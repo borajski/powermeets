@@ -16,16 +16,30 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
+          <a class="nav-link" href="#" id="prijava" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+</svg>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="prijava">
+          @if (Route::has('login'))
+         @auth
+          <a class="dropdown-item" href="{{ url('/home') }}">Moj profil</a>        
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Odjava</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                          @csrf
+                      </form>
+          @else
+          <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+          @if (Route::has('register'))
+          <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+          @endif
+          @endauth
+          @endif
           </ul>
         </li>
       </ul>
+      
     </div>
   </div>
 </nav>
