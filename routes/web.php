@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/proba', function () {
+    return view('back_layouts.proba');
+});
 
 Auth::routes();
 
