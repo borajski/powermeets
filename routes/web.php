@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\MeetsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,6 @@ Route::get('/', function () {
 Route::get('/profile', function () {
     return view('back_layouts.users.user_profile');
 });
-/*
-Route::get('/proba', function () {
-    return view('back_layouts.proba');
-}); */
 
 Auth::routes();
 
@@ -36,3 +33,8 @@ Route::get('/profile', function () {
 Route::resource('users', UsersController::class);
 //Route::get('/korisnici','UsersController@index');
 //Route::get('brisi_korisnika/{id}','UsersController@destroy');
+
+Route::get('/create_meet', function () {
+    return view('back_layouts.meets.new_meet');
+});
+Route::resource('meets', MeetsController::class);

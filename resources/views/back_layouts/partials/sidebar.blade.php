@@ -10,9 +10,9 @@
         <p><small>{{auth()->user()->name}}</small></p>
       </a>
       </div>
-   <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+      <a href="/home">Dashboard</a>
+   <a href="/create_meet">Create meet</a>
+  <a href="#">Meets list</a>
+
 </div>
 </div>

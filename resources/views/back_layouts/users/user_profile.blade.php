@@ -45,7 +45,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                         <div class="form-group align-center">
                             <label for="exampleFormControlFile1">Odaberi novu sliku</label>
                             <br>
-                            <img class="align-center img-responsive img-thumbnail" id="output" name="user_image" id="previewImg"
+                            <img class="align-center img-responsive img-thumbnail" id="output" name="user_image"
                                 src="{{asset($slika)}}"  width="250" alt="profile-image">
                                 <br>
                             <input type="file" class="form-control-file pt-2" name="user_image"

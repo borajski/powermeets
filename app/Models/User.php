@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\UserDetail;
+use App\Models\Meet;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,9 @@ class User extends Authenticatable
     public function details()
     {
         return $this->hasOne(UserDetail::class, 'user_id');
+    }
+    public function meets()
+    {
+        return $this->hasMany(Meet::class, 'user_id');
     }
 }

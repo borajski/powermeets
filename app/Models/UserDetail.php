@@ -30,9 +30,7 @@ public static function storeData($request, $user_id)
         'lname' => $request->user_lname,
         'country' => $request->user_country,
         'public' => $request->user_public,
-        //'role' => $request->user_role,
-        //'live' => $request->live,
-        'created_at' => Carbon::now(),
+       'created_at' => Carbon::now(),
         'updated_at' => Carbon::now()
     ]);
 }
