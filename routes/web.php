@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/profile', function () {
+    return view('back_layouts.users.user_profile');
+});
+/*
 Route::get('/proba', function () {
     return view('back_layouts.proba');
-});
+}); */
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Back routes //
+Route::get('/profile', function () {
+    return view('back_layouts.users.user_profile');
+});
+Route::resource('users', UsersController::class);
+//Route::get('/korisnici','UsersController@index');
+//Route::get('brisi_korisnika/{id}','UsersController@destroy');
