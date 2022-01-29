@@ -16,19 +16,17 @@ class CreateMeetsTable extends Migration
         Schema::create('meets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->index();
-            $table->text('naziv')->nullable();
-            $table->text('organizator')->nullable();
-            $table->text('email')->nullable();
-            $table->text('federacija')->nullable();
-            $table->text('logo')->nullable();
-            $table->text('slika')->nullable();
-            $table->text('mjesto')->nullable();
+            $table->string('naziv')->nullable();
+            $table->string('organizator')->nullable();
+            $table->string('federacija')->nullable();
+            $table->string('slika')->default('images/meets/default-cover.png');
+            $table->string('mjesto')->nullable();
             $table->date('datump')->nullable();
             $table->date('datumk')->nullable();
-            $table->text('discipline')->nullable();
+            $table->string('discipline')->nullable();
             $table->mediumText('opis')->nullable();
-            $table->text('pocetna')->nullable();
-            $table->text('prijave')->nullable();
+            $table->string('pocetna')->nullable();
+            $table->string('prijave')->nullable();
             $table->timestamps();
         });
     }

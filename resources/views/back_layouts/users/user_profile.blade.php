@@ -43,7 +43,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group align-center">
-                            <label for="exampleFormControlFile1">Odaberi novu sliku</label>
+                            <label for="profile_image">Odaberi novu sliku</label>
                             <br>
                             <img class="align-center img-responsive img-thumbnail" id="output" name="user_image"
                                 src="{{asset($slika)}}"  width="250" alt="profile-image">

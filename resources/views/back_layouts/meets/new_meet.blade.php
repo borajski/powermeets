@@ -3,9 +3,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h2>Create new meet</h2>
+            <h2 class="mb-5">Create new meet</h2>
 <form enctype="multipart/form-data" action="{{route('meets.store')}}" method="POST">
     {{ csrf_field() }}
+    <div class="form-group align-center">
+                            <label for="slika">Odaberi cover fotografiju:</label>
+                            <br>
+                            <img class="align-center img-responsive img-thumbnail" id="output" name="user_image"
+                                src="{{asset('images/meets/default-cover.png')}}"  width="100%" alt="meet-cover">
+                                <br>
+                            <input type="file" class="form-control-file pt-2" name="slika"
+                            accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                        </div>
     <div class="form-group">
         <label for="naziv"><b>Naziv natjecanja: @include('back_layouts.partials.required-star')</b></label>
         <input type="text" class="form-control" name="naziv" required>
@@ -24,20 +33,12 @@
             <option value="WUAP">WUAP</option>
             <option value="WPC">WPC</option>
         </select>
-    </div>
-    <div class="form-group">
-        <label for="logo"><b>Logo federacije: @include('back_layouts.partials.required-star')</b></label>
-        <input type="text" class="form-control" name="logo" required>
-    </div>
-    <div class="form-group">
-        <label for="slika"><b>Naslovna fotografija: @include('back_layouts.partials.required-star')</b></label>
-        <input type="text" class="form-control" name="slika" required>
-    </div>
+    </div> 
     <div class="form-group">
         <label for="mjesto"><b>Mjesto: @include('back_layouts.partials.required-star')</b></label>
         <input type="text" class="form-control" name="mjesto" required>
     </div>
-    <div class="form-group">
+    <div class="form-group mt-4 mb-4">
         <label for="raw-discipline"><b>Discipline RAW (Classic):
                </b></label>
         <br>
@@ -62,7 +63,7 @@
             <label class="form-check-label" for="pushpull">Push&pull</label>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group mt-4 mb-4"">
         <label for="raw-discipline"><b>Discipline Equipment:
                </b></label>
         <br>
@@ -89,14 +90,15 @@
     </div>
     <div class="form-group">
         <label for="datum-p"><b>Datum početka: @include('back_layouts.partials.required-star')</b></label>
-        <input class="form-control" type="date" name="datum-p" />
+        <input class="form-control" type="date" name="datump" />
     </div>
     <div class="form-group">
         <label for="datum-p"><b>Datum završetka: @include('back_layouts.partials.required-star')</b></label>
-        <input class="form-control" type="date" name="datum-k" />
+        <input class="form-control" type="date" name="datumk" />
     </div>
-
+     <div class="mt-4 text-end">
     <button type="submit" class="btn btn-primary">Create</button>
+        </div>
 </form>
         </div>
         </div>

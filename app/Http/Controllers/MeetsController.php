@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Meet;
+use App\Models\Group;
+use App\Models\Photo;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -38,25 +39,29 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-      
+      $meet = new Meet();
+      $stored = $meet->validateRequest($request)->storeData($request); // gives meet id
+      if ($stored)
+      {
+        if ($request->hasFile('slika')) {
+          $path = Photo::imageUpload($request->file('slika'), Meet::find($stored), 'meets', 'slika');
+          $meet->updateImagePath($stored, $path);
+      }
+      return redirect('/home')->with(['success' => 'Meet created successfully!']);
+      }
+      else {
+         return redirect()->back()->with(['error' => 'Oops! Some errors occured!']);
+      }
+       
+       
+       
+       /*
         $discipline = $request->input('discipline');
-       /* foreach ($lista as $list)
-        {
-            echo $list.'<br>';
-        }
-       */
-      
-       /* $discipline = array("powerlifting","benchpress","squat","deadlift","pushpull",
-        "e-powerlifting","e-benchpress","e-squat","e-deadlift","e-pushpull");
-        $disc_meet = ""; */
         $disc_meet = "";
-        foreach ($discipline as $disciplina) {
-           
+        foreach ($discipline as $disciplina) {           
             $disc_meet = $disciplina.','.$disc_meet;
-
-
         } 
-       return $disc_meet.'<br>radi';
+       return $disc_meet.'<br>radi'; */
        /*
         $this->validate($request, [
             'naziv' => 'required',
