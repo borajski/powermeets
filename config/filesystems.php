@@ -57,6 +57,11 @@ return [
             'root' => public_path('images/users'),
             'url' => 'images/users/'
           ],
+          'meets' => [
+            'driver' => 'local',
+            'root' => public_path('images/meets'),
+            'url' => 'images/meets/'
+          ],
 
     ],
 

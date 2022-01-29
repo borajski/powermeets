@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -36,27 +35,12 @@ class Photo extends Model
         // If it does, first delete it.
 
         // If the images folder requires Resource ID folder
-        if ($type == 'users' || $type == 'groups' || $type == 'categories' || $type == 'subcategories') {
+        if ($type == 'users' || $type == 'meets') {
             Storage::disk($type)->putFileAs($resource->id, $image, $image->getClientOriginalName());
             $path = $base_path . $resource->id . '/' . $image->getClientOriginalName();
         }
-        if ($type == 'products') {
-            if ($resource->product_id)
-            {
-              $prod_id = $resource->product_id;
-            }
-            else
-            {
-              $prod_id = $resource->id;
-            }
-            $adresa = auth()->user()->id.'/'.$prod_id;
-            Storage::disk($type)->putFileAs($adresa, $image, $image->getClientOriginalName());
-            $path = $base_path . $adresa . '/' . $image->getClientOriginalName();
-        }
-        if ($type == 'vendors') {
-          Storage::disk($type)->putFileAs($resource->id, $image, $image->getClientOriginalName());
-          $path = $base_path .'/'. $resource->id . '/' . $image->getClientOriginalName();
-        }
+    
+   
 
         return $path;
     }

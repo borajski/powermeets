@@ -24,8 +24,12 @@
         <input type="text" class="form-control" name="organizator" required>
     </div>
     <div class="form-group">
+        <label for="opis"><b>O natjecanju:</b></label>
+        <textarea class="form-control" name="opis" rows="5"></textarea>
+    </div>
+    <div class="form-group">
         <label for="federacija"><b>Federacija: @include('back_layouts.partials.required-star')</b></label>
-        <select name="user_country" class="form-control" required>
+        <select name="federacija" class="form-control" required>
             <option selected></option>
             <option value="IPF">IPF</option>
             <option value="GPC">GPC</option>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\Photo;
-use App\Models\Vendor;
+
 
 
 class UsersController extends Controller

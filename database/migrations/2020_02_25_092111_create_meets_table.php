@@ -25,8 +25,6 @@ class CreateMeetsTable extends Migration
             $table->date('datumk')->nullable();
             $table->string('discipline')->nullable();
             $table->mediumText('opis')->nullable();
-            $table->string('pocetna')->nullable();
-            $table->string('prijave')->nullable();
             $table->timestamps();
         });
     }

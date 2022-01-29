@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Meet;
-use App\Models\Photo;
 
-
-class MeetsController extends Controller
+class NominationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +13,7 @@ class MeetsController extends Controller
      */
     public function index()
     {
-        $meets = Meet::orderBy('created_at', 'desc')->get();
-        return view('layouts.meets.index')->with('meets', $meets);
+        //
     }
 
     /**
@@ -38,20 +34,7 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-      $meet = new Meet();
-      $stored = $meet->validateRequest($request)->storeData($request); // gives meet id
-      if ($stored)
-      {
-        if ($request->hasFile('slika')) {
-          $path = Photo::imageUpload($request->file('slika'), Meet::find($stored), 'meets', 'slika');
-          $meet->updateImagePath($stored, $path);
-      }
-      return redirect('/home')->with(['success' => 'Meet created successfully!']);
-      }
-      else {
-         return redirect()->back()->with(['error' => 'Oops! Some errors occured!']);
-      }     
-   
+        //
     }
 
     /**
@@ -60,11 +43,9 @@ class MeetsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public static function show($id)
+    public function show($id)
     {
-        $meet = Meet::find($id);
-       // return view('layouts.meets.show')->with('meet',$meet);
-        return $meet;
+        //
     }
 
     /**
@@ -87,13 +68,7 @@ class MeetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $meet = Meet::find($id);
-        $pocetna = "A-".$id;
-        $meet->frontpage = $pocetna;
-
-        $meet->save();
-
-        return redirect('/meet?id='.$id)->with('success', 'Postavljen kao početna stranica');
+        //
     }
 
     /**

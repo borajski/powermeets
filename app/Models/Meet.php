@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Models\User;
 
 class Meet extends Model
@@ -24,13 +25,20 @@ class Meet extends Model
     }
     public static function storeData($request)
 {
+    $disciplines = $request->discipline;
+    $disc_meet = "";
+    foreach ($disciplines as $disciplina) {           
+        $disc_meet = $disc_meet.','.$disciplina;
+    } 
+    $disc_meet = ltrim($disc_meet, $disc_meet[0]);
+
     return self::insertGetId([
         'user_id'       =>  auth()->user()->id,
         'naziv'         =>  $request->naziv,
         'organizator'   =>  $request->organizator,
         'federacija'    =>  $request->federacija,
         'mjesto'        =>  $request->mjesto,
-        'discipline'    =>  $request->discipline,
+        'discipline'    =>  $disc_meet,
         'opis'          =>  $request->opis,
         'datump'        =>  new Carbon($request->datump),
         'datumk'        =>  new Carbon($request->datumk),
@@ -38,7 +46,16 @@ class Meet extends Model
         'updated_at'    =>  Carbon::now()
     ]);
 }
-
+private function setRequest($request)
+  {
+      $this->request = $request;
+  }
+  public function updateImagePath($meet_id, $path)
+  {
+      return Meet::where('id', $meet_id)->update([
+          'slika' => $path
+      ]);
+  }
     public function user()
     {
      return $this->belongsTo(User::class);
