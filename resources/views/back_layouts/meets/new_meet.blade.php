@@ -9,7 +9,7 @@
     <div class="form-group align-center">
                             <label for="slika">Odaberi cover fotografiju:</label>
                             <br>
-                            <img class="align-center img-responsive img-thumbnail" id="output" name="user_image"
+                            <img class="align-center img-responsive img-thumbnail" id="output" 
                                 src="{{asset('images/meets/default-cover.png')}}"  width="100%" alt="meet-cover">
                                 <br>
                             <input type="file" class="form-control-file pt-2" name="slika"

@@ -38,3 +38,4 @@ Route::get('/create_meet', function () {
     return view('back_layouts.meets.new_meet');
 });
 Route::resource('meets', MeetsController::class);
+Route::get('/meets', [MeetsController::class, 'index']);

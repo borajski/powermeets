@@ -21,12 +21,13 @@ class Photo extends Model
         if ($resource->$resource_tag != NULL)
         {
             $old = str_replace($base_path, '', $resource->$resource_tag);
-            if ($old != "default-avatar.png")
+         
+          if ($old != "default-avatar.png")
             {
             if (Storage::disk($type)->exists($old)) {
                 Storage::disk($type)->delete($old);
             }
-            }
+            } 
         }
 
 
@@ -50,7 +51,7 @@ class Photo extends Model
     $old = str_replace($base_path, '', $resource->$resource_tag);
 
     // treba obrisati i folder gdje je slika
-    if ($old != "default-avatar.png")
+    if (($old != "default-avatar.png") || ($old != "default-cover.png"))
           {
           if (Storage::disk($type)->exists($old)) {
               Storage::disk($type)->delete($old);

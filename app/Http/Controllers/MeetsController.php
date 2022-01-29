@@ -16,8 +16,21 @@ class MeetsController extends Controller
      */
     public function index()
     {
-        $meets = Meet::orderBy('created_at', 'desc')->get();
-        return view('layouts.meets.index')->with('meets', $meets);
+      /*  $meets = Meet::orderBy('created_at', 'desc')->get();
+        return view('layouts.meets.index')->with('meets', $meets); */
+
+        if ((auth()->user()->details->role) == 'admin')
+        {
+        $query = (new Meet())->newQuery();
+        $natjecanja = $query->orderBy('datump')->get();
+        return view('back_layouts.meets.index')->with('natjecanja',$natjecanja);
+      }
+      else {
+        $organizator = auth()->user()->id;
+        $query = (new Meet())->newQuery()->where('user_id',$organizator);
+        $natjecanja = $query->orderBy('datump')->get();
+        return view('back_layouts.meets.index')->with('natjecanja',$natjecanja);
+      }
     }
 
     /**

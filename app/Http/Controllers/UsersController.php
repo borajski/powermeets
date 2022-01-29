@@ -50,7 +50,7 @@ class UsersController extends Controller
       $user = new UserDetail();
       $user_id = auth()->user()->id;
       $stored = $user->validateRequest($request)->storeData($request,$user_id);
-     
+           
       if ($stored)
       {
         if ($request->hasFile('user_image')) {
