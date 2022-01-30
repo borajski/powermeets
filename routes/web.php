@@ -39,3 +39,4 @@ Route::get('/create_meet', function () {
 });
 Route::resource('meets', MeetsController::class);
 Route::get('/meets', [MeetsController::class, 'index']);
+Route::get('/meet', [MeetsController::class, 'show']);

@@ -76,8 +76,8 @@ class MeetsController extends Controller
     public static function show($id)
     {
         $meet = Meet::find($id);
-       // return view('layouts.meets.show')->with('meet',$meet);
-        return $meet;
+       return view('back_layouts.meets.meet')->with('meet',$meet);
+      
     }
 
     /**
