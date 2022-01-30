@@ -46,6 +46,28 @@ class Meet extends Model
         'updated_at'    =>  Carbon::now()
     ]);
 }
+public static function updateData($request, $meet_id)
+  {
+    $disciplines = $request->discipline;
+    $disc_meet = "";
+    foreach ($disciplines as $disciplina) {           
+        $disc_meet = $disc_meet.','.$disciplina;
+    } 
+    $disc_meet = ltrim($disc_meet, $disc_meet[0]);
+
+      return self::where('id', $meet_id)->update([
+             'user_id'       =>  auth()->user()->id,
+        'naziv'         =>  $request->naziv,
+        'organizator'   =>  $request->organizator,
+        'federacija'    =>  $request->federacija,
+        'mjesto'        =>  $request->mjesto,
+        'discipline'    =>  $disc_meet,
+        'opis'          =>  $request->opis,
+        'datump'        =>  new Carbon($request->datump),
+        'datumk'        =>  new Carbon($request->datumk),
+        'updated_at'    =>  Carbon::now()
+      ]);
+  }
 private function setRequest($request)
   {
       $this->request = $request;

@@ -50,7 +50,7 @@ class Photo extends Model
     $base_path = config('filesystems.disks.' . $type . '.url');
     $old = str_replace($base_path, '', $resource->$resource_tag);
 
-    // treba obrisati i folder gdje je slika
+   
     if (($old != "default-avatar.png") || ($old != "default-cover.png"))
           {
           if (Storage::disk($type)->exists($old)) {
@@ -60,8 +60,5 @@ class Photo extends Model
               return true;
           }
         }
-
-
-
     }
 }

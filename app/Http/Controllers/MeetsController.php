@@ -59,7 +59,7 @@ class MeetsController extends Controller
           $path = Photo::imageUpload($request->file('slika'), Meet::find($stored), 'meets', 'slika');
           $meet->updateImagePath($stored, $path);
       }
-      return redirect('/home')->with(['success' => 'Meet created successfully!']);
+      return redirect('/meets')->with(['success' => 'Meet created successfully!']);
       }
       else {
          return redirect()->back()->with(['error' => 'Oops! Some errors occured!']);
@@ -100,13 +100,20 @@ class MeetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $meet = Meet::find($id);
-        $pocetna = "A-".$id;
-        $meet->frontpage = $pocetna;
-
-        $meet->save();
-
-        return redirect('/meet?id='.$id)->with('success', 'Postavljen kao početna stranica');
+      $meet = Meet::find($id);
+      $updated = $meet->validateRequest($request)->updateData($request,$id);
+      if ($updated)
+      {
+        if ($request->hasFile('slika')) {
+          $path = Photo::imageUpload($request->file('slika'), $meet, 'meets', 'slika');
+          $meet->updateImagePath($id, $path);
+      }
+      //return $meet->id;
+      return redirect()->route('meets.show', $meet->id)->with(['success' => 'Natjecanje je uspješno uređeno!']);
+      }
+      else {
+         return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
+      }
     }
 
     /**
@@ -117,6 +124,13 @@ class MeetsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $meet = Meet::find($id);
+      if ($meet->slika != NULL)
+      {
+        Photo::imageDelete($meet, 'meets', 'slika');
+      }
+      $meet->delete();
+      // kod brisanja treba razmotriti i brisanje pripadnih podataka u gensetts tablici i nominations tablici
+      return redirect('/meets')->with(['success' => 'Natjecanje je uspješno obrisano!']);
     }
 }

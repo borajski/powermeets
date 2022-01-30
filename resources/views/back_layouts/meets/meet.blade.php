@@ -33,9 +33,10 @@
  <div id="uredi" style="display:none;">
  <div class="row">
             <div class="col-md-10 offset-md-1">
-                <h2 class="mb-5">Create new meet</h2>
-                <form enctype="multipart/form-data" action="{{route('meets.store')}}" method="POST">
-                    {{ csrf_field() }}
+                <h2 class="mb-5">Edit meet</h2>
+                <form enctype="multipart/form-data" action="{{ route('meets.update',$meet->id) }}" method="POST">
+                {{ csrf_field() }}
+                {{method_field('patch') }}
                     <div class="form-group align-center">
                         <label for="slika">Odaberi novu cover fotografiju:</label>
                         <br>
@@ -79,51 +80,53 @@
                         <label for="raw-discipline"><b>Discipline RAW (Classic):
                             </b></label>
                         <br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="powerlifting">
-                            <label class="form-check-label" for="powerlifting">Powerlifting</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="squat">
-                            <label class="form-check-label" for="squat">Squat</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="benchpress">
-                            <label class="form-check-label" for="benchpress">Bench press</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="deadlift">
-                            <label class="form-check-label" for="deadlift">Deadlift</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="pushpull">
-                            <label class="form-check-label" for="pushpull">Push&pull</label>
-                        </div>
+                    @php
+                    $discipline = array("powerlifting","benchpress","squat","deadlift","pushpull");
+                    $meet_discipline = explode(',',$meet->discipline);
+                    foreach ($discipline as $disciplina)
+                    {
+                        if (in_array($disciplina,$meet_discipline))
+                        {
+                            echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'" checked>
+                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst($disciplina).'</label>
+                        </div>';
+                        }
+                        else
+                        {
+                            echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'">
+                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst($disciplina).'</label>
+                        </div>';
+                        }
+                    }
+                    @endphp                       
                     </div>
                     <div class="form-group mt-4 mb-4">
                         <label for=" raw-discipline"><b>Discipline Equipment:
                             </b></label>
                         <br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="e-powerlifting">
-                            <label class="form-check-label" for="powerlifting">Powerlifting</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="e-squat">
-                            <label class="form-check-label" for="squat">Squat</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="e-benchpress">
-                            <label class="form-check-label" for="benchpress">Bench press</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="e-deadlift">
-                            <label class="form-check-label" for="deadlift">Deadlift</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="e-pushpull">
-                            <label class="form-check-label" for="pushpull">Push&pull</label>
-                        </div>
+                        @php
+                        $discipline = array("e-powerlifting","e-benchpress","e-squat","e-deadlift","e-pushpull");
+                    $meet_discipline = explode(',',$meet->discipline);
+                    foreach ($discipline as $disciplina)
+                    {
+                        if (in_array($disciplina,$meet_discipline))
+                        {
+                            echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'" checked>
+                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst(substr($disciplina,2)).'</label>
+                        </div>';
+                        }
+                        else
+                        {
+                            echo '<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'">
+                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst(substr($disciplina,2)).'</label>
+                        </div>';
+                        }
+                    }
+                    @endphp   
                     </div>
                     <div class="form-group">
                         <label for="datum-p"><b>Datum početka:
