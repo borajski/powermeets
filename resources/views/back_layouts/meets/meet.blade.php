@@ -27,7 +27,7 @@ if ($meet->gensetts)
 else
 {
     $aktivan = '';
-    $prijavnica = 'checked';
+    $prijavnica = '';
     $nominacije = '';
     $nominacije = '';
     $natjecanje = '';
@@ -213,7 +213,7 @@ else
                 <input class="form-check-input" type="checkbox" name="rezultati" {{$rezultati}}>
                 <label class="form-check-label" for="rezultati">Objavi rezultate</label>
             </div>
-            @if ($meet->gensetts->aktivan == 'on')
+            @if ($aktivan == 'checked')
             <div class="form-group">
                     <label for="objave"><b>Objave:</b></label>
                     <textarea class="form-control" name="objave" rows="4">{{$meet->gensetts->objave}}</textarea>
