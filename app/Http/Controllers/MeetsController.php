@@ -108,7 +108,7 @@ class MeetsController extends Controller
           $path = Photo::imageUpload($request->file('slika'), $meet, 'meets', 'slika');
           $meet->updateImagePath($id, $path);
       }
-      //return $meet->id;
+     
       return redirect()->route('meets.show', $meet->id)->with(['success' => 'Natjecanje je uspješno uređeno!']);
       }
       else {

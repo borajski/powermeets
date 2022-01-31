@@ -16,11 +16,11 @@ class CreateGensettsTable extends Migration
         Schema::create('gensetts', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('meet_id')->index();
-            $table->string('aktivan')->default('ne');
-            $table->string('prijavnica')->default('ne');
-            $table->string('nominacije')->default('ne');
-            $table->string('natjecanje')->default('ne');
-            $table->string('rezultati')->default('ne');
+            $table->string('aktivan')->nullable();
+            $table->string('prijavnica')->nullable();
+            $table->string('nominacije')->nullable();
+            $table->string('natjecanje')->nullable();
+            $table->string('rezultati')->nullable();
             $table->mediumText('objave')->nullable();
             $table->timestamps();
         });

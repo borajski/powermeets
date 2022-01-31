@@ -1,5 +1,31 @@
 @extends('back_layouts.back-master')
 @section('content')
+@php 
+if ($meet->gensetts)
+{
+    if ($meet->gensetts->aktivan == 'on')
+      $aktivan = 'checked';
+      else
+        $aktivan = '';
+    if ($meet->gensetts->prijavnica == 'on')
+      $prijavnica = 'checked';
+      else
+        $prijavnica = '';
+    if ($meet->gensetts->nominacije == 'on')
+      $nominacije = 'checked';
+      else
+        $nominacije = '';
+    if ($meet->gensetts->natjecanje == 'on')
+      $natjecanje = 'checked';
+      else
+        $natjecanje = '';
+    if ($meet->gensetts->rezultati == 'on')
+      $rezultati = 'checked';
+      else
+        $rezultati = '';
+}
+@endphp
+
 <div class="container">
     <div id="postavke">
         <div class="row">
@@ -147,27 +173,46 @@
 </div>
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 border">
-            <p>Postavke javnosti</p>
+            <h4>Postavke javnosti</h4>
+            @if ($meet->gensetts)
+    <form enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('patch') }}
+        @else
+        <form enctype="multipart/form-data" action="{{route('gensetts.store')}}" method="POST">
+            {{ csrf_field() }}
+            @endif
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="aktivan">
+                <input class="form-check-input" type="checkbox" name="aktivan" {{$aktivan}}>
+                <input class="form-check-input" type="hidden" name="meet_id" value="{{$meet->id}}">
                 <label class="form-check-label" for="aktivan">Objavi natjecanje javno</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="prijavnica">
+                <input class="form-check-input" type="checkbox" name="prijavnica" {{$prijavnica}}>
                 <label class="form-check-label" for="prijavnica">Objavi prijavnicu</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="nominacije">
+                <input class="form-check-input" type="checkbox" name="nominacije" {{$nominacije}}>
                 <label class="form-check-label" for="nominacije">Objavi listu prijavljenih</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="natjecanje">
+                <input class="form-check-input" type="checkbox" name="natjecanje" {{$natjecanje}}>
                 <label class="form-check-label" for="natjecanje">Javno praćenje natjecanja</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="rezultati">
+                <input class="form-check-input" type="checkbox" name="rezultati" {{$rezultati}}>
                 <label class="form-check-label" for="rezultati">Objavi rezultate</label>
             </div>
+            @if ($meet->gensetts->aktivan == 'on')
+            <div class="form-group">
+                    <label for="objave"><b>Objave:</b></label>
+                    <textarea class="form-control" name="objave" rows="4">{{$meet->gensetts->objave}}</textarea>
+                </div>
+            @endif
+            <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-primary">Spremi</button>
+                    </div>
+            </form>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Gensett;
 
 class Meet extends Model
 {
@@ -81,5 +82,9 @@ private function setRequest($request)
     public function user()
     {
      return $this->belongsTo(User::class);
+    }
+    public function gensetts()
+    {
+        return $this->hasOne(Gensett::class, 'meet_id');
     }
 }

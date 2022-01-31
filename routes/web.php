@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MeetsController;
+use App\Http\Controllers\GensettsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,5 @@ Route::resource('meets', MeetsController::class);
 Route::get('/meets', [MeetsController::class, 'index']);
 Route::get('/meet', [MeetsController::class, 'show']);
 Route::get('delete/{id}',[MeetsController::class, 'destroy']);
+
+Route::resource('gensetts', GensettsController::class);
