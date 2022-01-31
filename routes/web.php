@@ -44,3 +44,8 @@ Route::get('/meet', [MeetsController::class, 'show']);
 Route::get('delete/{id}',[MeetsController::class, 'destroy']);
 
 Route::resource('gensetts', GensettsController::class);
+
+// Front routes //
+
+Route::get('/active_meets', [MeetsController::class, 'front_index']);
+Route::get('meet/{id}',[MeetsController::class, 'front_show']);

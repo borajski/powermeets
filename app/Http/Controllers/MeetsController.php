@@ -16,10 +16,7 @@ class MeetsController extends Controller
      */
     public function index()
     {
-      /*  $meets = Meet::orderBy('created_at', 'desc')->get();
-        return view('layouts.meets.index')->with('meets', $meets); */
-
-        if ((auth()->user()->details->role) == 'admin')
+      if ((auth()->user()->details->role) == 'admin')
         {
         $query = (new Meet())->newQuery();
         $natjecanja = $query->orderBy('datump')->get();
@@ -31,6 +28,13 @@ class MeetsController extends Controller
         $natjecanja = $query->orderBy('datump')->get();
         return view('back_layouts.meets.index')->with('natjecanja',$natjecanja);
       }
+    }
+    public function front_index()
+    {   
+        $query = (new Meet())->newQuery();
+        $natjecanja = $query->orderBy('datump')->get();
+        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja);     
+   
     }
 
     /**
@@ -76,10 +80,13 @@ class MeetsController extends Controller
     public static function show($id)
     {
         $meet = Meet::find($id);
-       return view('back_layouts.meets.meet')->with('meet',$meet);
-      
+       return view('back_layouts.meets.meet')->with('meet',$meet);      
     }
-
+    public static function front_show($id)
+    {
+       $meet = Meet::find($id);
+       return view('front_layouts.meets.meet')->with('meet',$meet);      
+    }
     /**
      * Show the form for editing the specified resource.
      *
