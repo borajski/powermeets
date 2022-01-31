@@ -24,6 +24,16 @@ if ($meet->gensetts)
       else
         $rezultati = '';
 }
+else
+{
+    $aktivan = '';
+    $prijavnica = 'checked';
+    $nominacije = '';
+    $nominacije = '';
+    $natjecanje = '';
+    $rezultati = '';
+
+}
 @endphp
 
 <div class="container">
