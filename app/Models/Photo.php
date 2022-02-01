@@ -36,7 +36,7 @@ class Photo extends Model
         // If it does, first delete it.
 
         // If the images folder requires Resource ID folder
-        if ($type == 'users' || $type == 'meets') {
+        if ($type == 'users' || $type == 'meets' || $type == 'federations') {
             Storage::disk($type)->putFileAs($resource->id, $image, $image->getClientOriginalName());
             $path = $base_path . $resource->id . '/' . $image->getClientOriginalName();
         }

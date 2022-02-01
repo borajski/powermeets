@@ -62,6 +62,11 @@ return [
             'root' => public_path('images/meets'),
             'url' => 'images/meets/'
           ],
+          'federations' => [
+            'driver' => 'local',
+            'root' => public_path('images/federations'),
+            'url' => 'images/federations/'
+          ],
 
     ],
 

@@ -87,4 +87,5 @@ private function setRequest($request)
     {
         return $this->hasOne(Gensett::class, 'meet_id');
     }
+  
 }
