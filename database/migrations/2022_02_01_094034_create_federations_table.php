@@ -21,6 +21,7 @@ class CreateFederationsTable extends Migration
             $table->string('wf_categories')->nullable();
             $table->mediumText('age_categories')->nullable();
             $table->string('divisions')->nullable();
+            $table->string('disciplines')->nullable();
             $table->string('points_system')->nullable();
             $table->timestamps();
         });

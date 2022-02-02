@@ -104,6 +104,10 @@
                             <label for="divisions"><b>Divizije:</b></label>
                             <input type="text" class="form-control" name="divisions">
                         </div>
+                        <div class="form-group">
+                            <label for="disciplines"><b>Discipline:</b></label>
+                            <input type="text" class="form-control" name="disciplines">
+                        </div>
                     </div>
                 </div>
                 <div class="text-end pt-3 pb-2">

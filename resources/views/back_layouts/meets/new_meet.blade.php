@@ -20,6 +20,10 @@
                     <input type="text" class="form-control" name="naziv" required>
                 </div>
                 <div class="form-group">
+                    <label for="mjesto"><b>Mjesto: @include('back_layouts.partials.required-star')</b></label>
+                    <input type="text" class="form-control" name="mjesto" required>
+                </div>
+                <div class="form-group">
                     <label for="organizator"><b>Organizator natjecanja:
                             @include('back_layouts.partials.required-star')</b></label>
                     <input type="text" class="form-control" name="organizator" required>
@@ -30,69 +34,14 @@
                 </div>
                 <div class="form-group">
                     <label for="federacija"><b>Federacija: @include('back_layouts.partials.required-star')</b></label>
-                    <select name="federacija" class="form-control" required>
+                    <select name="federacija"  class="form-control" onchange="getFed(this.value)" required>
                         <option selected></option>
-                        <option value="IPF">IPF</option>
-                        <option value="GPC">GPC</option>
-                        <option value="WRPF">WRPF</option>
-                        <option value="WUAP">WUAP</option>
-                        <option value="WPC">WPC</option>
-                    </select>
+                    @foreach ($federacije as $federacija)
+                        <option value="{{$federacija->name}}">{{$federacija->name}}</option>
+                    @endforeach
+                      </select>
                 </div>
-                <div class="form-group">
-                    <label for="mjesto"><b>Mjesto: @include('back_layouts.partials.required-star')</b></label>
-                    <input type="text" class="form-control" name="mjesto" required>
-                </div>
-                <div class="form-group mt-4 mb-4">
-                    <label for="raw-discipline"><b>Discipline RAW (Classic):
-                        </b></label>
-                    <br>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="powerlifting">
-                        <label class="form-check-label" for="powerlifting">Powerlifting</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="squat">
-                        <label class="form-check-label" for="squat">Squat</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="benchpress">
-                        <label class="form-check-label" for="benchpress">Bench press</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="deadlift">
-                        <label class="form-check-label" for="deadlift">Deadlift</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="pushpull">
-                        <label class="form-check-label" for="pushpull">Push&pull</label>
-                    </div>
-                </div>
-                <div class="form-group mt-4 mb-4">
-                <label for=" raw-discipline"><b>Discipline Equipment:
-                    </b></label>
-                    <br>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="e-powerlifting">
-                        <label class="form-check-label" for="powerlifting">Powerlifting</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="e-squat">
-                        <label class="form-check-label" for="squat">Squat</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="e-benchpress">
-                        <label class="form-check-label" for="benchpress">Bench press</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="e-deadlift">
-                        <label class="form-check-label" for="deadlift">Deadlift</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="discipline[]" value="e-pushpull">
-                        <label class="form-check-label" for="pushpull">Push&pull</label>
-                    </div>
-                </div>
+                <div id="discipline"></div>          
                 <div class="form-group">
                     <label for="datum-p"><b>Datum početka: @include('back_layouts.partials.required-star')</b></label>
                     <input class="form-control" type="date" name="datump" />
@@ -108,4 +57,18 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js_after')
+<script>
+function getFed (fed) {   
+    document.getElementById("discipline").innerHTML = ""; 
+    const xhttp = new XMLHttpRequest();
+    var url="fedRules/" + fed;
+    xhttp.onload = function() {
+    document.getElementById("discipline").innerHTML = this.responseText;
+    }  
+    xhttp.open("GET", url, true);
+    xhttp.send();   
+}
+</script>
 @endsection

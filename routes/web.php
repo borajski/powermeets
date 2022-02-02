@@ -33,14 +33,10 @@ Route::get('/profile', function () {
     return view('back_layouts.users.user_profile');
 });
 Route::resource('users', UsersController::class);
-//Route::get('/korisnici','UsersController@index');
-//Route::get('brisi_korisnika/{id}','UsersController@destroy');
 
-Route::get('/create_meet', function () {
-    return view('back_layouts.meets.new_meet');
-});
 Route::resource('meets', MeetsController::class);
 Route::get('/meets', [MeetsController::class, 'index']);
+Route::get('/create_meet', [MeetsController::class, 'create']);
 Route::get('/meet', [MeetsController::class, 'show']);
 Route::get('delete/{id}',[MeetsController::class, 'destroy']);
 
@@ -49,6 +45,8 @@ Route::resource('gensetts', GensettsController::class);
 Route::resource('federations', FederationsController::class);
 Route::get('/federations', [FederationsController::class, 'index']);
 Route::get('del_fed/{id}',[FederationsController::class, 'destroy']);
+Route::get('fedRules/{id}',[FederationsController::class, 'fedRules']);
+Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
 
 // Front routes //
 

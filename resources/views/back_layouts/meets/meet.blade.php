@@ -101,11 +101,9 @@ else
                                 @include('back_layouts.partials.required-star')</b></label>
                         <select name="federacija" class="form-control" required>
                             <option  value="{{$meet->federacija}}" selected>{{$meet->federacija}}</option>
-                            <option value="IPF">IPF</option>
-                            <option value="GPC">GPC</option>
-                            <option value="WRPF">WRPF</option>
-                            <option value="WUAP">WUAP</option>
-                            <option value="WPC">WPC</option>
+                            @foreach ($federacije as $federacija)
+                            <option value="{{$federacija->name}}">{{$federacija->name}}</option>
+                   @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -113,57 +111,42 @@ else
                         <input type="text" class="form-control" name="mjesto" value="{{$meet->mjesto}}" required>
                     </div>
                     <div class="form-group mt-4 mb-4">
-                        <label for="raw-discipline"><b>Discipline RAW (Classic):
-                            </b></label>
+                        <label for="discipline"><b>DISCIPLINE:</b></label>
                         <br>
                     @php
-                    $discipline = array("powerlifting","benchpress","squat","deadlift","pushpull");
+                    $discipline = explode(",",$federacija->disciplines);
                     $meet_discipline = explode(',',$meet->discipline);
-                    foreach ($discipline as $disciplina)
+                    $divizije = explode(",",$federacija->divisions);
+                    
+                    foreach ($divizije as $divizija) 
                     {
-                        if (in_array($disciplina,$meet_discipline))
-                        {
-                            echo '<div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'" checked>
-                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst($disciplina).'</label>
-                        </div>';
+                    $predznak = substr($divizija,0,2).'-';
+                    echo '<div class="form-group mt-4 mb-4">
+                            <label for="'.$divizija.'"><b>'.$divizija.':
+                            </b></label><br>';
+                    
+                        foreach ($discipline as $disciplina) {
+                            $disciplina_m = $predznak.$disciplina;
+                            // varijabla disciplina_m oznacava dispiplinu na natjecanju s obzirom na diviziju
+                            if (in_array($disciplina_m, $meet_discipline)) {
+                                echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$predznak.$disciplina.'" checked>
+                <label class="form-check-label" for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
+            </div>';
+                            } else {
+                                echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$predznak.$disciplina.'">
+                <label class="form-check-label" for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
+            </div>';
+                            }
                         }
-                        else
-                        {
-                            echo '<div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'">
-                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst($disciplina).'</label>
-                        </div>';
-                        }
+                        echo '</div>';
                     }
+
+                    
                     @endphp                       
-                    </div>
-                    <div class="form-group mt-4 mb-4">
-                        <label for=" raw-discipline"><b>Discipline Equipment:
-                            </b></label>
-                        <br>
-                        @php
-                        $discipline = array("e-powerlifting","e-benchpress","e-squat","e-deadlift","e-pushpull");
-                    $meet_discipline = explode(',',$meet->discipline);
-                    foreach ($discipline as $disciplina)
-                    {
-                        if (in_array($disciplina,$meet_discipline))
-                        {
-                            echo '<div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'" checked>
-                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst(substr($disciplina,2)).'</label>
-                        </div>';
-                        }
-                        else
-                        {
-                            echo '<div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$disciplina.'">
-                            <label class="form-check-label" for="'.$disciplina.'">'.ucfirst(substr($disciplina,2)).'</label>
-                        </div>';
-                        }
-                    }
-                    @endphp   
-                    </div>
+                </div>
+                 
                     <div class="form-group">
                         <label for="datum-p"><b>Datum početka:
                                 @include('back_layouts.partials.required-star')</b></label>

@@ -23,6 +23,7 @@ class Federation extends Model
           'age_categories'  => 'required',
           'logo'  => 'required',
           'divisions'  => 'required',
+          'disciplines'  => 'required',
       ]);    
       $this->setRequest($request);    
       return $this;
@@ -37,6 +38,7 @@ class Federation extends Model
         'age_categories'  =>  $request->age_categories,
         'points_system'    =>  $request->points_system,
         'divisions'    =>  $request->divisions,
+        'disciplines'    =>  $request->disciplines,
         'created_at'    =>  Carbon::now(),
         'updated_at'    =>  Carbon::now()
     ]);

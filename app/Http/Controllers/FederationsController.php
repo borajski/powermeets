@@ -18,7 +18,7 @@ class FederationsController extends Controller
     {
         $query = (new Federation())->newQuery();
         $federacije = $query->orderBy('name')->get();
-        return view('back_layouts.federations.index')->with('federacije',$federacije);;
+        return view('back_layouts.federations.index')->with('federacije',$federacije);
     }
 
     /**
@@ -71,6 +71,50 @@ class FederationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function fedRules($fed)
+    {
+        $federacija = Federation::where('name',$fed)->first();
+        $divisions = explode(",",$federacija->divisions);
+        $discipline = explode(",",$federacija->disciplines);
+        echo '<label class="pt-3" for="discipline"><b>DISCIPLINE</b></label>';
+        foreach ($divisions as $divizija)
+        {
+            echo ' <div class="form-group mt-4 mb-4">
+            <label for="'.$divizija.'"><b>'.$divizija.':
+                </b></label>
+            <br>';
+            $predznak = substr($divizija,0,2).'-';
+            foreach ($discipline as $disciplina)
+            {
+                echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$predznak.$disciplina.'">
+                <label class="form-check-label" for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
+            </div>';
+            }
+            echo '</div>';
+        }    
+        
+    }
+    public function weightCat ($id)
+    {
+        $upit = explode(",",$id);
+        $spol = $upit[0];
+        $federacija= $upit[1];
+        $wcat = Federation::where('name',$federacija)->first();
+        echo '<option selected></option>';
+        if ($spol == "M")
+            $kategorije = $wcat->wm_categories;
+        else
+            $kategorije = $wcat->wf_categories;
+
+        $kategorije = explode(",",$kategorije);
+                
+        foreach ($kategorije as $kategorija)
+        {
+            echo '<option value="'.$kategorija.'">'.$kategorija.'</option>';
+        }       
+     
+    }
     public function edit($id)
     {
         //

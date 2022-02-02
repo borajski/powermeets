@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Meet;
 use App\Models\Photo;
+use App\Models\Federation;
 
 
 class MeetsController extends Controller
@@ -44,7 +45,9 @@ class MeetsController extends Controller
      */
     public function create()
     {
-        //
+      $query = (new Federation())->newQuery();
+      $federacije = $query->orderBy('name')->get();
+      return view('back_layouts.meets.new_meet')->with('federacije',$federacije);
     }
 
     /**
@@ -80,12 +83,15 @@ class MeetsController extends Controller
     public static function show($id)
     {
         $meet = Meet::find($id);
-       return view('back_layouts.meets.meet')->with('meet',$meet);      
+        $query = (new Federation())->newQuery();
+        $federacije = $query->orderBy('name')->get();
+        return view('back_layouts.meets.meet')->with('meet',$meet)->with('federacije',$federacije);    
     }
     public static function front_show($id)
     {
        $meet = Meet::find($id);
-       return view('front_layouts.meets.meet')->with('meet',$meet);      
+       $federacija = Federation::where('name',$meet->federacija)->first();
+       return view('front_layouts.meets.meet')->with('meet',$meet)->with('federacija',$federacija);     
     }
     /**
      * Show the form for editing the specified resource.
