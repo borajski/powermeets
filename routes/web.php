@@ -47,6 +47,7 @@ Route::get('/federations', [FederationsController::class, 'index']);
 Route::get('del_fed/{id}',[FederationsController::class, 'destroy']);
 Route::get('fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
+Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 
 // Front routes //
 

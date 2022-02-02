@@ -1,6 +1,11 @@
 @extends('back_layouts.back-master')
 @section('content')
 @php 
+function ispisiDatum($datum)
+{
+    return  Carbon\Carbon::parse($datum)->format('d.m.Y');
+}
+
 if ($meet->gensetts)
 {
     if ($meet->gensetts->aktivan == 'on')
@@ -59,8 +64,8 @@ else
                         <h4>Tehnička pravila: {{$meet->federacija}}</h4>
                         <h4>Discipline: {{$meet->discipline}}</h4>
                         <h4>Mjesto: {{$meet->mjesto}}</h4>
-                        <h4>Početak: {{$meet->datump}}</h4>
-                        <h4>Završetak: {{$meet->datumk}}</h4>
+                        <h4>Početak: {{ispisiDatum($meet->datump)}}</h4>
+                        <h4>Završetak: {{ispisiDatum($meet->datumk)}}</h4>
 
             </div>
         </div>
