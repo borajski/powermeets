@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MeetsController;
 use App\Http\Controllers\GensettsController;
 use App\Http\Controllers\FederationsController;
+use App\Http\Controllers\NominationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +53,6 @@ Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 // Front routes //
 
 Route::get('/active_meets', [MeetsController::class, 'front_index']);
-Route::get('meet/{id}',[MeetsController::class, 'front_show']);
+Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
+
+Route::resource('nominations', NominationsController::class);

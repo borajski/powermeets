@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nomination;
+use Mail;
+use App\Mail\AppMessageMail;
 
 class NominationsController extends Controller
 {
@@ -34,7 +37,33 @@ class NominationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nomination = new Nomination();
+        $stored = $nomination->validateRequest($request)->storeData($request); // gives nomination id
+        // slanje poruke natjecatelju nakon prijave, sadržaj 
+        $nominacija = Nomination::find($stored);
+        $prijavnica = 'Name: '.$nominacija->ime.',
+        Surname: '.$nominacija->prezime.',
+        Country: '.$nominacija->drzava.',
+        Club: '.$nominacija->klub.',
+        Birthdate: '.$nominacija->datum.',
+        Sex: '.$nominacija->spol.',
+        Weight category: '.$nominacija->kategorija_t.',
+        Age category: '.$nominacija->kategorija_g.',
+        Disciplines: '.$nominacija->disciplina;
+        // kraj sadržaja        
+        
+        if ($stored)
+        {      
+            Mail::to($nominacija->email)->send(new AppMessageMail($prijavnica));
+            if (Mail::failures()) {
+                return response()->Fail('Sorry! Please try again latter');
+            }else{
+               return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nomination->name.' Uspješno ste prijavljeni!']);
+            }            
+        }
+        else {
+           return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
+        } 
     }
 
     /**
