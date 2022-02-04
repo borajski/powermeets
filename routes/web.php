@@ -56,3 +56,7 @@ Route::get('/active_meets', [MeetsController::class, 'front_index']);
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 
 Route::resource('nominations', NominationsController::class);
+
+Route::get('/about', function () {
+    return view('front_layouts.general.about');
+});

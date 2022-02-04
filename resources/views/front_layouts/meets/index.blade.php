@@ -1,4 +1,4 @@
-@extends('back_layouts.back-master')
+@extends('front_layouts.front-master')
 @section('content')
 <div class="container">
     <div class="row">

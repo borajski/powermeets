@@ -1,4 +1,10 @@
 @extends('back_layouts.back-master')
+@section('css_before')
+<link rel="stylesheet" href="css/editor.min.css">
+@endsection
+@section('js_before')
+<script src="js/editor.min.js"></script>
+@endsection
 @section('content')
 @php 
 function ispisiDatum($datum)
@@ -52,20 +58,18 @@ else
         <div class="row pt-4">
             <div class="col-md-10 offset-md-1 border">
 
-                <p class="pt-3">
-                    <span class="float-start" strong>OPĆE POSTAVKE</strong></span>
+                <p class="pt-3 pb-3 m-3">
+                    <span class="float-start"><strong>OPĆE POSTAVKE</strong></span>
                     <button class="btn btn-primary btn-sm float-end" type="button" onclick="editMeet()">Uredi</button>
                 </p>
-
-                <h1 class="display-7 text-center "><strong>{{$meet->naziv}}</strong>
-                    <h1>
-                        <h4>{{$meet->opis}}</h4>
-                        <h4>Organizator: {{$meet->organizator}}</h4>
-                        <h4>Tehnička pravila: {{$meet->federacija}}</h4>
-                        <h4>Discipline: {{$meet->discipline}}</h4>
-                        <h4>Mjesto: {{$meet->mjesto}}</h4>
-                        <h4>Početak: {{ispisiDatum($meet->datump)}}</h4>
-                        <h4>Završetak: {{ispisiDatum($meet->datumk)}}</h4>
+            <h1 class="text-center m-4"><strong>{{$meet->naziv}}</strong></h1>
+            <h2 class="text-center m-4">{{$meet->opis}}</h2>
+            <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
+            <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federacija}}</small></h3>
+            <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
+            <h3 class="m-2"><b>Početak:</b> <small> {{ispisiDatum($meet->datump)}}</small></h3>
+            <h3 class="m-2"><b>Završetak:</b> <small> {{ispisiDatum($meet->datumk)}}</small></h3>
+           
 
             </div>
         </div>
@@ -171,13 +175,13 @@ else
 </div>
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 border">
-            <h4>Postavke javnosti</h4>
+            <h4 class="m-3">Postavke javnosti</h4>
             @if ($meet->gensetts)
-    <form enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST">
+    <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('patch') }}
         @else
-        <form enctype="multipart/form-data" action="{{route('gensetts.store')}}" method="POST">
+        <form class="m-3" enctype="multipart/form-data" action="{{route('gensetts.store')}}" method="POST">
             {{ csrf_field() }}
             @endif
             <div class="form-check form-switch">
@@ -203,9 +207,9 @@ else
             </div>
             @if ($aktivan == 'checked')
             <div class="form-group">
-                    <label for="objave"><b>Objave:</b></label>
-                    <textarea class="form-control" name="objave" rows="4">{{$meet->gensetts->objave}}</textarea>
-                </div>
+                    <label for="objave"><h4 class="m-3">Objave:</h4></label>
+                    <textarea class="form-control" name="objave" rows="6">{{$meet->gensetts->objave}}</textarea>
+                    </div>
             @endif
             <div class="mt-4 text-end">
                         <button type="submit" class="btn btn-primary">Spremi</button>

@@ -47,8 +47,8 @@ class NominationsController extends Controller
         Club: '.$nominacija->klub.',
         Birthdate: '.$nominacija->datum.',
         Sex: '.$nominacija->spol.',
-        Weight category: '.$nominacija->kategorija_t.',
-        Age category: '.$nominacija->kategorija_g.',
+        Weight category: '.$nominacija->kategorijat.',
+        Age category: '.$nominacija->kategorijag.',
         Disciplines: '.$nominacija->disciplina;
         // kraj sadržaja        
         
