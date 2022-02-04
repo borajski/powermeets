@@ -46,7 +46,6 @@ else
 
 }
 @endphp
-
 <div class="container">
     <div id="postavke">
         <div class="row">

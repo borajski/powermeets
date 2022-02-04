@@ -6,17 +6,19 @@ function ispisiDatum($datum)
 return Carbon\Carbon::parse($datum)->format('d.m.Y');
 }
 @endphp
+
 <div class="container">
     <div class="row">
         <div class="col-md-10 offset-md-1">
+        <h1 class="text-center m-4"><strong>{{$meet->naziv}}</strong></h1>
+            <h2 class="text-center m-4">{{$meet->opis}}</h2>
             <div class="img-wrapper" style="background-image:url('{{asset($meet->slika)}}');">
             </div>
         </div>
     </div>
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 bg-light border">
-            <h1 class="text-center m-4"><strong>{{$meet->naziv}}</strong></h1>
-            <h2 class="text-center m-4">{{$meet->opis}}</h2>
+           
             <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
             <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federacija}}</small></h3>
             <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
