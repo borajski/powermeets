@@ -33,14 +33,15 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             <h3 class="m-2"><b>Ostale informacije i obavijesti:</b></h3>
             <div class="m-2 mt-4">
                 @php 
-                try {
-                $quill = new \DBlackborough\Quill\Render($meet->gensetts->objave, 'HTML');
-                $result = $quill->render();
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
-                  echo $result ?? '';
-              
+                if ($meet->gensetts->objave != null) {
+                    try {
+                        $quill = new \DBlackborough\Quill\Render($meet->gensetts->objave, 'HTML');
+                        $result = $quill->render();
+                    } catch (\Exception $e) {
+                        echo $e->getMessage();
+                    }
+                    echo $result;
+                }          
                 @endphp
             </div>
             @if ($meet->gensetts->prijavnica == 'on')
