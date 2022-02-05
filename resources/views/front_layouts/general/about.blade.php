@@ -3,7 +3,7 @@
 <section>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 bg-light pt-4 mt-2">
 					<h1 class="display-3 text-center mt-3 mb-0">PowerNet</h1>
 					<p class="text-muted h4 text-center mb-5">software za organizaciju i upravljanje powerlifting natjecanjima</p>		
 					<div class="img-wrapper" style="background-image:url('{{asset('images/front/about.jpg')}}');">

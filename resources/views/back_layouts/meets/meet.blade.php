@@ -1,9 +1,10 @@
 @extends('back_layouts.back-master')
 @section('css_before')
-<link rel="stylesheet" href="css/editor.min.css">
+<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 @endsection
 @section('js_before')
-<script src="js/editor.min.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 @endsection
 @section('content')
 @php 
@@ -55,7 +56,7 @@ else
             </div>
         </div>
         <div class="row pt-4">
-            <div class="col-md-10 offset-md-1 border">
+            <div class="col-md-10 offset-md-1 border bg-light">
 
                 <p class="pt-3 pb-3 m-3">
                     <span class="float-start"><strong>OPĆE POSTAVKE</strong></span>
@@ -76,7 +77,7 @@ else
            
  <div id="uredi" style="display:none;">
  <div class="row">
-            <div class="col-md-10 offset-md-1">
+            <div class="col-md-10 offset-md-1 bg-light">
                 <h2 class="mb-5">Edit meet</h2>
                 <form enctype="multipart/form-data" action="{{ route('meets.update',$meet->id) }}" method="POST">
                 {{ csrf_field() }}
@@ -173,10 +174,10 @@ else
 </div>
 </div>
     <div class="row pt-4">
-        <div class="col-md-10 offset-md-1 border">
+        <div class="col-md-10 offset-md-1 border bg-light">
             <h4 class="m-3">Postavke javnosti</h4>
             @if ($meet->gensetts)
-    <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST">
+    <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST" id="gensett">
         {{ csrf_field() }}
         {{ method_field('patch') }}
         @else
@@ -206,9 +207,11 @@ else
             </div>
             @if ($aktivan == 'checked')
             <div class="form-group">
-                    <label for="objave"><h4 class="m-3">Objave:</h4></label>
-                    <textarea class="form-control" name="objave" rows="6">{{$meet->gensetts->objave}}</textarea>
-                    </div>
+                    <label for="objave"><h4 class="m-2">Objave:</h4></label>
+                                         <div id="editor-container"></div>
+                       <input type="hidden" name="objave"/>
+                 </div>
+                    
             @endif
             <div class="mt-4 text-end">
                         <button type="submit" class="btn btn-primary">Spremi</button>
@@ -223,7 +226,27 @@ else
 function editMeet() {
     document.getElementById('postavke').style.display = "none";
     document.getElementById('uredi').style.display = "block";
-
 }
+/*quill rich text editor */
+var quill = new Quill('#editor-container', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ]
+  },
+  placeholder: 'Compose an epic...',
+  theme: 'snow'  // or 'bubble'
+});
+/*
+skripta za preuzimanje sadržaja iz quilla*/
+var form = document.getElementById("gensett");
+form.onsubmit = function() {
+  var name = document.querySelector('input[name=objave]');
+  name.value = JSON.stringify(quill.getContents());
+  return true; // submit form
+}
+quill.setContents({!! $meet->gensetts->objave !!});
 </script>
 @endsection

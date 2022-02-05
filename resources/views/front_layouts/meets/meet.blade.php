@@ -6,19 +6,24 @@ function ispisiDatum($datum)
 return Carbon\Carbon::parse($datum)->format('d.m.Y');
 }
 @endphp
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-        <h1 class="text-center m-4"><strong>{{$meet->naziv}}</strong></h1>
-            <h2 class="text-center m-4">{{$meet->opis}}</h2>
-            <div class="img-wrapper" style="background-image:url('{{asset($meet->slika)}}');">
-            </div>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-md-10 offset-md-1 bg-light border">
-           
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 bg-light pt-4 mt-2">
+					<h1 class="display-3 text-center mt-3 mb-0">{{$meet->naziv}}</h1>
+					<p class="text-muted h4 text-center mb-5">{{$meet->opis}}</p>		
+					<div class="img-wrapper" style="background-image:url('{{asset($meet->slika)}}');">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container py-5 bg-light">
+		<div class="row">		
+			<div class="col-md-8 offset-md-2 px-4 ">
+			<div class="mb-4">	                    
             <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
             <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federacija}}</small></h3>
             <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
@@ -26,7 +31,17 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             <h3 class="m-2"><b>Završetak:</b> <small> {{ispisiDatum($meet->datumk)}}</small></h3>
             
             <h3 class="m-2"><b>Ostale informacije i obavijesti:</b></h3>
-            <p class="m-2 mt-4">{{$meet->gensetts->objave}}</p>
+            <div class="m-2 mt-4">
+                @php 
+                try {
+                $quill = new \DBlackborough\Quill\Render($meet->gensetts->objave, 'HTML');
+                $result = $quill->render();
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+                echo $result;
+                @endphp
+            </div>
             @if ($meet->gensetts->prijavnica == 'on')
             <p class="text-end m-4">
                 <button class="btn btn-primary" data-bs-toggle="collapse" href="#prijavnica" role="button"
@@ -390,11 +405,18 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             </form>
                 </div>
             </div>
-            @endif
-        </div>
-    </div>
+            @endif			
 </div>
-</div>
+				</div>
+			</div>
+			<!-- /col -->
+		</div>
+	</div>
+</section>
+
+
+           
+   
 @endsection
 @section('js_after')
 <script>

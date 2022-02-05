@@ -1,4 +1,4 @@
-body {background-color:whitesmoke;}
+body {background-color:beige;}
 h1,h2,h3,h4  {font-family: 'Roboto', sans-serif;}
 h1 {font-size: 2.25rem;}
 h2 {font-size: 1.75rem;}
@@ -148,4 +148,8 @@ p {
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 50vh;
+  }
+
+  #editor-container {
+    height: 375px;
   }
