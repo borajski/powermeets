@@ -39,10 +39,8 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
-                if ($result)
-                 echo $result;
-                else 
-                 echo '';
+                  echo $result ?? '';
+              
                 @endphp
             </div>
             @if ($meet->gensetts->prijavnica == 'on')
