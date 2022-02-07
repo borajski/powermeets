@@ -18,6 +18,15 @@
     }
     /* MAIN WRAPPER */
     .main {
-        margin: 2rem 2rem 0rem 2rem;  
-        position: relative;  
+         top: 3.25rem;
+         margin-bottom: 4rem;
+         position: relative;  
       }
+/* image middlle */
+.img-middle {
+	position: relative;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+}
