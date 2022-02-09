@@ -106,14 +106,10 @@ else
                         <textarea class="form-control" name="opis" rows="5">{{$meet->opis}}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="federacija"><b>Federacija:
-                                @include('back_layouts.partials.required-star')</b></label>
-                        <select name="federacija" class="form-control" required>
-                            <option  value="{{$meet->federacija}}" selected>{{$meet->federacija}}</option>
-                            @foreach ($federacije as $federacija)
-                            <option value="{{$federacija->name}}">{{$federacija->name}}</option>
-                   @endforeach
-                        </select>
+                        <label for="federacija"><b>Federacija: {{$meet->federation->name}}
+                                   </b></label>
+                        <input type="hidden" name="federacija" value="{{$meet->federation_id}}">
+             
                     </div>
                     <div class="form-group">
                         <label for="mjesto"><b>Mjesto: @include('back_layouts.partials.required-star')</b></label>
