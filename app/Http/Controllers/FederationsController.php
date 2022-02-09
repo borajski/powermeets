@@ -73,7 +73,7 @@ class FederationsController extends Controller
      */
     public function fedRules($fed)
     {
-        $federacija = Federation::where('name',$fed)->first();
+        $federacija = Federation::find($fed);
         $divisions = explode(",",$federacija->divisions);
         $discipline = explode(",",$federacija->disciplines);
         echo '<label class="pt-3" for="discipline"><b>DISCIPLINE</b></label>';

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Meet;
 use App\Models\Photo;
 use App\Models\Federation;
+use App\Models\Gensett;
+use App\Models\Nomination;
 
 
 class MeetsController extends Controller
@@ -30,14 +32,14 @@ class MeetsController extends Controller
         return view('back_layouts.meets.index')->with('natjecanja',$natjecanja);
       }
     }
+    /*
     public function front_index()
     {   
         $query = (new Meet())->newQuery();
         $natjecanja = $query->orderBy('datump')->get();
-        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja);     
-   
+        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja);    
     }
-
+*/
     /**
      * Show the form for creating a new resource.
      *
@@ -66,6 +68,8 @@ class MeetsController extends Controller
           $path = Photo::imageUpload($request->file('slika'), Meet::find($stored), 'meets', 'slika');
           $meet->updateImagePath($stored, $path);
       }
+      $gensett = new Gensett();
+      $settstored = $gensett->storeData($stored); // gives gensett id
       return redirect('/meets')->with(['success' => 'Meet created successfully!']);
       }
       else {
@@ -90,7 +94,7 @@ class MeetsController extends Controller
     public static function front_show($id)
     {
        $meet = Meet::find($id);
-       $federacija = Federation::where('name',$meet->federacija)->first();
+       $federacija = $meet->federation;
        return view('front_layouts.meets.meet')->with('meet',$meet)->with('federacija',$federacija);     
     }
     /**
@@ -138,12 +142,19 @@ class MeetsController extends Controller
     public function destroy($id)
     {
       $meet = Meet::find($id);
+      $gensett = Gensett::where('meet_id',$id)->first();
+      $nominations = Nomination::where('meet_id',$id)->get();
       if ($meet->slika != NULL)
       {
         Photo::imageDelete($meet, 'meets', 'slika');
       }
       $meet->delete();
-      // kod brisanja treba razmotriti i brisanje pripadnih podataka u gensetts tablici i nominations tablici
+      $gensett->delete();
+      foreach ($nominations as $nominacija)
+      {
+        $nominacija->delete();
+      }
+      // kod brisanja treba razmotriti i brisanje pripadnih podataka u nominations tablici
       return redirect('/meets')->with(['success' => 'Natjecanje je uspješno obrisano!']);
     }
 }

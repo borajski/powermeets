@@ -65,7 +65,7 @@ else
             <h1 class="text-center m-4"><strong>{{$meet->naziv}}</strong></h1>
             <h2 class="text-center m-4">{{$meet->opis}}</h2>
             <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
-            <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federacija}}</small></h3>
+            <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
             <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
             <h3 class="m-2"><b>Početak:</b> <small> {{ispisiDatum($meet->datump)}}</small></h3>
             <h3 class="m-2"><b>Završetak:</b> <small> {{ispisiDatum($meet->datumk)}}</small></h3>
@@ -205,7 +205,7 @@ else
                 <input class="form-check-input" type="checkbox" name="rezultati" {{$rezultati}}>
                 <label class="form-check-label" for="rezultati">Objavi rezultate</label>
             </div>
-            @if ($aktivan == 'checked')
+            @if ($meet->gensetts)
             <div class="form-group">
                     <label for="objave"><h4 class="m-2">Objave:</h4></label>
                                          <div id="editor-container"></div>
@@ -236,7 +236,7 @@ var quill = new Quill('#editor-container', {
       ['image', 'code-block']
     ]
   },
-  placeholder: 'Compose an epic...',
+  placeholder: 'Napiši prvu objavu...',
   theme: 'snow'  // or 'bubble'
 });
 /*

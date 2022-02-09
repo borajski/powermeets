@@ -53,5 +53,8 @@ private function setRequest($request)
           'logo' => $path
       ]);
   }
-
+  public function meets()
+  {
+      return $this->hasMany(Meet::class, 'federation_id');
+  }
 }

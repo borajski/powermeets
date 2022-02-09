@@ -23,7 +23,7 @@
       <td>{{$natjecanje->id}}</td>
        <td><a href="{{ route('meets.show', $natjecanje->id)}}"> {{$natjecanje->naziv}}</a></td>
       <td>{{ $natjecanje->organizator }}</td>
-      <td>{{ $natjecanje->federacija }}</td>
+      <td>{{ $natjecanje->federation->name}}</td>
       <td>{{ $natjecanje->datump }}</td>
       <td>{{ $natjecanje->datumk }}</td>      
       <td><a href="delete/{{ $natjecanje->id }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Gensett;
+use App\Models\Federation;
 
 class Meet extends Model
 {
@@ -37,7 +38,7 @@ class Meet extends Model
         'user_id'       =>  auth()->user()->id,
         'naziv'         =>  $request->naziv,
         'organizator'   =>  $request->organizator,
-        'federacija'    =>  $request->federacija,
+        'federation_id'    =>  $request->federacija,
         'mjesto'        =>  $request->mjesto,
         'discipline'    =>  $disc_meet,
         'opis'          =>  $request->opis,
@@ -60,7 +61,7 @@ public static function updateData($request, $meet_id)
              'user_id'       =>  auth()->user()->id,
         'naziv'         =>  $request->naziv,
         'organizator'   =>  $request->organizator,
-        'federacija'    =>  $request->federacija,
+        'federacija'    =>  $request->federation_id,
         'mjesto'        =>  $request->mjesto,
         'discipline'    =>  $disc_meet,
         'opis'          =>  $request->opis,
@@ -87,5 +88,8 @@ private function setRequest($request)
     {
         return $this->hasOne(Gensett::class, 'meet_id');
     }
-  
+    public function federation()
+    {
+        return $this->belongsTo(Federation::class);
+    }
 }

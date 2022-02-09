@@ -25,7 +25,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 			<div class="col-md-8 offset-md-2 px-4 ">
 			<div class="mb-4">	                    
             <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
-            <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federacija}}</small></h3>
+            <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
             <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
             <h3 class="m-2"><b>Početak:</b> <small> {{ispisiDatum($meet->datump)}}</small></h3>
             <h3 class="m-2"><b>Završetak:</b> <small> {{ispisiDatum($meet->datumk)}}</small></h3>

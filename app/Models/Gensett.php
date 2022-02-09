@@ -20,6 +20,7 @@ class Gensett extends Model
      $this->setRequest($request);    
      return $this;
    }
+   /*
    public static function storeData($request)
 {
    return self::insertGetId([
@@ -30,6 +31,14 @@ class Gensett extends Model
        'natjecanje'    =>  $request->natjecanje,
        'rezultati'     =>  $request->rezultati,
        'objave'        =>  $request->objave,
+       'created_at'    =>  Carbon::now(),
+       'updated_at'    =>  Carbon::now()
+   ]);
+} */
+public static function storeData($id)
+{
+   return self::insertGetId([
+       'meet_id'       =>  $id,
        'created_at'    =>  Carbon::now(),
        'updated_at'    =>  Carbon::now()
    ]);

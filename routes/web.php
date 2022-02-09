@@ -6,6 +6,7 @@ use App\Http\Controllers\MeetsController;
 use App\Http\Controllers\GensettsController;
 use App\Http\Controllers\FederationsController;
 use App\Http\Controllers\NominationsController;
+use App\Models\Meet;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,9 @@ use App\Http\Controllers\NominationsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $query = (new Meet())->newQuery();
+    $natjecanja = $query->orderBy('datump')->get();  
+    return view('welcome')->with('natjecanja',$natjecanja);
 });
 Route::get('/profile', function () {
     return view('back_layouts.users.user_profile');
@@ -52,7 +55,7 @@ Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 
 // Front routes //
 
-Route::get('/active_meets', [MeetsController::class, 'front_index']);
+
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 
 Route::resource('nominations', NominationsController::class);

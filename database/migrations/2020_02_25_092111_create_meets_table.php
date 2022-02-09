@@ -18,8 +18,8 @@ class CreateMeetsTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->string('naziv')->nullable();
             $table->string('organizator')->nullable();
-            $table->string('federacija')->nullable();
-            $table->string('slika')->default('images/meets/default-cover.png');
+            $table->string('federation_id')->index();
+            $table->string('slika')->nullable();
             $table->string('mjesto')->nullable();
             $table->date('datump')->nullable();
             $table->date('datumk')->nullable();

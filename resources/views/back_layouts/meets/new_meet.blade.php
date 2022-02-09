@@ -37,7 +37,7 @@
                     <select name="federacija"  class="form-control" onchange="getFed(this.value)" required>
                         <option selected></option>
                     @foreach ($federacije as $federacija)
-                        <option value="{{$federacija->name}}">{{$federacija->name}}</option>
+                        <option value="{{$federacija->id}}">{{$federacija->name}}</option>
                     @endforeach
                       </select>
                 </div>
