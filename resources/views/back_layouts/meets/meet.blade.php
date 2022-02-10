@@ -109,13 +109,20 @@ else
                         <label for="federacija"><b>Federacija: {{$meet->federation->name}}
                                    </b></label>
                         <input type="hidden" name="federacija" value="{{$meet->federation_id}}">
-             
+                        <select name="federacija" class="form-control"  onchange="getFed(this.value)" required>
+                            <option  value="{{$meet->federation_id}}" selected>{{$meet->federation->name}}</option>
+                            @foreach ($federacije as $federacija)
+                            <option value="{{$federacija->id}}">{{$federacija->name}}</option>
+                   @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="mjesto"><b>Mjesto: @include('back_layouts.partials.required-star')</b></label>
                         <input type="text" class="form-control" name="mjesto" value="{{$meet->mjesto}}" required>
                     </div>
+                  
                     <div class="form-group mt-4 mb-4">
+                    <div id="discipline">
                         <label for="discipline"><b>DISCIPLINE:</b></label>
                         <br>
                     @php
@@ -150,7 +157,7 @@ else
 
                     
                     @endphp                       
-                </div>
+                </div></div>
                  
                     <div class="form-group">
                         <label for="datum-p"><b>Datum početka:
@@ -244,5 +251,16 @@ form.onsubmit = function() {
   return true; // submit form
 }
 quill.setContents({!! $meet->gensetts->objave !!});
+/* skripta za divizije federacije */
+function getFed (fed) {   
+    document.getElementById("discipline").innerHTML = ""; 
+    const xhttp = new XMLHttpRequest();
+    var url="fedRules/" + fed;
+    xhttp.onload = function() {
+    document.getElementById("discipline").innerHTML = this.responseText;
+    }  
+    xhttp.open("GET", url, true);
+    xhttp.send();   
+}
 </script>
 @endsection

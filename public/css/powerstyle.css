@@ -7,17 +7,10 @@ h4 {font-size: 1.25rem;}
 p {
   font-family: 'Montserrat', sans-serif;  
   font-size: 1.15rem;}
-
-.navbar {
-  z-index: 10;
-}
-.footer {
-  z-index: 10;
-}
 /*--SIDEBAR STYLE -- */
 .sidebar {
     height: 100%;
-    width: 0;
+    width: 250px;
     position: fixed;
     top: 0;
     left: 0;
@@ -35,7 +28,14 @@ p {
     display: block;
     transition: 0.3s;
   }
-  
+  .footer a {
+    padding: 12px;
+    text-decoration: none;
+    font-size: 1.25rem;
+    color: #818181;
+    display: inline;
+    transition: 0.3s;
+  }
   .sidebar a:hover {
     color: #f1f1f1;
   }
@@ -48,7 +48,7 @@ p {
   }
   .sidebar_content {
       position: absolute;
-      top: 6rem;
+      top: 4rem;
   }
   /* BUTTON COLLAPSE AND MAIN CONTENT AREA STYLE */
   .openbtn {
@@ -67,25 +67,37 @@ p {
   #main {
     transition: margin-left .5s;
     padding: 16px;
+    margin-left: 250px;
     position: relative;
     top: 3rem;
     padding-bottom: 5rem;
     z-index: 8;
   }
-  .expand2 {width: 250px;}
-  .expand1 {margin-left: 250px;}
-  #expandOff {display: none;}
+  .expand2 {width: 0;}
+  #expandOn {display: none;}
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
   }
+  @media screen and (min-width: 737px) {
+    .footer {display: none;}
+ }
+ @media screen and (max-width: 736px) {
+  .sidebar {display: none;}
+  .openbtn {display: none;}
+  .side-text {display: none;}
+  .profilna {display: none;}
+  #main {margin-left: 0;}
+}
   .profile_image {
     border-radius: 50%;
     height: 100px;
     width: 100px;
     }
+  .footer {
+       z-index: 10;}
   /* ---------------------------------------------------
        KLIZNI GUMB
    ----------------------------------------------------- */

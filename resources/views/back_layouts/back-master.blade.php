@@ -27,10 +27,11 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    @include('back_layouts.partials.header')
+
     @include('back_layouts.partials.sidebar')
     <div id="main">
-        <button class="openbtn" id="sidebar_gumb" onclick="expandNav()"><span id="expandOn">
+        <button class="openbtn" id="sidebar_gumb" onclick="expandNav()">
+        <span id="expandOn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list"
                     viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -49,8 +50,9 @@
         </button>
         @include('back_layouts.partials.sessions')
         @yield('content')
+      
     </div>
-        @include('back_layouts.partials.footer')
+    @include('back_layouts.partials.footer')
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
             async defer></script>
