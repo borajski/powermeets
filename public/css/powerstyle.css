@@ -81,10 +81,10 @@ p {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
   }
-  @media screen and (min-width: 737px) {
+  @media screen and (min-width: 825px) {
     .footer {display: none;}
  }
- @media screen and (max-width: 736px) {
+ @media screen and (max-width: 824px) {
   .sidebar {display: none;}
   .openbtn {display: none;}
   .side-text {display: none;}

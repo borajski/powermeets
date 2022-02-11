@@ -23,7 +23,7 @@ Route::get('/', function () {
     $query = (new Meet())->newQuery();
     $natjecanja = $query->orderBy('datump')->get();  
     return view('welcome')->with('natjecanja',$natjecanja);
-});
+})->name('start');
 Route::get('/profile', function () {
     return view('back_layouts.users.user_profile');
 });
@@ -61,6 +61,4 @@ Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet
 
 Route::resource('nominations', NominationsController::class);
 
-Route::get('/about', function () {
-    return view('front_layouts.general.about');
-});
+

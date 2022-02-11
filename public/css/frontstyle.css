@@ -19,7 +19,6 @@
     /* MAIN WRAPPER */
     .main {
          top: 3.25rem;
-         margin-bottom: 4rem;
          position: relative;  
       }
 /* image middlle */
@@ -57,3 +56,32 @@
     /* IE 9 */
     transform: scale(1.1);
   }
+  /* SEKCIJA KONTAKT */
+  #kontakt {
+    background-position: center center;
+    background-image: url('../images/front/contact.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .unos {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #8e793e;
+    width: 100%;
+  }
+  
+  .unos:focus {
+    background-color:beige;
+    color:  black;
+  }
+  
+  .podcrta {
+    border-bottom: 10px solid #E5C802;
+  }
+  
+ .naslov {
+    font-weight: bold;
+    color:black;
+  }
+  

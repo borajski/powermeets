@@ -20,7 +20,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 	</div>
 </section>
 <section>
-	<div class="container py-5 bg-light">
+	<div class="container bg-light" style="margin-bottom: 4rem;>
 		<div class="row">		
 			<div class="col-md-8 offset-md-2 px-4 ">
 			<div class="mb-4">	                    
