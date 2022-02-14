@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Meet;
 
 class Nomination extends Model
 {
@@ -67,4 +68,8 @@ class Nomination extends Model
  {
      $this->request = $request;
  }
+  public function meet()
+    {
+     return $this->belongsTo(Meet::class);
+    }
 }

@@ -176,18 +176,40 @@ else
             </div>
 </div>
 </div>
+<div class="row pt-4">
+        <div class="col-md-10 offset-md-1 border bg-light">
+    <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST" id="emsett">
+        {{ csrf_field() }}
+        {{ method_field('patch') }}
+            <div class="form-group">
+                    <label for="em_poruke"><h4 class="m-2">Sadržaj email poruke</h4>
+
+                </label>
+                                         <div id="email-container"></div>
+                       <input type="hidden" name="em_poruka"/>
+                       <input class="form-check-input" type="hidden" name="meet_id" value="{{$meet->id}}">
+                       <input class="form-check-input" type="hidden" name="aktivan" value="{{$meet->gensetts->aktivan}}">
+                       <input class="form-check-input" type="hidden" name="prijavnica" value="{{$meet->gensetts->prijavnica}}">
+                       <input class="form-check-input" type="hidden" name="nominacije" value="{{$meet->gensetts->nominacije}}">
+                       <input class="form-check-input" type="hidden" name="natjecanje" value="{{$meet->gensetts->natjecanje}}">
+                       <input class="form-check-input" type="hidden" name="rezultati" value="{{$meet->gensetts->rezultati}}">
+                       <input type="hidden" name="objave" value="{{$meet->gensetts->objave}}">
+                 </div>
+                 <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-primary">Spremi</button>
+                    </div>
+            </form>
+                        </div>
+                        </div>
+
+
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 border bg-light">
             <h4 class="m-3">Postavke javnosti</h4>
-            @if ($meet->gensetts)
     <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST" id="gensett">
         {{ csrf_field() }}
         {{ method_field('patch') }}
-        @else
-        <form class="m-3" enctype="multipart/form-data" action="{{route('gensetts.store')}}" method="POST">
-            {{ csrf_field() }}
-            @endif
-            <div class="form-check form-switch">
+           <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" name="aktivan" {{$aktivan}}>
                 <input class="form-check-input" type="hidden" name="meet_id" value="{{$meet->id}}">
                 <label class="form-check-label" for="aktivan">Objavi natjecanje javno</label>
@@ -213,6 +235,7 @@ else
                     <label for="objave"><h4 class="m-2">Objave:</h4></label>
                                          <div id="editor-container"></div>
                        <input type="hidden" name="objave"/>
+                       <input type="hidden" name="objave" value="{{$meet->gensetts->em_poruka}}">
                  </div>
                     
             @endif
@@ -230,7 +253,7 @@ function editMeet() {
     document.getElementById('postavke').style.display = "none";
     document.getElementById('uredi').style.display = "block";
 }
-/*quill rich text editor */
+/*quill rich text editor za objave*/
 var quill = new Quill('#editor-container', {
   modules: {
     toolbar: [
@@ -242,8 +265,19 @@ var quill = new Quill('#editor-container', {
   placeholder: 'Napiši prvu objavu...',
   theme: 'snow'  // or 'bubble'
 });
-/*
-skripta za preuzimanje sadržaja iz quilla*/
+/*quill rich text editor za email poruke*/
+var quill_e = new Quill('#email-container', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ]
+  },
+  placeholder: 'automatska email poruka natjecatelju nakon uspješne prijave',
+  theme: 'snow'  // or 'bubble'
+});
+/*skripta za preuzimanje sadržaja iz quilla za objave*/
 var form = document.getElementById("gensett");
 form.onsubmit = function() {
   var name = document.querySelector('input[name=objave]');
@@ -251,6 +285,14 @@ form.onsubmit = function() {
   return true; // submit form
 }
 quill.setContents({!! $meet->gensetts->objave !!});
+/*skripta za preuzimanje sadržaja iz quilla za em_poruke*/
+var form = document.getElementById("emsett");
+form.onsubmit = function() {
+  var name = document.querySelector('input[name=em_poruka]');
+  name.value = JSON.stringify(quill_e.getContents());
+  return true; // submit form
+}
+quill_e.setContents({!! $meet->gensetts->em_poruka !!});
 /* skripta za divizije federacije */
 function getFed (fed) {   
     document.getElementById("discipline").innerHTML = ""; 

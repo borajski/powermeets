@@ -22,6 +22,7 @@ class CreateGensettsTable extends Migration
             $table->string('natjecanje')->nullable();
             $table->string('rezultati')->nullable();
             $table->mediumText('objave')->nullable();
+            $table->mediumText('em_poruka')->nullable();
             $table->timestamps();
         });
     }

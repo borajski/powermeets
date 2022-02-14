@@ -11,15 +11,21 @@ class AppMessageMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $feedback;
+    public $adresa;
+    public $nominacija;
+    
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($feedback)
+    public function __construct($feedback,$adresa,$nominacija)
     {
         $this->feedback = $feedback;
+        $this->adresa = $adresa;
+        $this->nominacija = $nominacija;
+        
     }
 
     /**
@@ -29,6 +35,8 @@ class AppMessageMail extends Mailable
      */
     public function build()
     {
-        return $this->from(auth()->user()->email,'PowerMeets')->subject('Entry Form')->view('emails.email');
+      return $this->from($this->adresa,'PowerMeets')->subject('Entry Form')->view('emails.email')->with('nominacija',$this->nominacija);
+   
+    
     }
 }

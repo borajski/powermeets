@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Gensett;
 use App\Models\Federation;
+use App\Models\Nomination;
 
 class Meet extends Model
 {
@@ -87,6 +88,10 @@ private function setRequest($request)
     public function gensetts()
     {
         return $this->hasOne(Gensett::class, 'meet_id');
+    }
+    public function nominations()
+    {
+        return $this->hasMany(Nomination::class, 'meet_id');
     }
     public function federation()
     {

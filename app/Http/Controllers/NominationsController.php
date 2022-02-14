@@ -51,14 +51,15 @@ class NominationsController extends Controller
         Age category: '.$nominacija->kategorijag.',
         Disciplines: '.$nominacija->disciplina;
         // kraj sadržaja        
-        
         if ($stored)
-        {      
-            Mail::to($nominacija->email)->send(new AppMessageMail($prijavnica));
+        {  
+
+           Mail::to($nominacija->email)->send(new AppMessageMail($prijavnica,$nominacija->meet->user->email,$nominacija));
+     
             if (Mail::failures()) {
                 return response()->Fail('Sorry! Please try again latter');
             }else{
-               return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nomination->name.' Uspješno ste prijavljeni!']);
+               return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
             }            
         }
         else {

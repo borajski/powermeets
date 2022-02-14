@@ -37,6 +37,7 @@ public static function updateData($request, $id)
         'natjecanje'    =>  $request->natjecanje,
         'rezultati'     =>  $request->rezultati,
         'objave'        =>  $request->objave,
+        'em_poruka'     =>  $request->em_poruka,
         'updated_at'    =>  Carbon::now()
      ]);
  }
