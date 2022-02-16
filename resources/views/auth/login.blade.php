@@ -1,10 +1,10 @@
-@extends('layouts.app')
-
+@extends('front_layouts.front-master')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+        <div class="col-md-8 vh-100">
+            <div class="img-middle" style="width: 75%;">
+            <div class="card bg-dark text-light">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
@@ -67,6 +67,7 @@
                     </form>
                 </div>
             </div>
+</div>
         </div>
     </div>
 </div>

@@ -155,34 +155,46 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 	</div>
 	
 </div>
-<section id="contact" style="padding: 20px;background-color: #EAEDF7">
-	<div class="container-fluid mt-2">
-		<div class="row px-2">
-			<div class="col-sm-6" id="kontakt">
-				<h2 class="naslov p-3">
+<section  id="contact"  class="text-light mt-4" style="background-color: #00517D;">
+<div class="container text-center py-lg-6 py-4">
+	<div class="row justify-content-center">
+		<div class="col-xl-7 col-lg-8 col-md-10">
+			<div class="mb-4 img-middle">								
+			<h2 class="mb-4">
 					<span class="podcrta">
 						CONTACT
 					</span>
 				</h2>
-				<div class="px-5">
 					<p class="text-center lead">
-					PowerMeets is in the development and testing phase. If you are interested in our solution, feel free to contact us about the platform's capabilities and how you can use this software.	</p>
-
-				</div>
+					PowerMeets is in the development and testing phase.<br>
+					 If you are interested in our solution, feel free to contact us about the platform's capabilities and how you can use this software.	</p>			
+			</div>
+		</div>
+		</div>
+</div>
+</section>
+<section>
+<section style="padding: 20px;background-color: #EAEDF7">
+	<div class="container-fluid mt-2">
+		<div class="row px-2">
+			<div class="col-sm-6" id="kontakt">
+				
+				
 			</div>
 			<div class="col-sm-6 px-4 py-2">
-				<form id="inova-cf" action="/" method="post"><br>
+			<form action="/send" method="GET">
+                {{ csrf_field() }}
 					<div class="form-group">
-						<label for="ime">Ime/Naziv:</label><input type="text" class="form-control unos" name="cf-name" value="" id="inlineFormInput" placeholder="Unesite ime ili naziv" required="">
+						<label for="ime">Ime/Naziv:</label><input type="text" class="form-control unos" name="ime" value="" placeholder="Unesite ime ili naziv" required="">
 						<br>
 					</div>
 					<div class="form-group">
-						<label for="email">Email adresa:</label><input type="email" class="form-control unos" name="cf-email" value="" id="inlineFormInput" placeholder="Unesite valjanu email adresu" required="">
+						<label for="email">Email adresa:</label><input type="email" class="form-control unos" name="email" value="" placeholder="Unesite valjanu email adresu" required="">
 						<br>
 					</div><br>
 					<div class="form-group">
-						<label for="poruka">Poruka:</label><textarea class="form-control poruka unos" rows="3" name="cf-message" value="" id="inlineFormInput">    </textarea>
-					</div><button type="submit" class="btn btn-primary gumb float-end mt-3 mb-3" name="cf-submitted">Upit</button><br>
+						<label for="poruka">Poruka:</label><textarea class="form-control poruka unos" rows="3" name="poruka" value=""></textarea>
+					</div><button type="submit" class="btn btn-primary gumb float-end mt-3 mb-3">Upit</button><br>
 				</form>
 
 

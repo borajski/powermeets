@@ -46,6 +46,21 @@ else
     $rezultati = '';
 
 }
+if ($meet->nominations) {
+
+  $dobne = array();
+  $tezinske = array();
+ $nomination = $meet->nominations->where('disciplina','Ra-bench press');
+
+  
+ foreach ($nomination as $nominacija)
+ {
+  $tezinske[] = $nominacija->kategorijat;
+ }
+$tezinske = array_unique($tezinske);
+sort($tezinske);
+
+ }
 @endphp
 <div class="container">
     <div id="postavke">
@@ -206,7 +221,7 @@ else
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 border bg-light">
             <h4 class="m-3">Postavke javnosti</h4>
-    <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST" id="gensett">
+      <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}" method="POST" id="gensett">
         {{ csrf_field() }}
         {{ method_field('patch') }}
            <div class="form-check form-switch">
@@ -245,7 +260,43 @@ else
             </form>
         </div>
     </div>
-</div>
+    <div class="row pt-4">
+        <div class="col-md-10 offset-md-1 border bg-light">
+            <h4 class="m-3">{{ __('Lista prijavljenih') }}</h4>
+            <div class="table-responsive-sm">
+<table class="table table-hover bg-light shadow">
+  <thead class="thead t-head" >
+    <tr>
+      <th>{{ __('R.br.') }}</th>
+      <th>{{ __('Ime i prezime') }}</th>
+      <th>{{ __('Klub') }}</th>
+      <th>{{ __('Dob') }}</th>
+      <th>{{ __('Država') }}</th>
+     </tr>
+  </thead>
+  <tbody>
+  @foreach ($tezinske as $tezina)
+  <tr>
+      <td class="text-center text-light bg-dark" colspan="5">{{ __('Kategorija') }}:&nbsp;{{$tezina}}kg</td>
+                        </tr>
+  @foreach ($meet->nominations as $nominacija)
+  @if ($nominacija->kategorijat == $tezina)
+  <tr>
+      <td>{{$nominacija->id}}</td>
+      <td>{{$nominacija->ime}}&nbsp;{{$nominacija->prezime}}</td>
+      <td>{{$nominacija->klub}}</td>
+      <td>{{$nominacija->kategorijag}}</td>
+      <td>{{$nominacija->drzava}}</td>
+                        </tr>
+@endif
+@endforeach
+@endforeach
+  </tbody>
+                        </table>
+                        <div>
+                        </div>
+                        </div>
+                    </div>
 @endsection
 @section('js_after')
 <script>

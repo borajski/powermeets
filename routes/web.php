@@ -6,6 +6,7 @@ use App\Http\Controllers\MeetsController;
 use App\Http\Controllers\GensettsController;
 use App\Http\Controllers\FederationsController;
 use App\Http\Controllers\NominationsController;
+use App\Http\Controllers\EmailsController;
 use App\Models\Meet;
 
 /*
@@ -60,5 +61,7 @@ Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 
 Route::resource('nominations', NominationsController::class);
+
+Route::get('/send', [EmailsController::class, 'send'])->name('send');
 
 
