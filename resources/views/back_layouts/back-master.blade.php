@@ -19,7 +19,7 @@
   
         <link rel="stylesheet" href="{{asset('css/powerstyle.css')}}">
     @yield('css_before')
-    <script src="{{asset('js/power.js')}}" defer></script>
+    <script src="{{asset('js/back/general.js')}}" defer></script>
     @yield('js_before')
 </head>
 

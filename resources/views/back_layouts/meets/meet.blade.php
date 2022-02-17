@@ -48,18 +48,45 @@ else
 }
 if ($meet->nominations) {
 
-  $dobne = array();
-  $tezinske = array();
- $nomination = $meet->nominations->where('disciplina','Ra-bench press');
-
+  
+ $tezinske = array();
+ $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+ //$nomination = $meet->nominations->where('disciplina','Ra-bench press');
+ $nomination = $meet->nominations;
+ $division = array(); //array za divizije koje su na natjecanju
+ 
   
  foreach ($nomination as $nominacija)
  {
   $tezinske[] = $nominacija->kategorijat;
+  $disciplina = explode(",",$nominacija->disciplina);
+  foreach ($disciplina as $single)
+  {
+    $discipline_meet[] = $single;
+  }
+
  }
 $tezinske = array_unique($tezinske);
+$discipline_meet  = array_unique($discipline_meet );
 sort($tezinske);
-
+sort($discipline_meet);
+foreach ($discipline_meet as $single)
+{
+    $prvoslovo = $single[0];
+ switch ($prvoslovo)
+ {
+     case "R":
+        $division[] = "Raw";
+        break;
+    case "E":
+        $division[] = "Equipped";
+        break;
+    case "C":
+        $division[] = "Classic";
+        break;
+ }    
+}
+$division = array_unique($division);
  }
 @endphp
 <div class="container">
@@ -263,9 +290,18 @@ sort($tezinske);
     <div class="row pt-4">
         <div class="col-md-10 offset-md-1 border bg-light">
             <h4 class="m-3">{{ __('Lista prijavljenih') }}</h4>
+                @foreach ($division as $divizija)
+                <h3><strong> {{$divizija}}</strong></h3>
+                 @foreach ($discipline_meet as $single) 
+                 @if ((substr($divizija,0,2)) == substr($single,0,2))
+                 <button type="submit" class="btn btn-primary" onclick="getNominations('{{$meet->id.','.$single}}')">{{$single}}</button>  
+                  @endif                
+                  @endforeach  
+                  @endforeach 
+                  <div id="nominacije"></div>
             <div class="table-responsive-sm">
 <table class="table table-hover bg-light shadow">
-  <thead class="thead t-head" >
+  <thead class="thead" >
     <tr>
       <th>{{ __('R.br.') }}</th>
       <th>{{ __('Ime i prezime') }}</th>
@@ -274,6 +310,7 @@ sort($tezinske);
       <th>{{ __('Država') }}</th>
      </tr>
   </thead>
+
   <tbody>
   @foreach ($tezinske as $tezina)
   <tr>
@@ -296,14 +333,13 @@ sort($tezinske);
                         <div>
                         </div>
                         </div>
+          
                     </div>
 @endsection
 @section('js_after')
+<script src="{{asset('js/back/meet.js')}}" defer></script>
 <script>
-function editMeet() {
-    document.getElementById('postavke').style.display = "none";
-    document.getElementById('uredi').style.display = "block";
-}
+
 /*quill rich text editor za objave*/
 var quill = new Quill('#editor-container', {
   modules: {
@@ -344,16 +380,5 @@ form.onsubmit = function() {
   return true; // submit form
 }
 quill_e.setContents({!! $meet->gensetts->em_poruka !!});
-/* skripta za divizije federacije */
-function getFed (fed) {   
-    document.getElementById("discipline").innerHTML = ""; 
-    const xhttp = new XMLHttpRequest();
-    var url="fedRules/" + fed;
-    xhttp.onload = function() {
-    document.getElementById("discipline").innerHTML = this.responseText;
-    }  
-    xhttp.open("GET", url, true);
-    xhttp.send();   
-}
 </script>
 @endsection

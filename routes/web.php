@@ -55,6 +55,7 @@ Route::get('meets/fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
 Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 
+Route::get('meets/nomList/{discipline}',[NominationsController::class, 'nomList']);
 // Front routes //
 
 

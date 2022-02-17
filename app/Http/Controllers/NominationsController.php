@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Nomination;
 use Mail;
 use App\Mail\AppMessageMail;
+use App\Models\Meet;
 
 class NominationsController extends Controller
 {
@@ -69,8 +70,7 @@ class NominationsController extends Controller
                             $m->replyTo($athlete_email);
                             $m->to($organizer_email, 'PowerMeets')
                                     ->subject('New Entry');
-                                });                         
-
+                                });                        
                return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
             }            
         }
@@ -96,6 +96,21 @@ class NominationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function nomList($discipline)
+    {
+       $unos = explode(',',$discipline);
+       $meet_id = $unos[0];
+       $disciplina = '%'.$unos[1].'%';
+
+       $nomination = Nomination::where('meet_id',$meet_id)->where('disciplina','LIKE',$disciplina)->get();
+      
+        if (!$nomination){
+            return response()->json(['error' => 'Fucking error']);
+       }
+       return response()->json($nomination); 
+    
+     
+    }
     public function edit($id)
     {
         //
