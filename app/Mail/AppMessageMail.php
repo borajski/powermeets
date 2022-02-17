@@ -35,7 +35,7 @@ class AppMessageMail extends Mailable
      */
     public function build()
     {
-      return $this->from($this->adresa,'PowerMeets')->subject('Entry Form')->view('emails.email')->with('nominacija',$this->nominacija);
+      return $this->from($this->adresa,'PowerMeets')->subject('Entry Form')->view('emails.nomination')->with('nominacija',$this->nominacija);
    
     
     }

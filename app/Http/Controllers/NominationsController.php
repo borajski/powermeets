@@ -50,15 +50,27 @@ class NominationsController extends Controller
         Weight category: '.$nominacija->kategorijat.',
         Age category: '.$nominacija->kategorijag.',
         Disciplines: '.$nominacija->disciplina;
-        // kraj sadržaja        
+        // kraj sadržaja 
+        $organizer_email =  $nominacija->meet->user->email; 
+        $athlete_email =    $nominacija->email; 
+        $ime_prezime =  $nominacija->ime.' '.$nominacija->prezime;
         if ($stored)
         {  
-
-           Mail::to($nominacija->email)->send(new AppMessageMail($prijavnica,$nominacija->meet->user->email,$nominacija));
+           Mail::to($athlete_email)->send(new AppMessageMail($prijavnica,$organizer_email,$nominacija));
      
             if (Mail::failures()) {
                 return response()->Fail('Sorry! Please try again latter');
             }else{
+                Mail::send('emails.nom_notice', [
+                    'name' => $ime_prezime,
+                    'email' => $athlete_email],
+                    function ($m) use ($athlete_email,$organizer_email) {
+                            $m->from('sinisa.knezevic@alfacat.eu');
+                            $m->replyTo($athlete_email);
+                            $m->to($organizer_email, 'PowerMeets')
+                                    ->subject('New Entry');
+                                });                         
+
                return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
             }            
         }
