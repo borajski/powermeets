@@ -102,12 +102,20 @@ class NominationsController extends Controller
        $meet_id = $unos[0];
        $disciplina = '%'.$unos[1].'%';
 
+       $tezinske = array();
+
        $nomination = Nomination::where('meet_id',$meet_id)->where('disciplina','LIKE',$disciplina)->get();
-      
+       foreach ($nomination as $nominacija)
+       {
+        $tezinske[] = $nominacija->kategorijat;
+       }
+       $tezinske = array_unique($tezinske);
+       sort($tezinske);
+
         if (!$nomination){
             return response()->json(['error' => 'Fucking error']);
        }
-       return response()->json($nomination); 
+       return response()->json(['nominacije'=>$nomination,'tezinske'=>$tezinske]); 
     
      
     }

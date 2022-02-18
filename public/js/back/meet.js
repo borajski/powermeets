@@ -16,22 +16,30 @@ function getFed (fed) {
 /* skripta za ispis listi nominacija za pojedinu disciplinu - JSON metoda*/
 function getNominations(disciplina)
 {
- 
-    alert(disciplina);
-    document.getElementById("nominacije").innerHTML = ""; 
     const xhttp = new XMLHttpRequest();
     var url="nomList/" + disciplina;
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
-       // myFunction(myArr);
-      // odgovori.forEach(ispis); 
-      for (var key in odgovori) {
-
-        document.getElementById("nominacije").innerHTML = document.getElementById("nominacije").innerHTML + odgovori[key].ime+' '+odgovori[key].prezime+'<br>';
-   
-        }
-       
+       var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Klub</th><th>Dob</th><th>Država</th></tr></thead><tbody>';
+      var body = "";
+      var i = 0;
+      for (var j in odgovori.tezinske) {
+        body += '<tr><td class="text-center text-light bg-dark" colspan="5">Kategorija:&nbsp;'+ odgovori.tezinske[j] + 'kg</td></tr>';
+        for (var key in odgovori.nominacije) {
+        if (odgovori.nominacije[key].kategorijat == odgovori.tezinske[j])
+        {
+        i++;
+        body  += '<tr>' + 
+        '<td>' + i + '</td>' +
+        '<td>' + odgovori.nominacije[key].ime+' '+odgovori.nominacije[key].prezime+'</td>'+
+        '<td>' + odgovori.nominacije[key].klub + '</td>'+
+        '<td>' + odgovori.nominacije[key].kategorijag + '</td>'+
+        '<td>' + odgovori.nominacije[key].drzava + '</td></tr>'; 
+        }  
+        }  
+    }
+        document.getElementById("lista").innerHTML = tablica + body + '</tbody></table>';    
     }
 };
     xhttp.open("GET", url, true);

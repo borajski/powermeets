@@ -49,16 +49,16 @@ else
 if ($meet->nominations) {
 
   
- $tezinske = array();
+
  $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
- //$nomination = $meet->nominations->where('disciplina','Ra-bench press');
+
  $nomination = $meet->nominations;
  $division = array(); //array za divizije koje su na natjecanju
- 
+
+ $fed_divisions = explode(",",$meet->federation->divisions);
   
  foreach ($nomination as $nominacija)
  {
-  $tezinske[] = $nominacija->kategorijat;
   $disciplina = explode(",",$nominacija->disciplina);
   foreach ($disciplina as $single)
   {
@@ -66,25 +66,21 @@ if ($meet->nominations) {
   }
 
  }
-$tezinske = array_unique($tezinske);
+
 $discipline_meet  = array_unique($discipline_meet );
-sort($tezinske);
+
 sort($discipline_meet);
 foreach ($discipline_meet as $single)
 {
-    $prvoslovo = $single[0];
- switch ($prvoslovo)
- {
-     case "R":
-        $division[] = "Raw";
-        break;
-    case "E":
-        $division[] = "Equipped";
-        break;
-    case "C":
-        $division[] = "Classic";
-        break;
- }    
+ $prvoslovo = $single[0];
+  foreach ($fed_divisions as $feddiv)
+   {
+       if ($prvoslovo == $feddiv[0])
+       {
+        $division[] = $feddiv;
+       }
+   }
+
 }
 $division = array_unique($division);
  }
@@ -297,39 +293,9 @@ $division = array_unique($division);
                  <button type="submit" class="btn btn-primary" onclick="getNominations('{{$meet->id.','.$single}}')">{{$single}}</button>  
                   @endif                
                   @endforeach  
-                  @endforeach 
-                  <div id="nominacije"></div>
+                  @endforeach                   
             <div class="table-responsive-sm">
-<table class="table table-hover bg-light shadow">
-  <thead class="thead" >
-    <tr>
-      <th>{{ __('R.br.') }}</th>
-      <th>{{ __('Ime i prezime') }}</th>
-      <th>{{ __('Klub') }}</th>
-      <th>{{ __('Dob') }}</th>
-      <th>{{ __('Država') }}</th>
-     </tr>
-  </thead>
-
-  <tbody>
-  @foreach ($tezinske as $tezina)
-  <tr>
-      <td class="text-center text-light bg-dark" colspan="5">{{ __('Kategorija') }}:&nbsp;{{$tezina}}kg</td>
-                        </tr>
-  @foreach ($meet->nominations as $nominacija)
-  @if ($nominacija->kategorijat == $tezina)
-  <tr>
-      <td>{{$nominacija->id}}</td>
-      <td>{{$nominacija->ime}}&nbsp;{{$nominacija->prezime}}</td>
-      <td>{{$nominacija->klub}}</td>
-      <td>{{$nominacija->kategorijag}}</td>
-      <td>{{$nominacija->drzava}}</td>
-                        </tr>
-@endif
-@endforeach
-@endforeach
-  </tbody>
-                        </table>
+             <div id="lista"></div>
                         <div>
                         </div>
                         </div>
