@@ -123,23 +123,34 @@ class NominationsController extends Controller
      */
     public function nomList($discipline)
     {
+        function tezkat ($nomination)
+        {
+            $tezinske = array();
+            foreach ($nomination as $nominacija) {
+                $tezinske[] = $nominacija->kategorijat;
+            }
+            $tezinske = array_unique($tezinske);
+            sort($tezinske);
+            return $tezinske;
+        }
+
         $unos = explode(',', $discipline);
         $meet_id = $unos[0];
-        $disciplina = '%'.$unos[1].'%';
+        $disciplina = '%'.$unos[1].'%';      
 
-        $tezinske = array();
+        $nomination_m = Nomination::where('meet_id', $meet_id)->where('spol','M')->where('disciplina', 'LIKE', $disciplina)->get();
+        $tezinske_m = tezkat($nomination_m);
 
-        $nomination = Nomination::where('meet_id', $meet_id)->where('disciplina', 'LIKE', $disciplina)->get();
-        foreach ($nomination as $nominacija) {
-            $tezinske[] = $nominacija->kategorijat;
-        }
-        $tezinske = array_unique($tezinske);
-        sort($tezinske);
+        $nomination_f = Nomination::where('meet_id', $meet_id)->where('spol','Z')->where('disciplina', 'LIKE', $disciplina)->get();
+        $tezinske_f = tezkat($nomination_f);
 
-        if (!$nomination) {
+        if (!$nomination_m) {
             return response()->json(['error' => 'Fucking error']);
         }
-        return response()->json(['nominacije'=>$nomination,'tezinske'=>$tezinske]);
+        if (!$nomination_f) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        return response()->json(['nominacije_m'=>$nomination_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$nomination_f,'tezinske_f'=>$tezinske_f]);
     }
     public function edit($id)
     {
