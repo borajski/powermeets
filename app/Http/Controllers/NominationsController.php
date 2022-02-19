@@ -40,7 +40,7 @@ class NominationsController extends Controller
     {
         $nomination = new Nomination();
         $stored = $nomination->validateRequest($request)->storeData($request); // gives nomination id
-        // slanje poruke natjecatelju nakon prijave, sadržaj 
+        // slanje poruke natjecatelju nakon prijave, sadržaj
         $nominacija = Nomination::find($stored);
         $prijavnica = 'Name: '.$nominacija->ime.',
         Surname: '.$nominacija->prezime.',
@@ -51,32 +51,33 @@ class NominationsController extends Controller
         Weight category: '.$nominacija->kategorijat.',
         Age category: '.$nominacija->kategorijag.',
         Disciplines: '.$nominacija->disciplina;
-        // kraj sadržaja 
-        $organizer_email =  $nominacija->meet->user->email; 
-        $athlete_email =    $nominacija->email; 
+        // kraj sadržaja
+        $organizer_email =  $nominacija->meet->user->email;
+        $athlete_email =    $nominacija->email;
         $ime_prezime =  $nominacija->ime.' '.$nominacija->prezime;
-        if ($stored)
-        {  
-           Mail::to($athlete_email)->send(new AppMessageMail($prijavnica,$organizer_email,$nominacija));
+        if ($stored) {
+            Mail::to($athlete_email)->send(new AppMessageMail($prijavnica, $organizer_email, $nominacija));
      
             if (Mail::failures()) {
                 return response()->Fail('Sorry! Please try again latter');
-            }else{
-                Mail::send('emails.nom_notice', [
+            } else {
+                Mail::send(
+                    'emails.nom_notice',
+                    [
                     'name' => $ime_prezime,
                     'email' => $athlete_email],
-                    function ($m) use ($athlete_email,$organizer_email) {
-                            $m->from('sinisa.knezevic@alfacat.eu');
-                            $m->replyTo($athlete_email);
-                            $m->to($organizer_email, 'PowerMeets')
+                    function ($m) use ($athlete_email, $organizer_email) {
+                        $m->from('sinisa.knezevic@alfacat.eu');
+                        $m->replyTo($athlete_email);
+                        $m->to($organizer_email, 'PowerMeets')
                                     ->subject('New Entry');
-                                });                        
-               return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
-            }            
+                    }
+                );
+                return redirect()->route('front_meet', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
+            }
+        } else {
+            return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
         }
-        else {
-           return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
-        } 
     }
 
     /**
@@ -87,7 +88,31 @@ class NominationsController extends Controller
      */
     public function show($id)
     {
-        //
+        $nomination = Nomination::where('meet_id', $id)->get();
+        $meet = Meet::find($id);
+        $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+      $division = array(); //array za divizije koje su na natjecanju
+
+      $fed_divisions = explode(",", $meet->federation->divisions);
+        foreach ($nomination as $nominacija) {
+            $disciplina = explode(",", $nominacija->disciplina);
+            foreach ($disciplina as $single) {
+                $discipline_meet[] = $single;
+            }
+        }
+        $discipline_meet = array_unique($discipline_meet);
+        sort($discipline_meet);
+
+        foreach ($discipline_meet as $single) {
+            $prvoslovo = $single[0];
+            foreach ($fed_divisions as $feddiv) {
+                if ($prvoslovo == $feddiv[0]) {
+                    $division[] = $feddiv;
+                }
+            }
+        }
+        $division = array_unique($division);
+        return view('back_layouts.meets.nominations',['discipline_meet'=>$discipline_meet,'division'=>$division,'meet'=>$meet]);
     }
 
     /**
@@ -98,26 +123,23 @@ class NominationsController extends Controller
      */
     public function nomList($discipline)
     {
-       $unos = explode(',',$discipline);
-       $meet_id = $unos[0];
-       $disciplina = '%'.$unos[1].'%';
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = '%'.$unos[1].'%';
 
-       $tezinske = array();
+        $tezinske = array();
 
-       $nomination = Nomination::where('meet_id',$meet_id)->where('disciplina','LIKE',$disciplina)->get();
-       foreach ($nomination as $nominacija)
-       {
-        $tezinske[] = $nominacija->kategorijat;
-       }
-       $tezinske = array_unique($tezinske);
-       sort($tezinske);
+        $nomination = Nomination::where('meet_id', $meet_id)->where('disciplina', 'LIKE', $disciplina)->get();
+        foreach ($nomination as $nominacija) {
+            $tezinske[] = $nominacija->kategorijat;
+        }
+        $tezinske = array_unique($tezinske);
+        sort($tezinske);
 
-        if (!$nomination){
+        if (!$nomination) {
             return response()->json(['error' => 'Fucking error']);
-       }
-       return response()->json(['nominacije'=>$nomination,'tezinske'=>$tezinske]); 
-    
-     
+        }
+        return response()->json(['nominacije'=>$nomination,'tezinske'=>$tezinske]);
     }
     public function edit($id)
     {

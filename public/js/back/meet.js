@@ -16,6 +16,7 @@ function getFed (fed) {
 /* skripta za ispis listi nominacija za pojedinu disciplinu - JSON metoda*/
 function getNominations(disciplina)
 {
+    ispis = disciplina.split(",").pop();
     const xhttp = new XMLHttpRequest();
     var url="nomList/" + disciplina;
     xhttp.onreadystatechange = function() {
@@ -39,7 +40,7 @@ function getNominations(disciplina)
         }  
         }  
     }
-        document.getElementById("lista").innerHTML = tablica + body + '</tbody></table>';    
+        document.getElementById("lista").innerHTML = 'Lista prijavljenih za:'+ispis + tablica + body + '</tbody></table>';    
     }
 };
     xhttp.open("GET", url, true);
