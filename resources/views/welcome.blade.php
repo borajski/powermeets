@@ -18,7 +18,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 					</div>
 				</div>
 				<div>
-					<a class="btn btn-primary gumb" href="#" role="button">Tell me more</a>
+					<a class="btn btn-primary gumb" href="{{route('start')}}#about" role="button">Tell me more</a>
 				</div>
 			</div>
 			<div class="col-md-6 p-4">

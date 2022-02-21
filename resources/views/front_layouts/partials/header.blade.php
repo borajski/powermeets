@@ -1,4 +1,4 @@
-<nav class="navbar  navbar-expand-lg navbar-dark fixed-top" style="background-color: #000428;">
+<nav class="navbar  navbar-expand-lg navbar-dark" style="background-color: #000428;">
     <div class="container">
         <a class="navbar-brand" href="/">PowerMeets</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
