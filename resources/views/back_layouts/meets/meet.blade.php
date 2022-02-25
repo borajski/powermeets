@@ -191,10 +191,9 @@ $rezultati = '';
                 <div class="form-group">
                     <label for="em_poruke">
                         <h4 class="m-2">Sadržaj email poruke</h4>
-
                     </label>
                     <div id="email-container"></div>
-                    <input type="hidden" name="em_poruka" />
+                    <input type="hidden" name="em_poruka" id="emporuka" />
                     <input class="form-check-input" type="hidden" name="meet_id" value="{{$meet->id}}">
                     <input class="form-check-input" type="hidden" name="aktivan" value="{{$meet->gensetts->aktivan}}">
                     <input class="form-check-input" type="hidden" name="prijavnica"
@@ -219,12 +218,13 @@ $rezultati = '';
         <div class="col-md-10 offset-md-1 border bg-light">
             <h4 class="m-3">Postavke javnosti</h4>
             <form class="m-3" enctype="multipart/form-data" action="{{ route('gensetts.update', $meet->gensetts->id) }}"
-                method="POST" id="gensett">
+                method="POST" id="gensetts">
                 {{ csrf_field() }}
                 {{ method_field('patch') }}
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="aktivan" {{$aktivan}}>
                     <input class="form-check-input" type="hidden" name="meet_id" value="{{$meet->id}}">
+                    <input type="hidden" name="em_poruka" value="{{$meet->gensetts->em_poruka}}">
                     <label class="form-check-label" for="aktivan">Objavi natjecanje javno</label>
                 </div>
                 <div class="form-check form-switch">
@@ -243,18 +243,14 @@ $rezultati = '';
                     <input class="form-check-input" type="checkbox" name="rezultati" {{$rezultati}}>
                     <label class="form-check-label" for="rezultati">Objavi rezultate</label>
                 </div>
-                @if ($meet->gensetts)
                 <div class="form-group">
                     <label for="objave">
                         <h4 class="m-2">Objave:</h4>
                     </label>
-                    <div id="editor-container"></div>
-                    <input type="hidden" name="em_poruka" value="{{$meet->gensetts->em_poruka}}">
-                    <input type="hidden" name="objave" />
-                    <input type="hidden" name="objave" value="{{$meet->gensetts->objave}}">
-                </div>
-
-                @endif
+                    <div id="editor-container"></div>                 
+                    <input type="hidden" name="objave" id="objava"/>
+                    
+                </div>               
                 <div class="mt-4 text-end">
                     <button type="submit" class="btn btn-primary">Spremi</button>
                 </div>
@@ -280,7 +276,7 @@ $rezultati = '';
             theme: 'snow' // or 'bubble'
         });
         /*quill rich text editor za email poruke*/
-        var quill_e = new Quill('#email-container', {
+       var quill_e = new Quill('#email-container', {
             modules: {
                 toolbar: [
                     [{
@@ -292,19 +288,21 @@ $rezultati = '';
             },
             placeholder: 'automatska email poruka natjecatelju nakon uspješne prijave',
             theme: 'snow' // or 'bubble'
-        });
+        }); 
         /*skripta za preuzimanje sadržaja iz quilla za objave*/
-        var form = document.getElementById("gensett");
-        form.onsubmit = function() {
-            var name = document.querySelector('input[name=objave]');
+        var form1 = document.getElementById("gensetts");
+        form1.onsubmit = function() {
+           // var name = document.querySelector('input[name=objave]');
+            var name = document.getElementById("objava");
             name.value = JSON.stringify(quill.getContents());
             return true; // submit form
         }
         quill.setContents({!!$meet->gensetts->objave!!});
         /*skripta za preuzimanje sadržaja iz quilla za em_poruke*/
-        var form = document.getElementById("emsett");
-        form.onsubmit = function() {
-            var name = document.querySelector('input[name=em_poruka]');
+        var form2 = document.getElementById("emsett");
+        form2.onsubmit = function() {
+           // var name = document.querySelector('input[name=em_poruka]');
+           var name = document.getElementById("emporuka");
             name.value = JSON.stringify(quill_e.getContents());
             return true; // submit form
         }

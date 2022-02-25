@@ -77,6 +77,7 @@ class GensettsController extends Controller
      */
     public function update(Request $request, $id)
     {
+       
         $gensett = Gensett::find($id);
         $updated = $gensett->validateRequest($request)->updateData($request,$id);
         if ($updated)
