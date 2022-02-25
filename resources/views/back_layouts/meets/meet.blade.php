@@ -1,6 +1,6 @@
 @extends('back_layouts.back-master')
 @section('css_before')
-<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" integrity="sha384-07UbSXbd8HpaOfxZsiO6Y8H1HTX6v0J96b5qP6PKSpYEuSZSYD4GFFHlLRjvjVrL" crossorigin="anonymous">
 @endsection
 @section('js_before')
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -299,9 +299,7 @@ $rezultati = '';
             name.value = JSON.stringify(quill.getContents());
             return true; // submit form
         }
-        quill.setContents({
-            !!$meet - > gensetts - > objave!!
-        });
+        quill.setContents({!!$meet->gensetts->objave!!});
         /*skripta za preuzimanje sadržaja iz quilla za em_poruke*/
         var form = document.getElementById("emsett");
         form.onsubmit = function() {
@@ -309,8 +307,6 @@ $rezultati = '';
             name.value = JSON.stringify(quill_e.getContents());
             return true; // submit form
         }
-        quill_e.setContents({
-            !!$meet - > gensetts - > em_poruka!!
-        });
+        quill_e.setContents({!!$meet->gensetts->em_poruka!!});
         </script>
         @endsection

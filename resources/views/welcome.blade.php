@@ -152,9 +152,11 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				</div>
 			
 		</div><!-- /col -->
-	</div>
-	
+	</div>	
 </div>
+</section>
+@endif
+@endforeach
 <section  id="contact"  class="text-light mt-4" style="background-color: #00517D;">
 <div class="container text-center py-lg-6 py-4">
 	<div class="row justify-content-center">
@@ -201,8 +203,5 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 			</div>
 		</div>
 	</div>
-</section>
-@endif
-@endforeach
 </section>
 @endsection
