@@ -249,7 +249,7 @@ $rezultati = '';
                         <h4 class="m-2">Objave:</h4>
                     </label>
                     <div id="editor-container"></div>
-                    <input type="hidden" name="em-poruka" value="{{$meet->gensetts->em-poruka}}">
+                    <input type="hidden" name="em_poruka" value="{{$meet->gensetts->em_poruka}}">
                     <input type="hidden" name="objave" />
                     <input type="hidden" name="objave" value="{{$meet->gensetts->objave}}">
                 </div>
