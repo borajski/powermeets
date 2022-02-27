@@ -6,6 +6,7 @@ function ispisiDatum($datum)
 return Carbon\Carbon::parse($datum)->format('d.m.Y');
 }
 @endphp
+
 <section class="vh-100">
 	<div class="container-fluid overflow-hidden p-0">
 		<div class="row g-0">
@@ -13,8 +14,8 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				<div class="mb-3">
 					<div editable="img-middle">
 						<h1><strong>POWERMEETS</strong>
-						<br><small>a modern powerlifting software</small></h1>
-						<p class="lead">Web platform for organizing and managing powerlifting competitions. </p>
+						<br><small>{{ __('a modern powerlifting software') }}</small></h1>
+						<p class="lead">{{ __('Web platform for organizing and managing powerlifting competitions. ') }}</p>
 					</div>
 				</div>
 				<div>
@@ -33,22 +34,22 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 <section class="text-light" style="background-color: #00517D;" id="about">
 	<div class="container py-5 text-center">
 		<div class="row">
-			<div class="col-md-8 offset-md-2 px-4">
+			<div class="col-md-8 offset-md-2 px-4 mt-3 mb-3">
 				<div class="mb-4">					
-						<h2 class="display-6">PowerMeets<br>promotes your competition and powerlifting as sport as well.</h2>					
+						<h2 class="display-6">PowerMeets<br>{{ __('promotes your competition and powerlifting as sport as well.')}}</h2>					
 				</div>
 			</div><!-- /col -->
 		</div>
 	</div>
 </section>
 <section>
-<div class="container">
+<div class="container pozadina">
 	<div class="row">
-		<div class="col-md-12 text-center">
+		<div class="col-md-12 text-center mt-3">
 			<div class="lc-block">
-				<span editable="inline" class="small mt-4 d-block">REAL TIME PROCESSING</span>
-				<h2 editable="inline" class="display-2 mb-0">Full Power&nbsp;</h2>
-				<p editable="inline" class="">Take a full control of your competition</p>
+				<span class="small mt-4 mb-2 d-block">{{ __('REAL TIME PROCESSING')}}</span>
+				<h2 class="display-2 mb-2">{{ __('Full Power')}}</h2>
+				<p class="mb-2">{{ __('Take a full control of your competition')}}</p>
 			</div>
 </div>
 	</div>
@@ -58,14 +59,14 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				<div>
 				<i class="fa-solid fa-rocket fa-3x"></i>
 					<h5 class="mt-3 mb-4" editable="inline">
-						<strong>CREATE</strong>
+						<strong>{{ __('CREATE')}}</strong>
 					</h5>
 				</div>
 				<div>
-					<p>Create and customize your competition</p>
-					<p>Make entry forms</p>
-					<p>Track entry process</p>
-					<p>Publish nominations list</p>
+					<p>{{ __('Create and customize your competition')}}</p>
+					<p>{{ __('Make entry forms')}}</p>
+					<p>{{ __('Track entry process')}}</p>
+					<p>{{ __('Publish nominations list')}}</p>
 				</div>
 			</div>		
 		</div>
@@ -74,14 +75,14 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				<div>
 				<i class="fa-solid fa-users-gear fa-3x"></i>
 					<h5 class="mt-3 mb-4">
-						<strong>MANAGE</strong>
+						<strong>{{ __('MANAGE')}}</strong>
 					</h5>
 				</div>
 				<div>
-					<p>Flight management, publish flights groups</p>
-					<p>Weight in process, print paperwork</p>
-					<p>Competition monitoring and results inputs</p>
-					<p>Online broadcasting</p>
+					<p>{{ __('Flight management, publish flights groups')}}</p>
+					<p>{{ __('Weight in process, print paperwork')}}</p>
+					<p>{{ __('Competition monitoring and results inputs')}}</p>
+					<p>{{ __('Online broadcasting')}}</p>
 					<p><br></p>
 				</div>
 			</div>
@@ -91,13 +92,13 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				<div>
 				<i class="fa-solid fa-medal fa-3x"></i>
 					<h5 class="mt-3 mb-4">
-						<strong>RESULTS</strong>
+						<strong>{{ __('RESULTS')}}</strong>
 					</h5>
 				</div>
 				<div>
-					<p>Real time results</p>
-					<p>Create relative categories</p>
-					<p>One click full report</p>
+					<p>{{ __('Real time results')}}</p>
+					<p>{{ __('Create relative categories')}}</p>
+					<p>{{ __('One click full report')}}</p>
 				</div>
 			</div>
 		</div>
@@ -106,25 +107,25 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 				<div>
 				<i class="fa-solid fa-desktop fa-3x"></i>
 					<h5 class="mt-3 mb-4">
-						<strong>REPORTS</strong>
+						<strong>{{ __('REPORTS')}}</strong>
 					</h5>
 				</div>
 				<div>
-					<p>PDF / CSV export</p>
-					<p>Archive your competition</p>
-					<p>Cloud hosting</p>
+					<p>{{ __('PDF / CSV export')}}</p>
+					<p>{{ __('Archive your competition')}}</p>
+					<p>{{ __('Cloud hosting')}}</p>
 				</div>
 			</div>
 		</div>
 	</div> 
 </div>
 </section>
-<section class="text-light mt-4" style="background-color: #00517D;">
+<section class="text-light p-3 mt-4 mb-4" style="background-color: #00517D;">
 <div class="container text-center py-lg-6 py-4">
 	<div class="row justify-content-center">
 		<div class="col-xl-7 col-lg-8 col-md-10">
 			<div class="mb-4 img-middle">								
-					<h2 class="display-4">Upcoming Meets</h2>				
+					<h2 class="display-4">{{ __('Upcoming Meets')}}</h2>				
 			</div>
 		</div>
 		</div>
@@ -162,14 +163,14 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 	<div class="row justify-content-center">
 		<div class="col-xl-7 col-lg-8 col-md-10">
 			<div class="mb-4 img-middle">								
-			<h2 class="mb-4">
+			<h2 class="p-4 mb-4">
 					<span class="podcrta">
-						CONTACT
+					{{ __('CONTACT')}}
 					</span>
 				</h2>
-					<p class="text-center lead">
-					PowerMeets is in the development and testing phase.<br>
-					 If you are interested in our solution, feel free to contact us about the platform's capabilities and how you can use this software.	</p>			
+					<h3 class="text-center p-3" style=" line-height: 1.6;">
+					{{ __('PowerMeets is in the development and testing phase.')}}<br>
+					{{ __("If you are interested in our solution, feel free to contact us about the platform's capabilities and how you can use this software.")}}	</h3>			
 			</div>
 		</div>
 		</div>
@@ -177,26 +178,24 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 </section>
 <section>
 <section style="padding: 20px;background-color: #EAEDF7">
-	<div class="container-fluid mt-2">
-		<div class="row px-2">
-			<div class="col-sm-6" id="kontakt">
-				
-				
+	<div class="container-fluid mt-4">
+		<div class="row p-2">
+			<div class="col-sm-6" id="kontakt">		
 			</div>
 			<div class="col-sm-6 px-4 py-2">
 			<form action="/send" method="GET">
                 {{ csrf_field() }}
 					<div class="form-group">
-						<label for="ime">Ime/Naziv:</label><input type="text" class="form-control unos" name="ime" value="" placeholder="Unesite ime ili naziv" required="">
+						<label for="ime">{{ __('Name:')}}</label><input type="text" class="form-control unos" name="ime" required="">
 						<br>
 					</div>
 					<div class="form-group">
-						<label for="email">Email adresa:</label><input type="email" class="form-control unos" name="email" value="" placeholder="Unesite valjanu email adresu" required="">
+						<label for="email">{{ __('Email address:')}}</label><input type="email" class="form-control unos" name="email" required="">
 						<br>
 					</div><br>
 					<div class="form-group">
-						<label for="poruka">Poruka:</label><textarea class="form-control poruka unos" rows="3" name="poruka" value=""></textarea>
-					</div><button type="submit" class="btn btn-primary gumb float-end mt-3 mb-3">Upit</button><br>
+						<label for="poruka">{{ __('Message:')}}</label><textarea class="form-control poruka unos" rows="3" name="poruka" value=""></textarea>
+					</div><button type="submit" class="btn btn-primary gumb float-end mt-5 mb-3">{{ __('Send')}}</button><br>
 				</form>
 
 

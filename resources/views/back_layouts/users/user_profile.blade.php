@@ -27,7 +27,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
 
 <div class="card card-primary">
     <div class="card-header t-head">
-        <h3 class="card-title">O meni</h3>
+        <h3 class="card-title">{{ __('About')}}</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -43,7 +43,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group align-center">
-                            <label for="profile_image">Odaberi novu sliku</label>
+                            <label for="profile_image">{{ __('Choose new profile photo')}}</label>
                             <br>
                             <img class="align-center img-responsive img-thumbnail" id="output" name="user_image"
                                 src="{{asset($slika)}}"  width="250" alt="profile-image">
@@ -54,15 +54,15 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name"><b>Ime: @include('back_layouts.partials.required-star')</b></label>
+                            <label for="name"><b>{{ __('Name:')}} @include('back_layouts.partials.required-star')</b></label>
                             <input type="text" class="form-control" name="user_fname" value="{{$ime}}" required>
                         </div>
                         <div class="form-group">
-                            <label for="name"><b>Prezime: @include('back_layouts.partials.required-star')</b></label>
+                            <label for="name"><b>{{ __('Surname:')}} @include('back_layouts.partials.required-star')</b></label>
                             <input type="text" class="form-control" name="user_lname" value="{{$prezime}}" required>
                         </div>
                         <div class="form-group">
-                            <label for="drzava"><b>Država:</b></label>
+                            <label for="drzava"><b>{{ __('Country:')}}</b></label>
                             <select name="user_country" class="form-control">
                                 <option value="{{$drzava}}" selected>{{$drzava}}</option>
                                 <option value="Afghanistan">Afghanistan</option>
@@ -325,7 +325,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                         </div>
                         @if ($role == "admin")
                         <div class="form-group">
-                            <label for="uloga"><b>Uloga:</b></label>
+                            <label for="uloga"><b>{{ __('Role:')}}</b></label>
                             <select name="user_role" class="form-control">
                                 <option value="{{$role}}" selected>{{$role}}</option>
                                 <option value="admin">Admin</option>
@@ -333,19 +333,15 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                                 <option value="customer">Athlete</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="javnost"><b>On/off line</b></label>
-                            <br>
-                            <label class="switch">
-                                @if ($korisnik->live == "ne")
-                                <input type="checkbox" name="live">
+                        <div class="form-check form-switch mt-3">
+                        <label class="form-check-label" for="javnost"><b>On/off line</b></label>
+                        @if ($korisnik->live == "ne")                    
+                        <input class="form-check-input" type="checkbox" name="live">
                                 @else
-                                <input type="checkbox" name="live" checked>
+                                <input class="form-check-input" type="checkbox" name="live" checked>
                                 @endif
                                 <!-- endif live -->
-                                <span class="slider"></span>
-                            </label>
-                        </div>
+                        </div>                      
                         @else
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="user_role" value="{{$role}}">
@@ -370,7 +366,7 @@ echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo va
                         @endif
                     </div>
                 </div>
-                <div class="row text-end"><div class="col-md-12"><button type="submit" class="btn btn-primary">Spremi</button></div></div>
+                <div class="row text-end"><div class="col-md-12"><button type="submit" class="btn btn-primary gumb">{{ __('Save')}}</button></div></div>
             </div>
         </form>
 </div>

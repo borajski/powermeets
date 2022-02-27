@@ -136,8 +136,19 @@ class NominationsController extends Controller
 
         $unos = explode(',', $discipline);
         $meet_id = $unos[0];
-        $disciplina = '%'.$unos[1].'%';      
-
+        $disciplina = '%'.$unos[1].'%';  
+        // traženje punog naziva discipline i divizije
+        $meet = Meet::find($meet_id);
+        $fed_divisions = explode(",", $meet->federation->divisions);
+        $oznaka_divizije = explode('-',$unos[1]);
+        $prvoslovo = $oznaka_divizije[0];
+        foreach ($fed_divisions as $feddiv) {
+            if ($prvoslovo[0] == $feddiv[0]) {
+                $divizija = $feddiv;
+            }
+        }
+        $ispis = $divizija.' '.$oznaka_divizije[1];
+        // kraj traženja
         $nomination_m = Nomination::where('meet_id', $meet_id)->where('spol','M')->where('disciplina', 'LIKE', $disciplina)->get();
         $tezinske_m = tezkat($nomination_m);
 
@@ -150,7 +161,7 @@ class NominationsController extends Controller
         if (!$nomination_f) {
             return response()->json(['error' => 'Fucking error']);
         }
-        return response()->json(['nominacije_m'=>$nomination_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$nomination_f,'tezinske_f'=>$tezinske_f]);
+        return response()->json(['ispis'=>$ispis,'nominacije_m'=>$nomination_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$nomination_f,'tezinske_f'=>$tezinske_f]);
     }
     public function edit($id)
     {

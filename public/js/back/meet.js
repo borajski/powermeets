@@ -16,7 +16,7 @@ function getFed (fed) {
 /* skripta za ispis listi nominacija za pojedinu disciplinu - JSON metoda*/
 function getNominations(disciplina)
 {
-    var ispis = '<h2 class="mb-3">Lista prijavljenih za:' + disciplina.split(",").pop() + '</h2>';
+    var ispis;
     var spol;
     var tablica_m = "";
     var tablica_z = "";
@@ -26,7 +26,7 @@ function getNominations(disciplina)
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
-     
+      ispis = '<h2 class="mb-3">Lista prijavljenih za: ' + odgovori.ispis + '</h2>';
       if ( odgovori.nominacije_m != "")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Klub</th><th>Dob</th><th>Država</th></tr></thead><tbody>';

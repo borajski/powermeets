@@ -28,10 +28,10 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
+    
     @include('back_layouts.partials.sidebar')
     <div id="main">
-        <button class="openbtn" id="sidebar_gumb" onclick="expandNav()">
+    <button class="openbtn" id="sidebar_gumb" onclick="expandNav()">
         <span id="expandOn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list"
                     viewBox="0 0 16 16">

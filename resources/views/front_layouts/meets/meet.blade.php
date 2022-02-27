@@ -20,9 +20,9 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 	</div>
 </section>
 <section>
-	<div class="container bg-light" style="margin-bottom: 4rem;>
+	<div class="container bg-light mb-4">
 		<div class="row">		
-			<div class="col-md-8 offset-md-2 px-4 ">
+			<div class="col-md-8 offset-md-2 px-4 mt-5">
 			<div class="mb-4">	                    
             <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
             <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
@@ -46,9 +46,9 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             </div>
             @if ($meet->gensetts->prijavnica == 'on')
             <p class="text-end m-4">
-                <button class="btn btn-primary" data-bs-toggle="collapse" href="#prijavnica" role="button"
+                <button class="btn btn-primary gumb" data-bs-toggle="collapse" href="#prijavnica" role="button"
                     aria-expanded="false" aria-controls="prijavnica" id="gumb-prijava">
-                    Prijavnica
+                    {{ __('Apply form')}}
                 </button>
             </p>
             <div class="collapse" id="prijavnica">
@@ -399,7 +399,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 
                         </select>
                     </div>
-                    <div class="text-end mt-3">
+                    <div class="text-end mt-4">
                         <button type="submit" class="btn btn-primary">
                             PRIJAVA
                         </button>

@@ -1,4 +1,7 @@
   body {background-color:beige;}
+  html {
+    scroll-behavior: smooth;
+  }
   h1,h2,h3  {font-family: 'Roboto', sans-serif;}
   h1 {font-size: 2.25rem;}
   h2 {font-size: 1.75rem;}
@@ -30,8 +33,15 @@
 
 }
 .gumb {
-  box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+  background-color: #00517D;
+  box-shadow: 5px 5px 0px #000428;
+  border: none;
 }
+.gumb:focus {
+  -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
 
   .slika-box {
     overflow: hidden;
@@ -79,5 +89,8 @@
   .podcrta {
     border-bottom: 10px solid #E5C802;
   }
+ 
+
+  .pozadina {color: #000428;}
 
   
