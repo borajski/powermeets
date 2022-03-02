@@ -400,8 +400,8 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         </select>
                     </div>
                     <div class="text-end mt-4">
-                        <button type="submit" class="btn btn-primary">
-                            PRIJAVA
+                        <button type="submit" class="btn btn-primary gumb">
+                        {{ __('APPLY')}}
                         </button>
                     </div>
             </form>
