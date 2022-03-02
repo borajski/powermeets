@@ -14,6 +14,11 @@
     <meta property="og:url" content="/">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:image" content="{{asset('images/front/powermeets.jpg')}}" />
+    <meta property="og:image:secure_url" content="{{asset('images/front/powermeets.jpg')}}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="751" />
+<meta property="og:image:height" content="615" />
+<meta property="og:image:alt" content="A shiny red apple with a bite taken out" />
     <meta name="robots" content="index,follow" /> 
     <link rel="canonical" href="/">
     <link rel="icon" type="text/svg+xml" href="{{asset('images/front/favicon.svg')}}">

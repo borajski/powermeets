@@ -56,12 +56,12 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                 <form enctype="multipart/form-data" action="{{route('nominations.store')}}" method="POST">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="ime"><b>Ime:</b></label>
+                    <label for="ime"><b>Ime/Name:</b></label>
                     <input type="text" class="form-control" name="ime" placeholder="Vaše ime" required />
                     <input type="hidden" class="form-control" name="meet_id" value="{{$meet->id}}" />
                 </div>
                 <div class="form-group">
-                    <label for="prezime"><b>Prezime:</b></label>
+                    <label for="prezime"><b>Prezime/Surname:</b></label>
                     <input type="text" class="form-control" name="prezime" placeholder="Vaše prezime" required />
                 </div>
                 <div class="form-group">
@@ -69,12 +69,12 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     <input type="email" class="form-control" name="email" placeholder="Unesite vaš email" required />
                 </div>
                 <div class="form-group">
-                    <label for="klub"><b>Klub/Tim:</b></label>
+                    <label for="klub"><b>Klub/Team:</b></label>
                     <input type="klub" class="form-control" name="klub" placeholder="Unesite naziv vašeg tima"
                         required />
                 </div>
                 <div class="form-group">
-                    <label for="drzava"><b>Država:</b></label>
+                    <label for="drzava"><b>Država/Country:</b></label>
                     <select name="drzava" class="form-control" required>
                         <option value="" selected></option>
                         <option value="Afghanistan">Afghanistan</option>
@@ -336,16 +336,16 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="datum-r"><b>Datum rođenja: </b></label>
+                    <label for="datum-r"><b>Datum rođenja/Birth Date: </b></label>
                     <input class="form-control" type="date" name="datum_r" />
                 </div>
                 <div class="form-group">
-                    <label for="spol"><b>Spol:</b></label>
+                    <label for="spol"><b>Spol/Sex:</b></label>
                     <select class="form-select" id="spol" name="spol"
                         onchange="weightCat(this.value,'{{$federacija->name}}')" required>
                         <option selected></option>
-                        <option value="M">Muški</option>
-                        <option value="Z">Ženski</option>
+                        <option value="M">Muški/Male</option>
+                        <option value="Z">Ženski/Female</option>
                     </select>
                 </div>
                 <div class="form-group mt-4 mb-4">
@@ -380,7 +380,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     }
                     @endphp
                     <div class="form-group">
-                        <label for="dobna_kategorija">Dobna kategorija:</label>
+                        <label for="dobna_kategorija">Dobna kategorija/Age category:</label>
                         <select class="form-select" name="dobna">
                             <option selected></option>
                             @php
@@ -394,7 +394,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="kategorija">Težinska kategorija:</label>
+                        <label for="kategorija">Težinska kategorija/Weight category:</label>
                         <select class="form-select" name="kategorija" id="kategorija">
 
                         </select>
