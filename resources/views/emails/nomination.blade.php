@@ -6,6 +6,7 @@ foreach ($ispis as $element)
 {
 echo $element."<br>";
 }
+
 @endphp
 </p>
 @php 

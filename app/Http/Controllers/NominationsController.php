@@ -56,8 +56,8 @@ class NominationsController extends Controller
         $athlete_email =    $nominacija->email;
         $ime_prezime =  $nominacija->ime.' '.$nominacija->prezime;
         if ($stored) {
-            Mail::to($athlete_email)->send(new AppMessageMail($prijavnica, $organizer_email, $nominacija));
-     
+        Mail::to($athlete_email)->send(new AppMessageMail($prijavnica, $organizer_email, $nominacija));
+ 
             if (Mail::failures()) {
                 return response()->Fail('Sorry! Please try again latter');
             } else {
@@ -67,7 +67,7 @@ class NominationsController extends Controller
                     'name' => $ime_prezime,
                     'email' => $athlete_email],
                     function ($m) use ($athlete_email, $organizer_email) {
-                        $m->from('sinisa.knezevic@alfacat.eu');
+                        $m->from('sinisa.knezevic@alfacat.eu', 'PowerMeets');
                         $m->replyTo($athlete_email);
                         $m->to($organizer_email, 'PowerMeets')
                                     ->subject('New Entry');
