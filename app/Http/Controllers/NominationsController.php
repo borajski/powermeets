@@ -18,6 +18,7 @@ class NominationsController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -28,6 +29,7 @@ class NominationsController extends Controller
     public function create()
     {
         //
+
     }
 
     /**

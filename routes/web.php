@@ -7,6 +7,7 @@ use App\Http\Controllers\GensettsController;
 use App\Http\Controllers\FederationsController;
 use App\Http\Controllers\NominationsController;
 use App\Http\Controllers\EmailsController;
+use App\Http\Controllers\AthletesController;
 use App\Models\Meet;
 
 /*
@@ -55,17 +56,17 @@ Route::get('meets/fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
 Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 
+Route::resource('nominations', NominationsController::class);
+Route::get('/nominations', [NominationsController::class, 'show']);
 Route::get('nominations/nomList/{discipline}',[NominationsController::class, 'nomList']);
 
-Route::get('/nominations', [NominationsController::class, 'show']);
-
+Route::resource('athletes', AthletesController::class);
+Route::get('athletes/nomList/{discipline}',[NominationsController::class, 'nomList']);
+Route::get('/start_managing/{id}',[AthletesController::class, 'initiate']);
 // Front routes //
 
 
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
-
-Route::resource('nominations', NominationsController::class);
-
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
 
 

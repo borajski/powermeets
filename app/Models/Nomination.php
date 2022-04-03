@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Meet;
+use App\Models\Athlete;
 
 class Nomination extends Model
 {
@@ -71,5 +72,9 @@ class Nomination extends Model
   public function meet()
     {
      return $this->belongsTo(Meet::class);
+    }
+    public function athletes()
+    {
+        return $this->hasMany(Athlete::class, 'nomination_id');
     }
 }
