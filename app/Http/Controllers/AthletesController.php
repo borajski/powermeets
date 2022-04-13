@@ -56,9 +56,60 @@ class AthletesController extends Controller
                 $athlete->save();
             }
         }
-        return 'uspjelo je';
+       
+        return redirect()->route('athletes.show', [$id]);
         
-        
+    }
+    public function athletesList($discipline)
+    {
+        function tezkat ($nomination)
+        {
+            $tezinske = array();
+            foreach ($nomination as $nominacija) {
+                $tezinske[] = $nominacija->kategorijat;
+            }
+            $tezinske = array_unique($tezinske);
+            sort($tezinske);
+            return $tezinske;
+        }
+
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = '%'.$unos[1].'%';  
+        // traženje punog naziva discipline i divizije
+        $meet = Meet::find($meet_id);
+        $fed_divisions = explode(",", $meet->federation->divisions);
+        $oznaka_divizije = explode('-',$unos[1]);
+        $prvoslovo = $oznaka_divizije[0];
+        foreach ($fed_divisions as $feddiv) {
+            if ($prvoslovo[0] == $feddiv[0]) {
+                $divizija = $feddiv;
+            }
+        }
+        $ispis = $divizija.' '.$oznaka_divizije[1];
+        // kraj traženja
+        $athlete_m = Athlete::where('meet_id', $meet_id)->where('spol','M')->where('discipline', $ispis)->get();
+        $tezinske_m = tezkat($athlete_m);
+        $athletes_m = array();
+        foreach ($athlete_m as $athlete)
+        {
+          $athletes_m[]["id"] =  $athlete->id;
+          $athletes_m[]["ime"] =  $athlete->nomination->ime;
+          $athletes_m[]["prezime"] =  $athlete->nomination->prezime;
+          $athletes_m[]["kategorijag"] =  $athlete->kategorijag;
+          $athletes_m[]["kategorijat"] =  $athlete->kategorijat;
+        }
+
+        $athletes_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $ispis)->get();
+        $tezinske_f = tezkat($athletes_f);
+
+        if (!$athlete_m) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        if (!$athletes_f) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        return response()->json(['ispis'=>$ispis,'nominacije_m'=>$athletes_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$athletes_f,'tezinske_f'=>$tezinske_f]);
     }
 
     /**

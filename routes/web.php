@@ -61,7 +61,7 @@ Route::get('/nominations', [NominationsController::class, 'show']);
 Route::get('nominations/nomList/{discipline}',[NominationsController::class, 'nomList']);
 
 Route::resource('athletes', AthletesController::class);
-Route::get('athletes/nomList/{discipline}',[NominationsController::class, 'nomList']);
+Route::get('athletes/athletesList/{discipline}',[AthletesController::class, 'athletesList']);
 Route::get('/start_managing/{id}',[AthletesController::class, 'initiate']);
 // Front routes //
 

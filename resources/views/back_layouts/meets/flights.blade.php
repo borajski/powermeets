@@ -9,7 +9,7 @@
             <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
             @foreach ($discipline_meet as $single)
             @if ((substr($divizija,0,2)) == substr($single,0,2))
-            @php 
+            @php
             $disc = explode("-",$single);
             $disciplina = ucfirst($disc[1]);
             @endphp
@@ -18,17 +18,17 @@
             @endif
             @endforeach
             @endforeach
-       
+
             <div class="table-responsive-sm mt-4 p-2">
-            <form enctype="multipart/form-data" action="{{route('athletes.store')}}" method="POST">
-                {{ csrf_field() }}
-                <div id="lista"></div>
-                   
-            </form>
+                <form enctype="multipart/form-data" action="{{route('athletes.store')}}" method="POST">
+                    {{ csrf_field() }}
+                    <div id="lista"></div>
+
+                </form>
                 <div>
                 </div>
             </div>
-        
+
         </div>
         @endsection
         @section('js_after')

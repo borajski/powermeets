@@ -89,7 +89,7 @@ function getFlights(disciplina)
     var kraj_forme = "";
     var iz = 0;
     var im = 0;
-    var url="nomList/" + disciplina;
+    var url="athletesList/" + disciplina;
     const xhttp = new XMLHttpRequest();
   
     xhttp.onreadystatechange = function() {
@@ -103,18 +103,18 @@ function getFlights(disciplina)
         var body = "";
      for (var j in odgovori.tezinske_m) {
         body += '<tr><td class="text-center text-light bg-dark" colspan="5">Kategorija:&nbsp;'+ odgovori.tezinske_m[j] + 'kg</td></tr>';
-        for (var key in odgovori.nominacije_m) {
-        if (odgovori.nominacije_m[key].kategorijat == odgovori.tezinske_m[j])
+    
+     for (var br=0; br<odgovori.nominacije_m.length; ++br) {
+        if (odgovori.nominacije_m[br]["kategorijat"] == odgovori.tezinske_m[j])
         {
         im++;
         body  += '<tr>' + 
         '<td>' + im + '</td>' +
-        '<td>' + odgovori.nominacije_m[key].ime+' '+odgovori.nominacije_m[key].prezime+'</td>'+
-        '<td>' + odgovori.nominacije_m[key].kategorijag + '</td>'+
-        '<td><input type="text" class="form-control" name="grupa[]" placeholder="Unesi naziv grupe" required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_m[key].id + '"></td></tr>'; 
+        '<td>' + odgovori.nominacije_m[br]["ime"]+' '+odgovori.nominacije_m[br]["prezime"]+'</td>'+
+        '<td>' + odgovori.nominacije_m[br]["kategorijag"] + '</td>'+
+        '<td><input type="text" class="form-control" name="grupa[]" placeholder="Unesi naziv grupe" required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_m[br]["id"] + '"></td></tr>'; 
         }  
-        }  
-    }
+        } }
     spol = '<h3 class="mb-3">Muškarci</h3>';
     tablica_m = spol + tablica + body + '</tbody></table>'; 
 }    
