@@ -26,5 +26,5 @@
         </div>
         @endsection
         @section('js_after')
-        <script src="{{asset('js/back/meet.js')}}" defer></script>
+        <script src="{{asset('js/back/nominations.js')}}" defer></script>
         @endsection

@@ -93,20 +93,21 @@ class AthletesController extends Controller
         $athletes_m = array();
         foreach ($athlete_m as $athlete)
         {
-          $athletes_m[]["id"] =  $athlete->id;
-          $athletes_m[]["ime"] =  $athlete->nomination->ime;
-          $athletes_m[]["prezime"] =  $athlete->nomination->prezime;
-          $athletes_m[]["kategorijag"] =  $athlete->kategorijag;
-          $athletes_m[]["kategorijat"] =  $athlete->kategorijat;
-        }
+        $athletes_m[] = array("id" => $athlete->id,"ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight );          
+       }
 
-        $athletes_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $ispis)->get();
-        $tezinske_f = tezkat($athletes_f);
+        $athlete_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $ispis)->get();
+        $tezinske_f = tezkat($athlete_f);
+        $athletes_f = array();
+        foreach ($athlete_f as $athlete)
+        {
+        $athletes_f[] = array("id" => $athlete->id,"ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight );          
+       }
 
         if (!$athlete_m) {
             return response()->json(['error' => 'Fucking error']);
         }
-        if (!$athletes_f) {
+        if (!$athlete_f) {
             return response()->json(['error' => 'Fucking error']);
         }
         return response()->json(['ispis'=>$ispis,'nominacije_m'=>$athletes_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$athletes_f,'tezinske_f'=>$tezinske_f]);
@@ -120,24 +121,7 @@ class AthletesController extends Controller
      */
     public function store(Request $request)
     {
-       $groupes = $request->grupa;
-       $ids = $request->idbroj;
-       $broj_natjecatelja = $request->athletes_number;
-       $disciplina = $request->disciplina;
-       echo $disciplina.'<br>';
-       echo $broj_natjecatelja.'<br>';
-       for ($i=0;$i<$broj_natjecatelja;$i++)
-       {
-           $athlete = new Athlete();
-           $athlete->nomination_id = $ids[$i];
-           $athlete->discipline = $request->disciplina;
-           $athlete->flight = $groupes[$i];
-           $athlete->save();
-           echo 'ID='.$ids[$i].'<br>';
-           echo 'Grupa'.$groupes[$i].'<br>';
-       }
-
-
+   //
     }
 
     /**
@@ -196,6 +180,22 @@ class AthletesController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+    public function group(Request $request)
+    {
+        $groupes = $request->grupa;
+        $ids = $request->idbroj;
+        $broj_natjecatelja = $request->athletes_number;
+        for ($i=0;$i<$broj_natjecatelja;$i++)
+        {            
+            $athlete = Athlete::find($ids[$i]);
+            $athlete->flight = $groupes[$i];
+            $athlete->save();
+        }
+
+        return redirect()->route('athletes.show', $athlete->meet_id)->with(['success' => 'Flight set!']);
+    
+ 
     }
 
     /**

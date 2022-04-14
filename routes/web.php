@@ -63,6 +63,7 @@ Route::get('nominations/nomList/{discipline}',[NominationsController::class, 'no
 Route::resource('athletes', AthletesController::class);
 Route::get('athletes/athletesList/{discipline}',[AthletesController::class, 'athletesList']);
 Route::get('/start_managing/{id}',[AthletesController::class, 'initiate']);
+Route::post('/group',[AthletesController::class, 'group']);
 // Front routes //
 
 
