@@ -49,43 +49,7 @@
             </div>
         </div>
          <!--- kraj divisiona za određivanje grupa -->
-         <!--- division za ispisivanje grupa -->
-        <div class="collapse" id="flights">
-            <div class="card card-body">
-                <div class="col-md-10 offset-md-1">
-                    <h3 class="text-center mt-3 mb-5">{{ __('Flight Groups') }}</h3>
-                    @foreach ($division as $divizija)
-                    <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
-                    @foreach ($discipline_meet as $single)
-                    @if ((substr($divizija,0,2)) == substr($single,0,2))
-                    @php
-                    $disc = explode("-",$single);
-                    $single_disc = $divizija.' '.$disc[1];
-                    $disciplina = ucfirst($disc[1]);
-                    @endphp
-                    <button type="submit" class="btn btn-primary gumb m-1"
-                        onclick="getGroups('{{$meet->id.','.$single_disc}}')">{{$disciplina}}</button>
-                    @endif
-                    @endforeach
-                    @endforeach
-
-                    <div class="table-responsive-sm mt-4 p-2">
-                               
-                            <div id="lista2"></div>
-
-                        </form>
-                        <div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-         <!--- kraj divisiona za ispisivanje grupa -->
     </div>
 
 </div>
-@endsection
-@section('js_after')
-<script src="{{asset('js/back/flights.js')}}" defer></script>
 @endsection

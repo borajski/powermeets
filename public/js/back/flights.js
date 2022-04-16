@@ -10,8 +10,9 @@ function getFlights(disciplina)
     var iz = 0;
     var im = 0;
     var url="athletesList/" + disciplina;
+    document.getElementById("lista2").innerHTML = "";
     const xhttp = new XMLHttpRequest();
-  
+    
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
@@ -68,7 +69,7 @@ if ( odgovori.nominacije_f != "")
         '<td>' + iz + '</td>' +
         '<td>' + odgovori.nominacije_f[br]["ime"]+' '+odgovori.nominacije_f[br]["prezime"]+'</td>'+
         '<td>' + odgovori.nominacije_f[br]["kategorijag"] + '</td>'+
-        '<td><input type="text" class="form-control" name="grupa[]" ' + grupa + '"required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_m[br]["id"] + '"></td></tr>'; 
+        '<td><input type="text" class="form-control" name="grupa[]" ' + grupa + '"required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_f[br]["id"] + '"></td></tr>'; 
         }  
         }  
 } 
@@ -77,8 +78,56 @@ if ( odgovori.nominacije_f != "")
     
 }   
         zbroj = im + iz;
-        kraj_forme = '<input type="hidden" name="athletes_number" value="' + zbroj +'"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Create</button></div>';
+        kraj_forme = '<input type="hidden" name="athletes_number" value="' + zbroj +'"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
         document.getElementById("lista").innerHTML = ispis + tablica_m + tablica_z + kraj_forme; 
+               
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send();  
+}
+//Groups printing
+function getGroups(disciplina)
+{
+    var ispis;
+    var im = 0;
+    var url="groupesList/" + disciplina;
+    const xhttp = new XMLHttpRequest();
+    document.getElementById("lista").innerHTML = "";
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var odgovori = JSON.parse(this.responseText);
+      ispis = '<h3 class="mb-3">Ispis grupa za: ' + odgovori.ispis + '</h3>';
+     
+      if ( odgovori.natjecatelji.length > 0)
+      {
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Dob</th><th>Kategorija</th><th>Spol</th></tr></thead><tbody>';
+        var body = "";
+     for (var j in odgovori.grupe) {
+        body += '<tr><td class="text-center text-light bg-dark" colspan="5">Grupa:&nbsp;'+ odgovori.grupe[j] + '</td></tr>';
+        im = 0;
+     for (var br=0; br<odgovori.natjecatelji.length; ++br) {
+        if (odgovori.natjecatelji[br]["grupa"] == odgovori.grupe[j])
+        {
+        im++;
+    
+        body  += '<tr>' + 
+        '<td>' + im + '</td>' +
+        '<td>' + odgovori.natjecatelji[br]["ime"]+' '+odgovori.natjecatelji[br]["prezime"]+'</td>'+
+        '<td>' + odgovori.natjecatelji[br]["kategorijag"] + '</td>'+
+        '<td>' + odgovori.natjecatelji[br]["kategorijat"] + '</td>'+
+        '<td>' + odgovori.natjecatelji[br]["spol"] + '</td></tr>'; 
+        }  
+        } }
+    tablica = tablica + body + '</tbody></table>'; 
+} 
+else
+{
+    tablica = '<h4 class="mb-3"><strong>' + odgovori.grupe + '</strong></h4>';
+}   
+
+       
+        document.getElementById("lista2").innerHTML = ispis + tablica; 
                
     }
 };

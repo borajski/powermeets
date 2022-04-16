@@ -112,6 +112,48 @@ class AthletesController extends Controller
         }
         return response()->json(['ispis'=>$ispis,'nominacije_m'=>$athletes_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$athletes_f,'tezinske_f'=>$tezinske_f]);
     }
+    public function groupesList($discipline)
+    {
+        function grupe ($natjecatelji)
+        {
+            $grupe = array();
+            foreach ($natjecatelji as $natjecatelj) {
+                if ($natjecatelj->flight)
+                {
+                    $grupe[] = $natjecatelj->flight;
+                }                
+            }
+            $grupe = array_unique($grupe);
+            sort($grupe);
+            return $grupe;
+        }
+        
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+        $natjecatelji = array();
+
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderByDesc('kategorijat')->get();
+        if (!$athletes) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        if (grupe($athletes) != null)
+        {
+            $grupe = grupe($athletes);
+            foreach ($athletes as $athlete)
+            {
+            $natjecatelji[] = array("ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight,"spol" => $athlete->spol );          
+           }
+        }
+        
+        else
+         $grupe = "Athletes are not groupped!";         
+        
+         
+       
+      
+        return response()->json(['ispis'=>$disciplina,'grupe'=>$grupe,'natjecatelji'=>$natjecatelji]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -135,7 +177,7 @@ class AthletesController extends Controller
         $nomination = Nomination::where('meet_id', $id)->get();
         $meet = Meet::find($id);
         $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
-      $division = array(); //array za divizije koje su na natjecanju
+        $division = array(); //array za divizije koje su na natjecanju
 
       $fed_divisions = explode(",", $meet->federation->divisions);
         foreach ($nomination as $nominacija) {
@@ -165,6 +207,34 @@ class AthletesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function showGroups($id)
+    {
+        $nomination = Nomination::where('meet_id', $id)->get();
+        $meet = Meet::find($id);
+        $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+        $division = array(); //array za divizije koje su na natjecanju
+
+      $fed_divisions = explode(",", $meet->federation->divisions);
+        foreach ($nomination as $nominacija) {
+            $disciplina = explode(",", $nominacija->disciplina);
+            foreach ($disciplina as $single) {
+                $discipline_meet[] = $single;
+            }
+        }
+        $discipline_meet = array_unique($discipline_meet);
+        sort($discipline_meet);
+
+        foreach ($discipline_meet as $single) {
+            $prvoslovo = $single[0];
+            foreach ($fed_divisions as $feddiv) {
+                if ($prvoslovo == $feddiv[0]) {
+                    $division[] = $feddiv;
+                }
+            }
+        }
+        $division = array_unique($division);
+        return view('back_layouts.meets.flights',['discipline_meet'=>$discipline_meet,'division'=>$division,'meet'=>$meet]);
+    }
     public function edit($id)
     {
         //
