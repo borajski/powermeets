@@ -17,6 +17,8 @@ class CreateAthletesTable extends Migration
             $table->id();
             $table->unsignedInteger('nomination_id')->index();
             $table->unsignedInteger('meet_id')->index();
+            $table->string('name')->nullable();
+            $table->string('surname')->nullable();
             $table->string('spol')->nullable();
             $table->string('weight')->nullable();
             $table->string('age')->nullable();

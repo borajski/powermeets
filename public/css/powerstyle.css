@@ -113,8 +113,7 @@ p {
     height: 375px;
   }
   .gumb {
-    background-color: #00517D;
-    box-shadow: 5px 5px 0px #000428;
+    background-color: #00517D;    
     border: none;
   }
   .gumb:focus {

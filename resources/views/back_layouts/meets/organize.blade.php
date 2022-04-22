@@ -11,6 +11,8 @@
                 data-bs-toggle="collapse">{{ __('Grouping') }}</a>
                 <a role="button" class="btn btn-primary gumb m-1" href="#flights"
                 data-bs-toggle="collapse">{{ __('Flights') }}</a>
+                <a role="button" class="btn btn-primary gumb m-1" href="#racks"
+                data-bs-toggle="collapse">{{ __('Rack heights') }}</a>
             @else
             <a role="button" class="btn btn-primary gumb m-1" href="/start_managing/{{$meet->id}}">{{ __('Start') }}</a>
             @endif
@@ -27,10 +29,11 @@
                     @if ((substr($divizija,0,2)) == substr($single,0,2))
                     @php
                     $disc = explode("-",$single);
+                    $single_disc = $divizija.' '.$disc[1];
                     $disciplina = ucfirst($disc[1]);
                     @endphp
                     <button type="submit" class="btn btn-primary gumb m-1"
-                        onclick="getFlights('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
+                        onclick="getFlights('{{$meet->id.','.$single_disc}}')">{{$disciplina}}</button>
                     @endif
                     @endforeach
                     @endforeach
@@ -72,6 +75,42 @@
                     <div class="table-responsive-sm mt-4 p-2">
                                
                             <div id="lista2"></div>
+
+                        </form>
+                        <div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+         <!--- kraj divisiona za ispisivanje grupa -->
+          <!--- division za visine stalaka -->
+          <div class="collapse" id="racks">
+            <div class="card card-body">
+                <div class="col-md-10 offset-md-1">
+                    <h3 class="text-center mt-3 mb-5">{{ __('Rack Heights') }}</h3>
+                    @foreach ($division as $divizija)
+                    <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
+                    @foreach ($discipline_meet as $single)
+                    @if ((substr($divizija,0,2)) == substr($single,0,2))
+                    @php
+                    $disc = explode("-",$single);
+                    $single_disc = $divizija.' '.$disc[1];
+                    $disciplina = ucfirst($disc[1]);
+                    @endphp
+                    @if ($disc[1] != "deadlift")
+                    <button type="submit" class="btn btn-primary gumb m-1"
+                        onclick="rackHeights('{{$meet->id.','.$single_disc}}')">{{$disciplina}}</button>
+                    @endif
+                    @endif
+                    @endforeach
+                    @endforeach
+
+                    <div class="table-responsive-sm mt-4 p-2">
+                        <form enctype="multipart/form-data" action="/setrack" method="POST">
+                            {{ csrf_field() }}
+                            <div id="lista3"></div>
 
                         </form>
                         <div>

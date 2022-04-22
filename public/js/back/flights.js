@@ -18,60 +18,62 @@ function getFlights(disciplina)
         var odgovori = JSON.parse(this.responseText);
       ispis = '<h2 class="mb-3">Lista prijavljenih za: ' + odgovori.ispis + '</h2>';
       disciplina = odgovori.ispis;
-      if ( odgovori.nominacije_m != "")
+      if ( odgovori.natjecatelji_m != "")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Dob</th><th>Grupa</th></tr></thead><tbody>';
         var body = "";
      for (var j in odgovori.tezinske_m) {
         body += '<tr><td class="text-center text-light bg-dark" colspan="5">Kategorija:&nbsp;'+ odgovori.tezinske_m[j] + 'kg</td></tr>';
-    
-     for (var br=0; br<odgovori.nominacije_m.length; ++br) {
-        if (odgovori.nominacije_m[br]["kategorijat"] == odgovori.tezinske_m[j])
-        {
-        im++;
-        if (odgovori.nominacije_m[br]["grupa"] == null)
-        {
-            grupa  = 'placeholder= "Unesi naziv grupe"';            
-        }
-        else
-        {
-            grupa = 'value = "' + odgovori.nominacije_m[br]["grupa"] + '"';
-        }
-        body  += '<tr>' + 
-        '<td>' + im + '</td>' +
-        '<td>' + odgovori.nominacije_m[br]["ime"]+' '+odgovori.nominacije_m[br]["prezime"]+'</td>'+
-        '<td>' + odgovori.nominacije_m[br]["kategorijag"] + '</td>'+
-        '<td><input type="text" class="form-control" name="grupa[]"' + grupa + 'required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_m[br]["id"] + '"></td></tr>'; 
-        }  
-        } }
+        for (var key in odgovori.natjecatelji_m) {
+            if (odgovori.natjecatelji_m[key].kategorijat == odgovori.tezinske_m[j])
+            {
+            im++;
+            if (odgovori.natjecatelji_m[key].flight == null)
+            {
+                grupa  = 'placeholder= "Unesi naziv grupe"';            
+            }
+            else
+            {
+                grupa = 'value = "' + odgovori.natjecatelji_m[key].flight + '"';
+            }
+            body  += '<tr>' + 
+            '<td>' + im + '</td>' +
+            '<td>' + odgovori.natjecatelji_m[key].name+' '+odgovori.natjecatelji_m[key].surname+'</td>'+
+            '<td>' + odgovori.natjecatelji_m[key].kategorijag + '</td>'+
+            '<td>' + odgovori.natjecatelji_m[key].kategorijat + '</td>'+
+            '<td><input type="text" class="form-control" name="grupa[]"' + grupa + 'required><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji_m[key].id + '"></td></tr>'; 
+            }  
+            }  
+    }
     spol = '<h3 class="mb-3">Muškarci</h3>';
     tablica_m = spol + tablica + body + '</tbody></table>'; 
 }    
-if ( odgovori.nominacije_f != "")
+if ( odgovori.natjecatelji_f != "")
 {  
    var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Dob</th><th>Grupa</th></tr></thead><tbody>';
     var body = "";    
   for (var j in odgovori.tezinske_f) {
     body += '<tr><td class="text-center text-light bg-dark" colspan="5">Kategorija:&nbsp;'+ odgovori.tezinske_f[j] + 'kg</td></tr>';
-    for (var br=0; br<odgovori.nominacije_f.length; ++br) {
-        if (odgovori.nominacije_f[br]["kategorijat"] == odgovori.tezinske_f[j])
+    for (var key in odgovori.natjecatelji_f) {
+        if (odgovori.natjecatelji_f[key].kategorijat == odgovori.tezinske_f[j])
         {
         iz++;
-        if (odgovori.nominacije_f[br]["grupa"] == null)
+        if (odgovori.natjecatelji_f[key].flight == null)
         {
             grupa  = 'placeholder= "Unesi naziv grupe"';            
         }
         else
         {
-            grupa = 'value = "' + odgovori.nominacije_f[br]["grupa"] + '"';
+            grupa = 'value = "' + odgovori.natjecatelji_f[key].flight + '"';
         }
         body  += '<tr>' + 
         '<td>' + iz + '</td>' +
-        '<td>' + odgovori.nominacije_f[br]["ime"]+' '+odgovori.nominacije_f[br]["prezime"]+'</td>'+
-        '<td>' + odgovori.nominacije_f[br]["kategorijag"] + '</td>'+
-        '<td><input type="text" class="form-control" name="grupa[]" ' + grupa + '"required><input type="hidden" name="idbroj[]" value="' + odgovori.nominacije_f[br]["id"] + '"></td></tr>'; 
+        '<td>' + odgovori.natjecatelji_f[key].name+' '+odgovori.natjecatelji_f[key].surname+'</td>'+
+        '<td>' + odgovori.natjecatelji_f[key].kategorijag + '</td>'+
+        '<td>' + odgovori.natjecatelji_f[key].kategorijat + '</td>'+
+        '<td><input type="text" class="form-control" name="grupa[]"' + grupa + 'required><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji_f[key].id + '"></td></tr>'; 
         }  
-        }  
+        } 
 } 
     spol = '<h3 class="mb-3">Žene</h3>';
     tablica_z = spol + tablica + body + '</tbody></table>';
@@ -99,26 +101,27 @@ function getGroups(disciplina)
         var odgovori = JSON.parse(this.responseText);
       ispis = '<h3 class="mb-3">Ispis grupa za: ' + odgovori.ispis + '</h3>';
      
-      if ( odgovori.natjecatelji.length > 0)
+      if ( odgovori.grupe != "Athletes are not groupped!")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Dob</th><th>Kategorija</th><th>Spol</th></tr></thead><tbody>';
         var body = "";
-     for (var j in odgovori.grupe) {
+       for (var j in odgovori.grupe) {
         body += '<tr><td class="text-center text-light bg-dark" colspan="5">Grupa:&nbsp;'+ odgovori.grupe[j] + '</td></tr>';
-        im = 0;
-     for (var br=0; br<odgovori.natjecatelji.length; ++br) {
-        if (odgovori.natjecatelji[br]["grupa"] == odgovori.grupe[j])
-        {
-        im++;
-    
-        body  += '<tr>' + 
-        '<td>' + im + '</td>' +
-        '<td>' + odgovori.natjecatelji[br]["ime"]+' '+odgovori.natjecatelji[br]["prezime"]+'</td>'+
-        '<td>' + odgovori.natjecatelji[br]["kategorijag"] + '</td>'+
-        '<td>' + odgovori.natjecatelji[br]["kategorijat"] + '</td>'+
-        '<td>' + odgovori.natjecatelji[br]["spol"] + '</td></tr>'; 
-        }  
-        } }
+        im = 0; 
+        for (var key in odgovori.natjecatelji) {
+            if (odgovori.natjecatelji[key].flight == odgovori.grupe[j])
+            {
+            im++;
+            body  += '<tr>' + 
+            '<td>' + im + '</td>' +
+            '<td>' + odgovori.natjecatelji[key].name+' '+odgovori.natjecatelji[key].surname+'</td>'+
+            '<td>' + odgovori.natjecatelji[key].kategorijag + '</td>'+
+            '<td>' + odgovori.natjecatelji[key].kategorijat + '</td>'+
+            '<td>' + odgovori.natjecatelji[key].spol + '</td></tr>'; 
+            }  
+            }  
+    }
+
     tablica = tablica + body + '</tbody></table>'; 
 } 
 else
@@ -128,6 +131,64 @@ else
 
        
         document.getElementById("lista2").innerHTML = ispis + tablica; 
+               
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send();  
+}
+//Rack heights
+function rackHeights(disciplina)
+{
+    var ispis;
+    var rack;
+    var upit;
+    var kraj_forme = "";
+    var im = 0;
+    var url="rackHeights/" + disciplina;
+    document.getElementById("lista").innerHTML = "";
+    const xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var odgovori = JSON.parse(this.responseText);
+      ispis = '<h2 class="mb-3">Visina stalka: ' + odgovori.ispis + '</h2>';
+      disciplina = odgovori.ispis;
+      upit = disciplina.split(" ");
+      if ( odgovori.natjecatelji != "")
+      {
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th>Rack height</th></tr></thead><tbody>';
+        var body = "";
+         for (var key in odgovori.natjecatelji) { 
+           if (upit[1] == "bench")
+           {
+            if (odgovori.natjecatelji[key].bp_rack == null)
+                 rack = '<td><input type="text" class="form-control" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+            else
+                rack = '<td>' + odgovori.natjecatelji[key].bp_rack +'<input type="hidden" class="form-control" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+            
+         }
+           else
+           {
+            if (odgovori.natjecatelji[key].sq_rack == null)
+            rack = '<td><input type="text" class="form-control" name="racksq[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+           else
+           rack = '<td>' + odgovori.natjecatelji[key].sq_rack +'<input type="hidden" class="form-control" name="racksq[]" value="' + odgovori.natjecatelji[key].sq_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+      
+           }
+            im++;
+            body  += '<tr>' + 
+            '<td>' + im + '</td>' +
+            '<td>' + odgovori.natjecatelji[key].name+' '+odgovori.natjecatelji[key].surname+'</td>'+rack+'</tr>';
+          
+            }  
+             
+   
+    tablica = tablica + body + '</tbody></table>'; 
+}    
+
+        kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
+        document.getElementById("lista3").innerHTML = ispis + tablica + kraj_forme; 
                
     }
 };

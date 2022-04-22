@@ -49,6 +49,8 @@ class AthletesController extends Controller
                 $athlete = new Athlete();
                 $athlete->nomination_id = $nominacija->id;
                 $athlete->meet_id = $id;
+                $athlete->name = $nominacija->ime;
+                $athlete->surname = $nominacija->prezime;
                 $athlete->discipline = $single_discipline;
                 $athlete->spol = $nominacija->spol;
                 $athlete->kategorijat = $nominacija->kategorijat;
@@ -75,42 +77,18 @@ class AthletesController extends Controller
 
         $unos = explode(',', $discipline);
         $meet_id = $unos[0];
-        $disciplina = '%'.$unos[1].'%';  
-        // traženje punog naziva discipline i divizije
-        $meet = Meet::find($meet_id);
-        $fed_divisions = explode(",", $meet->federation->divisions);
-        $oznaka_divizije = explode('-',$unos[1]);
-        $prvoslovo = $oznaka_divizije[0];
-        foreach ($fed_divisions as $feddiv) {
-            if ($prvoslovo[0] == $feddiv[0]) {
-                $divizija = $feddiv;
-            }
-        }
-        $ispis = $divizija.' '.$oznaka_divizije[1];
-        // kraj traženja
-        $athlete_m = Athlete::where('meet_id', $meet_id)->where('spol','M')->where('discipline', $ispis)->get();
-        $tezinske_m = tezkat($athlete_m);
-        $athletes_m = array();
-        foreach ($athlete_m as $athlete)
-        {
-        $athletes_m[] = array("id" => $athlete->id,"ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight );          
-       }
-
-        $athlete_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $ispis)->get();
-        $tezinske_f = tezkat($athlete_f);
-        $athletes_f = array();
-        foreach ($athlete_f as $athlete)
-        {
-        $athletes_f[] = array("id" => $athlete->id,"ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight );          
-       }
-
-        if (!$athlete_m) {
+        $disciplina = $unos[1]; 
+        $athletes_m = Athlete::where('meet_id', $meet_id)->where('spol','M')->where('discipline', $disciplina)->get();
+        $athletes_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $disciplina)->get();
+        if (!$athletes_m) {
             return response()->json(['error' => 'Fucking error']);
         }
-        if (!$athlete_f) {
+        if (!$athletes_f) {
             return response()->json(['error' => 'Fucking error']);
         }
-        return response()->json(['ispis'=>$ispis,'nominacije_m'=>$athletes_m,'tezinske_m'=>$tezinske_m,'nominacije_f'=>$athletes_f,'tezinske_f'=>$tezinske_f]);
+        $tezinske_m = tezkat($athletes_m);   
+        $tezinske_f = tezkat($athletes_f);      
+        return response()->json(['ispis'=>$disciplina,'natjecatelji_m'=>$athletes_m,'tezinske_m'=>$tezinske_m,'natjecatelji_f'=>$athletes_f,'tezinske_f'=>$tezinske_f]);
     }
     public function groupesList($discipline)
     {
@@ -131,30 +109,29 @@ class AthletesController extends Controller
         $unos = explode(',', $discipline);
         $meet_id = $unos[0];
         $disciplina = $unos[1]; 
-        $natjecatelji = array();
-
         $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderByDesc('kategorijat')->get();
         if (!$athletes) {
             return response()->json(['error' => 'Fucking error']);
         }
         if (grupe($athletes) != null)
-        {
-            $grupe = grupe($athletes);
-            foreach ($athletes as $athlete)
-            {
-            $natjecatelji[] = array("ime" => $athlete->nomination->ime,"prezime" => $athlete->nomination->prezime,"kategorijag" => $athlete->kategorijag,"kategorijat" => $athlete->kategorijat,"grupa" => $athlete->flight,"spol" => $athlete->spol );          
-           }
-        }
-        
+            $grupe = grupe($athletes);       
         else
-         $grupe = "Athletes are not groupped!";         
-        
-         
-       
-      
-        return response()->json(['ispis'=>$disciplina,'grupe'=>$grupe,'natjecatelji'=>$natjecatelji]);
+            $grupe = "Athletes are not groupped!";       
+        return response()->json(['ispis'=>$disciplina,'grupe'=>$grupe,'natjecatelji'=>$athletes]);
     }
-
+    public function rackHeights($discipline)
+    {
+              
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+       
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
+        if (!$athletes) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        return response()->json(['ispis'=>$disciplina,'natjecatelji'=>$athletes]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -264,6 +241,32 @@ class AthletesController extends Controller
         }
 
         return redirect()->route('athletes.show', $athlete->meet_id)->with(['success' => 'Flight set!']);
+    
+ 
+    }
+    public function setRack(Request $request)
+    {
+        $disciplina = $request->disciplina;
+        $upit = explode(" ",$disciplina);
+        $ids = $request->idbroj;
+        $broj_natjecatelja = $request->athletes_number;
+
+        if ($upit[1] = "bench")        
+            $racks = $request->rackbp;
+        else
+            $racks = $request->racksq;     
+        for ($i=0;$i<$broj_natjecatelja;$i++)
+        {            
+            $athlete = Athlete::find($ids[$i]);
+            if ($upit[1] = "bench")        
+                $athlete->bp_rack = $racks[$i];
+            else
+                $athlete->sq_rack = $racks[$i];   
+            
+            $athlete->save();
+        }
+
+        return redirect()->route('athletes.show', $athlete->meet_id)->with(['success' => 'Rack heights set!']);
     
  
     }
