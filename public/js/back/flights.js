@@ -157,23 +157,23 @@ function rackHeights(disciplina)
       upit = disciplina.split(" ");
       if ( odgovori.natjecatelji != "")
       {
-        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th>Rack height</th></tr></thead><tbody>';
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th class="text-center">Rack height</th></tr></thead><tbody>';
         var body = "";
          for (var key in odgovori.natjecatelji) { 
            if (upit[1] == "bench")
            {
             if (odgovori.natjecatelji[key].bp_rack == null)
-                 rack = '<td><input type="text" class="form-control" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+                 rack = '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
             else
-                rack = '<td>' + odgovori.natjecatelji[key].bp_rack +'<input type="hidden" class="form-control" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+                rack = '<td class="text-center"><b id="nova' + im + '" ondblclick="promjena(' + im + ')">' + odgovori.natjecatelji[key].bp_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
             
          }
            else
            {
             if (odgovori.natjecatelji[key].sq_rack == null)
-            rack = '<td><input type="text" class="form-control" name="racksq[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+            rack = '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="racksq[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
            else
-           rack = '<td>' + odgovori.natjecatelji[key].sq_rack +'<input type="hidden" class="form-control" name="racksq[]" value="' + odgovori.natjecatelji[key].sq_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+           rack = '<td class="text-center"><b id="nova' + im + '" ondblclick="promjena(' + im + ')">' + odgovori.natjecatelji[key].sq_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="racksq[]" value="' + odgovori.natjecatelji[key].sq_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
       
            }
             im++;
@@ -189,6 +189,58 @@ function rackHeights(disciplina)
 
         kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
         document.getElementById("lista3").innerHTML = ispis + tablica + kraj_forme; 
+               
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send();  
+}
+//promjena vrijednosti na doubleclick
+function promjena (id)
+{
+    nova="nova"+id;
+    visina = "nova-visina"+id;
+    document.getElementById(nova).innerHTML = "";
+    document.getElementById(visina).type = "text";
+
+
+}
+//Weighing
+function weighing(disciplina)
+{
+    var ispis;
+    var rack;
+    var upit;
+    var kraj_forme = "";
+    var im = 0;
+    var url="weighing/" + disciplina;
+    document.getElementById("lista").innerHTML = "";
+    const xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var odgovori = JSON.parse(this.responseText);
+      ispis = '<h2 class="mb-3">Vaganje: ' + odgovori.ispis + '</h2>';
+      disciplina = odgovori.ispis;
+      upit = disciplina.split(" ");
+      if ( odgovori.natjecatelji != "")
+      {
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th></tr></thead><tbody>';
+        var body = "";
+         for (var key in odgovori.natjecatelji) { 
+            im++;
+            body  += '<tr>' + 
+            '<td>' + im + '</td>' +
+            '<td><a href="/athlete/'+odgovori.natjecatelji[key].id+'">' + odgovori.natjecatelji[key].name+' '+odgovori.natjecatelji[key].surname+'</a></td></tr>';
+          
+            }  
+             
+   
+    tablica = tablica + body + '</tbody></table>'; 
+}    
+
+        kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
+        document.getElementById("lista4").innerHTML = ispis + tablica + kraj_forme; 
                
     }
 };

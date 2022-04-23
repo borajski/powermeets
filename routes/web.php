@@ -66,6 +66,8 @@ Route::get('/start_managing/{id}',[AthletesController::class, 'initiate']);
 Route::post('/group',[AthletesController::class, 'group']);
 Route::get('athletes/groupesList/{discipline}',[AthletesController::class, 'groupesList']);
 Route::get('athletes/rackHeights/{discipline}',[AthletesController::class, 'rackHeights']);
+Route::get('athletes/weighing/{discipline}',[AthletesController::class, 'weighing']);
+Route::get('/athlete/{id}',[AthletesController::class, 'showAthlete']);
 Route::post('/setrack',[AthletesController::class, 'setRack']);
 // Front routes //
 

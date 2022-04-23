@@ -132,6 +132,19 @@ class AthletesController extends Controller
         }
         return response()->json(['ispis'=>$disciplina,'natjecatelji'=>$athletes]);
     }
+    public function weighing($discipline)
+    {
+              
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+       
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
+        if (!$athletes) {
+            return response()->json(['error' => 'Fucking error']);
+        }
+        return response()->json(['ispis'=>$disciplina,'natjecatelji'=>$athletes]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -176,6 +189,11 @@ class AthletesController extends Controller
         }
         $division = array_unique($division);
         return view('back_layouts.meets.organize',['discipline_meet'=>$discipline_meet,'division'=>$division,'meet'=>$meet]);
+    }
+    public function showAthlete ($id)
+    {
+        $athlete = Athlete::find($id);
+        return view('back_layouts.meets.weighing')->with('athlete',$athlete);
     }
 
     /**

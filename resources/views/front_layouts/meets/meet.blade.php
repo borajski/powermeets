@@ -385,7 +385,6 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                             <option selected></option>
                             @php
                             $dobne = explode(",",$federacija->age_categories);
-
                             foreach ($dobne as $dob)
                             {
                             echo '<option value="'.$dob.'">'.$dob.'</option>';
