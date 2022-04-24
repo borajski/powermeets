@@ -8,6 +8,7 @@ use App\Http\Controllers\FederationsController;
 use App\Http\Controllers\NominationsController;
 use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\AthletesController;
+use App\Http\Controllers\ResultsController;
 use App\Models\Meet;
 
 /*
@@ -69,6 +70,8 @@ Route::get('athletes/rackHeights/{discipline}',[AthletesController::class, 'rack
 Route::get('athletes/weighing/{discipline}',[AthletesController::class, 'weighing']);
 Route::get('/athlete/{id}',[AthletesController::class, 'showAthlete']);
 Route::post('/setrack',[AthletesController::class, 'setRack']);
+
+Route::resource('results', ResultsController::class);
 // Front routes //
 
 

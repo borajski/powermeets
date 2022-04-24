@@ -23,8 +23,8 @@ class CreateAthletesTable extends Migration
             $table->string('age')->nullable();
             $table->string('kategorijat')->nullable();
             $table->string('kategorijag')->nullable();
-            $table->string('weight_coef')->nullable();
-            $table->string('age_coef')->nullable();
+            $table->float('weight_coef')->nullable();
+            $table->float('age_coef')->nullable();
             $table->string('discipline')->nullable();
             $table->string('flight')->nullable();
             $table->string('sq_rack')->nullable();
