@@ -9,6 +9,7 @@ use App\Http\Controllers\NominationsController;
 use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\AthletesController;
 use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\PDFController;
 use App\Models\Meet;
 
 /*
@@ -68,6 +69,7 @@ Route::post('/group',[AthletesController::class, 'group']);
 Route::get('athletes/groupesList/{discipline}',[AthletesController::class, 'groupesList']);
 Route::get('athletes/rackHeights/{discipline}',[AthletesController::class, 'rackHeights']);
 Route::get('athletes/weighing/{discipline}',[AthletesController::class, 'weighing']);
+Route::get('/weighing_lists/{discipline}',[AthletesController::class, 'weighingList']);
 Route::get('/athlete/{id}',[AthletesController::class, 'showAthlete']);
 Route::post('/setrack',[AthletesController::class, 'setRack']);
 
@@ -77,5 +79,8 @@ Route::resource('results', ResultsController::class);
 
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
+
+//PDF Controller
+Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Gensett;
 use App\Models\Federation;
 use App\Models\Nomination;
+use App\Models\Athlete;
 
 class Meet extends Model
 {
@@ -92,6 +93,10 @@ private function setRequest($request)
     public function nominations()
     {
         return $this->hasMany(Nomination::class, 'meet_id');
+    }
+    public function athletes()
+    {
+        return $this->hasMany(Athlete::class, 'meet_id');
     }
     public function federation()
     {

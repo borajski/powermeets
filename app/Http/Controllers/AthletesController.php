@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Athlete;
 use App\Models\Nomination;
 use App\Models\Meet;
+use PDF;
 
 
 class AthletesController extends Controller
@@ -110,7 +111,7 @@ class AthletesController extends Controller
         $unos = explode(',', $discipline);
         $meet_id = $unos[0];
         $disciplina = $unos[1]; 
-        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderByDesc('kategorijat')->get();
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderByDesc('kategorijag')->get();
         if (!$athletes) {
             return response()->json(['error' => 'Fucking error']);
         }
@@ -145,6 +146,21 @@ class AthletesController extends Controller
             return response()->json(['error' => 'Fucking error']);
         }
         return response()->json(['ispis'=>$disciplina,'natjecatelji'=>$athletes]);
+    }
+    public function weighingList($discipline)
+    {
+       
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
+      
+        $pdf = PDF::loadView('back_layouts.meets.weighing_lists', ['athletes' => $athletes])->setOptions(['defaultFont' => 'sans-serif']);;
+    
+        //return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->setPaper('a4')->stream();
+      
+        //return view('back_layouts.meets.weighing_lists')->with('athletes',$athletes);
     }
     /**
      * Store a newly created resource in storage.

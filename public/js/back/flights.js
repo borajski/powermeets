@@ -93,6 +93,7 @@ function getGroups(disciplina)
 {
     var ispis;
     var im = 0;
+    var liste;
     var url="groupesList/" + disciplina;
     const xhttp = new XMLHttpRequest();
     document.getElementById("lista").innerHTML = "";
@@ -129,8 +130,8 @@ else
     tablica = '<h4 class="mb-3"><strong>' + odgovori.grupe + '</strong></h4>';
 }   
 
-       
-        document.getElementById("lista2").innerHTML = ispis + tablica; 
+        liste = '<a href="/weighing_lists/' + disciplina +'" class="btn btn-primary gumb m-1 gumb float-end" role="button">Print weighing lists</a>';
+        document.getElementById("lista2").innerHTML = ispis + tablica+liste; 
                
     }
 };
