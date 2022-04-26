@@ -156,11 +156,11 @@ class AthletesController extends Controller
         $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
       
         $pdf = PDF::loadView('back_layouts.meets.weighing_lists', ['athletes' => $athletes])->setOptions(['defaultFont' => 'sans-serif']);;
-    
-        //return $pdf->download('itsolutionstuff.pdf');
-        return $pdf->setPaper('a4')->stream();
+        $naziv = $disciplina.' weighing lists.pdf';
+       // return $pdf->download($naziv);
+        return $pdf->setPaper('a4')->stream($naziv);
       
-        //return view('back_layouts.meets.weighing_lists')->with('athletes',$athletes);
+  
     }
     /**
      * Store a newly created resource in storage.
