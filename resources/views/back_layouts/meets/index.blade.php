@@ -36,7 +36,7 @@ function ispisiDatum($datum)
     </td>
       <td>{{ ispisiDatum($natjecanje->datump) }}</td>
       <td>{{ ispisiDatum($natjecanje->datumk) }}</td>      
-      <td class="text-center"><a href="delete/{{ $natjecanje->id }}"><i class="fa-solid fa-trash-can fa-lg"></i></a></td>
+      <td class="text-center"><a href="delete/{{ $natjecanje->id }}" onclick="return confirm('Are you sure you want to Remove?');"><i class="fa-solid fa-trash-can fa-lg"></i></a></td>
     </tr>
 @endforeach
   </tbody>
