@@ -17,8 +17,8 @@ function ispisiDatum($datum)
       <th>{{ __('Naziv') }}</th>
       <th>{{ __('Prijavljeni') }}</th>
       <th>{{ __('Organiziraj') }}</th>
+      <th>{{ __('Natjecanje') }}</th>
       <th>{{ __('Početak') }}</th>
-      <th>{{ __('Kraj') }}</th>
       <th>{{ __('Obriši') }}</th>
     </tr>
   </thead>
@@ -27,15 +27,22 @@ function ispisiDatum($datum)
     <tr>
        <td><a href="{{ route('meets.show', $natjecanje->id)}}"> {{$natjecanje->naziv}}</a></td>
       <td class="text-center"><a href="{{ route('nominations.show', $natjecanje->id)}}"><i class="fa-solid fa-table-list fa-lg"></i></a></td>
-      <td class="text-center">
-      @if ($natjecanje->gensetts->prijavnica != 'on')  
+      @if ($natjecanje->gensetts->prijavnica != 'on') 
+      <td class="text-center">      
       <a href="{{ route('athletes.show', $natjecanje->id)}}"><i class="fa-solid fa-gear fa-lg"></i></a>
+      </td>
+      <td class="text-center">      
+      <a href="{{ route('results.show', $natjecanje->id)}}"><i class="fa-solid fa-dumbbell"></i></a>
+      </td>
       @else 
+      <td class="text-center">   
       <i class="fa-solid fa-gear fa-lg"></i>
+      </td>
+      <td class="text-center">   
+      <i class="fa-solid fa-dumbbell"></i>
+      </td>
       @endif    
-    </td>
-      <td>{{ ispisiDatum($natjecanje->datump) }}</td>
-      <td>{{ ispisiDatum($natjecanje->datumk) }}</td>      
+      <td>{{ ispisiDatum($natjecanje->datump) }}</td>          
       <td class="text-center"><a href="delete/{{ $natjecanje->id }}" onclick="return confirm('Are you sure you want to Remove?');"><i class="fa-solid fa-trash-can fa-lg"></i></a></td>
     </tr>
 @endforeach

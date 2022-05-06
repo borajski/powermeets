@@ -125,7 +125,52 @@ class ResultsController extends Controller
      */
     public function show($id)
     {
-        //
+        $natjecatelji = Athlete::where('meet_id', $id)->get();
+        $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+ 
+        foreach ($natjecatelji as $natjecatelj)
+        {
+            $discipline_meet[] = $natjecatelj->discipline;
+        }
+
+        $discipline_meet = array_unique($discipline_meet);
+        sort($discipline_meet);
+        return view('back_layouts.meets.competitions.index',['discipline'=>$discipline_meet,'meet'=>$id]);
+  
+    }
+    public function showGroup($meet,$group,$discipline)
+    {
+        $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->get();
+    
+        return view('back_layouts.meets.competitions.group_comp',['natjecatelji'=>$natjecatelji,'disciplina'=>$discipline,'grupa'=>$group]);
+  
+    }
+    public function groupes($discipline)
+    {
+        function grupe ($natjecatelji)
+        {
+            $grupe = array();
+            foreach ($natjecatelji as $natjecatelj) {
+                if ($natjecatelj->flight)
+                {
+                    $grupe[] = $natjecatelj->flight;
+                }                
+            }
+            $grupe = array_unique($grupe);
+            sort($grupe);
+            return $grupe;
+        }
+        
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+        $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->get();
+        if (!$athletes) {
+            return response()->json(['error' => 'Fucking error']);
+        }        
+        $grupe = grupe($athletes);       
+           
+        return response()->json(['ispis'=>$disciplina,'grupe'=>$grupe,'natjecanje'=>$meet_id]);
     }
 
     /**
