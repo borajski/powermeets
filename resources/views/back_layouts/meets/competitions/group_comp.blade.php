@@ -1,23 +1,22 @@
 @extends('back_layouts.back-master')
 @section('content')
 @php
-if (strpos($disciplina,"bench"))
-  {
-      $prefix = "BP";
-   $upit1 = "bench1";
-   $upit2 = "bench2";
-   $upit3 = "bench3";
-   $upit4 = "bench4";
+$upit1 = $prefix[1];
+$upit2 = $prefix[2];
+$upit3 = $prefix[3];
+$upit4 = $prefix[4];
+
+function lift ($broj)
+{
+ if ($broj < 0)
+   return 'redcell';
+$decnumber = strlen(strstr($broj,'.'))-1;
+if ($decnumber == 3)
+return 'greencell';
+else 
+   return "";
 }
-   
-if (strpos($disciplina,"deadlift"))
-   {
-       $prefix = "DL";
-       $upit1 = "deadlift1";
-       $upit2 = "deadlift2";
-   $upit3 = "deadlift3";
-   $upit4 = "deadlift4";
-   }
+
 @endphp
 <div class="container">
     <div class="row">
@@ -31,35 +30,51 @@ if (strpos($disciplina,"deadlift"))
       <th>{{ __('Athlete') }}</th>
       <th>{{ __('BWT') }}</th>
       <th>{{ __('Age') }}</th>
-      <th>{{ $prefix}}1</th>
-      <th>{{ $prefix}}2</th>
-      <th>{{ $prefix}}3</th>
-      <th>{{ $prefix}}4</th>    
+      <th>{{ $prefix[0]}}1</th>
+      <th>{{ $prefix[0]}}2</th>
+      <th>{{ $prefix[0]}}3</th>
+      <th>{{ $prefix[0]}}4</th>    
       <th>{{ __('Total') }}</th>
       <th>{{ __('Points') }}</th>
     </tr>
-  </thead>
+  </thead><div id="ispis">
   <tbody>
-@foreach ($natjecatelji as $natjecatelj)
+  
+@foreach ($slijedeci as $natjecatelj)
 <tr>
 <td>{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</td>
 <td>{{$natjecatelj->weight}}</td>
 <td>{{$natjecatelj->age}}</td>
-@if ($natjecatelj->results)
-<td>{{$natjecatelj->results->$upit1}}</td>
-<td>{{$natjecatelj->results->$upit2}}</td>
-<td>{{$natjecatelj->results->$upit3}}</td>
-<td>{{$natjecatelj->results->$upit4}}</td>
-<td>{{$natjecatelj->results->total}}</td>
-<td>{{$natjecatelj->results->points}}</td>
-@endif
-
+<td class="{{lift($natjecatelj->$upit1)}}">{{abs(round($natjecatelj->$upit1,1))}}</td>
+<td>{{$natjecatelj->$upit2}}</td>
+<td>{{$natjecatelj->$upit3}}</td>
+<td>{{$natjecatelj->$upit4}}</td>
+<td>{{$natjecatelj->total}}</td>
+<td>{{$natjecatelj->points}}</td>
 </tr>
 @endforeach
-</tbody>
+@foreach ($odradili as $natjecatelj)
+<tr>
+<td>{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</td>
+<td>{{$natjecatelj->weight}}</td>
+<td>{{$natjecatelj->age}}</td>
+<td class="{{lift($natjecatelj->$upit1)}}">{{abs(round($natjecatelj->$upit1,1))}}</td>
+<td>{{$natjecatelj->$upit2}}</td>
+<td>{{$natjecatelj->$upit3}}</td>
+<td>{{$natjecatelj->$upit4}}</td>
+<td>{{$natjecatelj->total}}</td>
+<td>{{$natjecatelj->points}}</td>
+</tr>
+@endforeach
+  
+</tbody></div>
 </table>
+<div class="mt-4 text-end"><button type="submit" class="btn btn-primary gumb" onclick="nextSerie()">Start</button></div>
 </div>
 </div>
 </div>
 </div>
+@endsection
+@section('js_after')
+<script src="{{asset('js/back/competitions.js')}}" defer></script>
 @endsection

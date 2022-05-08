@@ -10,7 +10,7 @@ function getGroups(disciplina)
       ispis = '<h4 class="bg-primary text-light text-center p-2 mt-3 mb-3">' + odgovori.ispis + '</h4>';
 
        for (var j in odgovori.grupe) {
-        body += '<p class="bg-info text-light text-center p-1 mt-3 mb-3"><a href="/competition/'+odgovori.natjecanje+'/'+odgovori.grupe[j]+'/'+odgovori.ispis+'">Grupa:&nbsp;'+ odgovori.grupe[j] + '</a></p>';
+        body += '<p class="bg-info text-light text-center p-1 mt-3 mb-3"><a href="/competition/'+odgovori.natjecanje+','+odgovori.grupe[j]+','+odgovori.ispis+'">Grupa:&nbsp;'+ odgovori.grupe[j] + '</a></p>';
     }
        document.getElementById("lista").innerHTML = ispis + body; 
                
@@ -18,4 +18,31 @@ function getGroups(disciplina)
 };
     xhttp.open("GET", url, true);
     xhttp.send();  
+}
+// ispis tekuće serije
+function nextSerie()
+{
+    var ispis;
+    var putanja = window.location.pathname.split('/');
+    var body = "";
+    document.getElementById("ispis").innerHTML = "";
+    var url = "nextSerie/"+ putanja[2];
+   const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var odgovori = JSON.parse(this.responseText);
+      ispis = '<h4 class="bg-primary text-light text-center p-2 mt-3 mb-3">' + odgovori.ispis + '</h4>';
+
+ /*    for (var j in odgovori.grupe) {
+        body += '<p class="bg-info text-light text-center p-1 mt-3 mb-3"><a href="/competition/'+odgovori.natjecanje+'/'+odgovori.grupe[j]+'/'+odgovori.ispis+'">Grupa:&nbsp;'+ odgovori.grupe[j] + '</a></p>';
+    } */
+       document.getElementById("ispis").innerHTML = ispis; 
+      
+       
+               
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send();  
+  
 }

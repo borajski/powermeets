@@ -120,3 +120,9 @@ p {
     -webkit-box-shadow: none!important;
       box-shadow: none!important;
   }
+  td.redcell {
+    background: red;
+    color: white;}
+  td.greencell {
+    background: green;
+    color: white;}

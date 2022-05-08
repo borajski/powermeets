@@ -156,12 +156,9 @@ foreach ($nominations as $nominacija)
                     @endforeach
 
                     <div class="table-responsive-sm mt-4 p-2">
-                        <form enctype="multipart/form-data" action="/setrack" method="POST">
-                            {{ csrf_field() }}
-                            <div id="lista4"></div>
+                              <div id="lista4"></div>
 
-                        </form>
-                        <div>
+                                                <div>
                         </div>
                     </div>
 

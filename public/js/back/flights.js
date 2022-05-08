@@ -188,7 +188,7 @@ function rackHeights(disciplina)
     tablica = tablica + body + '</tbody></table>'; 
 }    
 
-        kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
+        kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Set height</button></div>';
         document.getElementById("lista3").innerHTML = ispis + tablica + kraj_forme; 
                
     }
@@ -240,8 +240,8 @@ function weighing(disciplina)
     tablica = tablica + body + '</tbody></table>'; 
 }    
 
-        kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
-        document.getElementById("lista4").innerHTML = ispis + tablica + kraj_forme; 
+        //kraj_forme = '<input type="hidden" name="athletes_number" value="' + im +'"><input type="hidden" name="disciplina" value="' + disciplina + '"><div class="mt-4 text-end"><button type="submit" class="btn btn-primary">Group</button></div>';
+        document.getElementById("lista4").innerHTML = ispis + tablica; 
                
     }
 };
