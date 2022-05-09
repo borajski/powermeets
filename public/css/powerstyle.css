@@ -126,3 +126,7 @@ p {
   td.greencell {
     background: green;
     color: white;}
+  th.activecell {
+      background: orange;
+      color: white;
+    }

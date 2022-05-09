@@ -46,3 +46,57 @@ function nextSerie()
     xhttp.send();  
   
 }
+//upis nove tezine
+function promjena(id,serija) {
+  
+    nova=id+serija;
+    serija = "'"+serija+"'";
+    document.getElementById(nova).innerHTML = '<input type="text" size="5" maxlength="5" onchange="weightUpdate('+id+','+serija+',this.value)">';
+  }
+function weightUpdate(id,serija,tezina)
+{
+    var id_element = id + serija; 
+    var podaci = id + ',' + serija + ',' + tezina; 
+    var url = "inputWeight/"+ podaci;
+   const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var odgovori = JSON.parse(this.responseText);
+        document.getElementById(id_element).innerHTML = odgovori.rezultat;       
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send(); 
+    location.reload(true);
+}
+//upis lifta
+function onStage(natjecatelj,tezina,serija)
+{
+  var platforma,novalue,goodvalue;
+  //serija = "'"+serija+"'";
+  platforma = '<h3 class="text-center"><strong>'+natjecatelj.name+' '+natjecatelj.surname+'</strong></h3>';
+  platforma = platforma + '<h1 class="text-center"><strong>'+tezina+'kg</strong></h3>';
+  goodvalue = "yes-"+natjecatelj.id+"-"+tezina+"-"+serija;
+  novalue = "no-"+natjecatelj.id+"-"+tezina+"-"+serija;
+  document.getElementById("stage").innerHTML = platforma; 
+  document.getElementById("goodLift").value = goodvalue; 
+  document.getElementById("noLift").value = novalue; 
+}
+function liftResult(unos)
+{
+    //var id_element = id + serija; 
+   // var podaci = id + ',' + serija + ',' + tezina; 
+ 
+    var url = "inputLift/"+ unos;
+   const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // var odgovori = JSON.parse(this.responseText);
+      //  document.getElementById(id_element).innerHTML = odgovori.rezultat;  
+      location.reload(true);     
+    }
+};
+    xhttp.open("GET", url, true);
+    xhttp.send(); 
+    
+}

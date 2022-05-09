@@ -210,9 +210,7 @@ function promjena (id)
 function weighing(disciplina)
 {
     var ispis;
-    var rack;
     var upit;
-    var kraj_forme = "";
     var im = 0;
     var url="weighing/" + disciplina;
     document.getElementById("lista").innerHTML = "";

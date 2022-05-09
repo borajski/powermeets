@@ -216,9 +216,9 @@ class ResultsController extends Controller
             else
               $next[] = $natjecatelj;        
         }
-
+        //$serija = substr($aktivna, -1);
       
-     return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix]);
+     return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
   
     }
     public function showGroupSerie($input)
@@ -281,6 +281,34 @@ class ResultsController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+    public function inputWeight($datas)
+    {
+        $unos = explode(",",$datas);
+        $id = $unos[0];
+        $serija = $unos[1];
+        $tezina =  $unos[2];
+        $tezina = str_replace(",",".",$tezina);
+        $rezultat = Result::find($id);
+        $rezultat->$serija = $tezina;
+        $rezultat->save();
+        return response()->json(['rezultat'=>$tezina]);
+    }
+    public function inputLift($datas)
+    {
+        $unos = explode("-",$datas);
+        $lift = $unos[0];
+        $id = $unos[1];
+        $tezina =  $unos[2];
+        $serija =  $unos[3];
+        $rezultat = Result::find($id);
+        if ($lift == "yes")
+         $tezina = $tezina + 0.001;
+        else
+         $tezina = $tezina * (-1);
+        $rezultat->$serija = $tezina;
+        $rezultat->save();
+        return response()->json();
     }
 
     /**
