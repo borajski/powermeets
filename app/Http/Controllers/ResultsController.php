@@ -288,7 +288,6 @@ class ResultsController extends Controller
         $id = $unos[0];
         $serija = $unos[1];
         $tezina =  $unos[2];
-        $tezina = str_replace(",",".",$tezina);
         $rezultat = Result::find($id);
         $rezultat->$serija = $tezina;
         $rezultat->save();

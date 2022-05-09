@@ -48,7 +48,6 @@ function nextSerie()
 }
 //upis nove tezine
 function promjena(id,serija) {
-  
     nova=id+serija;
     serija = "'"+serija+"'";
     document.getElementById(nova).innerHTML = '<input type="text" size="5" maxlength="5" onchange="weightUpdate('+id+','+serija+',this.value)">';
@@ -56,8 +55,9 @@ function promjena(id,serija) {
 function weightUpdate(id,serija,tezina)
 {
     var id_element = id + serija; 
+    tezina = tezina.replace(",",".");
     var podaci = id + ',' + serija + ',' + tezina; 
-    var url = "inputWeight/"+ podaci;
+   var url = "inputWeight/"+ podaci;
    const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
