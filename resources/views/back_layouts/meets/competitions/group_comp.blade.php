@@ -1,11 +1,12 @@
 @extends('back_layouts.back-master')
 @section('content')
 @php
+global $serija,$ostatak;
 $upit1 = $prefix[1];
 $upit2 = $prefix[2];
 $upit3 = $prefix[3];
-$upit4 = $prefix[4];
 $serija = substr($aktivna, -1);
+$ostatak = count($slijedeci);
 
 function lift ($broj)
 {
@@ -17,25 +18,44 @@ return 'greencell';
 else 
    return "";
 }
-function aktivna ($broj,$aktivna)
+function aktivna ($broj)
 {
-  $serija = substr($aktivna, -1);
+ global $serija,$ostatak;
+
+ if ($ostatak == 0)
+  return '';
  if ($broj == $serija)
    return 'activecell';
  else
    return '';
+
 }
 
 @endphp
 <div class="container">
-<div class="row">
-        <div class="col-md-10 offset-md-1">
+<div class="row" style="background-color: yellow;">
+<div class="col-md-2"><p>Plates:</p>
+<div id="boje"></div>
+<div id="crvene"></div>
+ <div id="plave"></div>
+ <div id="zute"></div>
+ <div id="zelene"></div>
+ <div id="bijele"></div>
+ <div id="crne"></div>
+  <div id="male1"></div>
+   <div id="male2"></div>
+    <div id="male3"></div>
+     <div id="male4"></div>
+
+</div>
+        <div class="col-md-8">
           <h2 class="text-center">PLATFORMA</h2>
-          <div id="stage" style="background-color: yellow;"></div>
+          <div id="stage" ></div>
           <div class="mt-4 text-center">
   <a role="button" class="btn btn-success" id="goodLift" onclick="liftResult(this.value)">Good lift</a>
   <a role="button" class="btn btn-danger" id="noLift" onclick="liftResult(this.value)">No lift</a></div>
 </div>
+<div class="col-md-2"><p>Rack height:</p><div id="rack"></div></div>
 </div>
     <div class="row">
         <div class="col-md-10 offset-md-1">
@@ -48,10 +68,9 @@ function aktivna ($broj,$aktivna)
       <th>{{ __('Athlete') }}</th>
       <th>{{ __('BWT') }}</th>
       <th>{{ __('Age') }}</th>
-      <th class="{{aktivna(1,$aktivna)}}">{{ $prefix[0]}}1</th>
-      <th class="{{aktivna(2,$aktivna)}}">{{ $prefix[0]}}2</th>
-      <th class="{{aktivna(3,$aktivna)}}">{{ $prefix[0]}}3</th>
-      <th class="{{aktivna(4,$aktivna)}}">{{ $prefix[0]}}4</th>    
+      <th class="{{aktivna(1)}}">{{ $prefix[0]}}1</th>
+      <th class="{{aktivna(2)}}">{{ $prefix[0]}}2</th>
+      <th class="{{aktivna(3)}}">{{ $prefix[0]}}3</th>     
       <th>{{ __('Total') }}</th>
       <th>{{ __('Points') }}</th>
     </tr>
@@ -100,19 +119,6 @@ function aktivna ($broj,$aktivna)
 @endif
 </td>
 <!--kraj treće serije-->
-<!--četvrta serija-->
-<td class="{{lift($natjecatelj->$upit4)}}">
-@if ($aktivna == $upit4)
-<b id="{{$natjecatelj->id.$upit4}}" ondblclick="promjena({{$natjecatelj->id}},'{{$upit4}}')">
-@else
-<b>
-@endif
-@if (abs(round($natjecatelj->$upit4,1)) != 0)
-  {{abs(round($natjecatelj->$upit4,1))}}
-</b>
-@endif
-</td>
-<!--kraj četvrte serije-->
 <td>{{$natjecatelj->total}}</td>
 <td>{{$natjecatelj->points}}</td>
 </tr>
@@ -151,21 +157,8 @@ function aktivna ($broj,$aktivna)
 @endif
 </td>
 <!--kraj treće serije-->
-<!--četvrta serija-->
-<td class="{{lift($natjecatelj->$upit4)}}">
-<div id="{{$natjecatelj->id.$upit4}}">
-@if ((($serija + 1) == 4) && ($natjecatelj->$upit4 == NULL))
-<input type='text' size='5' maxlength='5' onchange="weightUpdate({{$natjecatelj->id}},'{{$upit4}}',this.value)">
-</div> 
-@else
-@if (abs(round($natjecatelj->$upit4,1)) != 0)
-  {{abs(round($natjecatelj->$upit4,1))}}
-@endif
-@endif
-</td>
-<!--kraj treće serije-->
-<td>{{$natjecatelj->total}}</td>
-<td>{{$natjecatelj->points}}</td>
+<td><strong>{{$natjecatelj->total}}</strong></td>
+<td><strong>{{$natjecatelj->points}}</strong></td>
 </tr>
 @endforeach
   

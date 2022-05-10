@@ -192,7 +192,8 @@ class ResultsController extends Controller
               $i2++;
             if ($natjecatelj->results->$upit3 == NULL)
               $i3++;
-            if ($natjecatelj->results->$upit4 == NULL)
+            //if ($natjecatelj->results->$upit4 == NULL)
+            else
               $i4++;
         }
 
@@ -202,7 +203,8 @@ class ResultsController extends Controller
           $aktivna = $upit2;
         elseif ($i4 > 0)
           $aktivna = $upit3;
-
+        
+     
         $sortiraj = "results.".$aktivna;
         $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->join('results','results.athlete_id','=','athletes.id')->orderBy($sortiraj)->get();
      
@@ -216,8 +218,7 @@ class ResultsController extends Controller
             else
               $next[] = $natjecatelj;        
         }
-        //$serija = substr($aktivna, -1);
-      
+           
      return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
   
     }
@@ -295,6 +296,36 @@ class ResultsController extends Controller
     }
     public function inputLift($datas)
     {
+        function total ($result)
+        {
+            $squat = array();
+            $squat[0] = $result->squat1;
+            $squat[1] = $result->squat2;
+            $squat[2] = $result->squat3;
+            $squat_max = max($squat);
+            if ($squat_max < 0)
+               $squat_max = 0;
+
+            $bench = array();
+            $bench[0] = $result->bench1;
+            $bench[1] = $result->bench2;
+            $bench[2] = $result->bench3;
+            $bench_max = max($bench);
+            if ($bench_max < 0)
+            $bench_max = 0;
+
+            $deadlift = array();
+            $deadlift[0] = $result->deadlift1;
+            $deadlift[1] = $result->deadlift2;
+            $deadlift[2] = $result->deadlift3;
+            $deadlift_max = max($deadlift);
+            if ($deadlift_max < 0)
+            $deadlift_max = 0;
+
+            $total = $squat_max + $bench_max + $deadlift_max;
+
+            return $total;
+        }
         $unos = explode("-",$datas);
         $lift = $unos[0];
         $id = $unos[1];
@@ -307,6 +338,12 @@ class ResultsController extends Controller
          $tezina = $tezina * (-1);
         $rezultat->$serija = $tezina;
         $rezultat->save();
+        $koeficijent = $rezultat->athlete->weight_coef;
+        $rezultat->total = total($rezultat);
+        $rezultat->points = total($rezultat)*$koeficijent;
+        $rezultat->save();
+
+
         return response()->json();
     }
 

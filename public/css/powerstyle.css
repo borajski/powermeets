@@ -122,11 +122,13 @@ p {
   }
   td.redcell {
     background: red;
-    color: white;}
+    color: white;
+    border: 1px solid white;}
   td.greencell {
     background: green;
-    color: white;}
+    color: white;
+    border: 1px solid white;}
   th.activecell {
       background: orange;
-      color: white;
+      color: white;      
     }
