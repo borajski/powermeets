@@ -76,7 +76,7 @@ Route::post('/setrack',[AthletesController::class, 'setRack']);
 Route::resource('results', ResultsController::class);
 Route::get('results/groupes/{discipline}',[ResultsController::class, 'groupes']);
 Route::get('/competition/{input}',[ResultsController::class, 'showGroup']);
-Route::get('/competition/nextSerie/{input}',[ResultsController::class, 'showGroupSerie']);
+//Route::get('/competition/nextSerie/{input}',[ResultsController::class, 'showGroupSerie']);
 Route::get('/competition/inputWeight/{input}',[ResultsController::class, 'inputWeight']);
 Route::get('/competition/inputLift/{input}',[ResultsController::class, 'inputLift']);
 // Front routes //

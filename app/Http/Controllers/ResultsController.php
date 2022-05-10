@@ -143,13 +143,21 @@ class ResultsController extends Controller
       function prefix ($disciplina)
       {
         $upit = array();
+        if (strpos($disciplina,"squat"))
+        {
+         $upit[0] = "SQ";
+         $upit[1] = "squat1";
+         $upit[2] = "squat2";
+         $upit[3] = "squat3";
+         //$upit[4] = "squat4";
+        }
         if (strpos($disciplina,"bench"))
         {
          $upit[0] = "BP";
          $upit[1] = "bench1";
          $upit[2] = "bench2";
          $upit[3] = "bench3";
-         $upit[4] = "bench4";
+         //$upit[4] = "bench4";
       }
          
       if (strpos($disciplina,"deadlift"))
@@ -158,7 +166,7 @@ class ResultsController extends Controller
              $upit[1] = "deadlift1";
              $upit[2] = "deadlift2";
              $upit[3] = "deadlift3";
-             $upit[4] = "deadlift4";
+            // $upit[4] = "deadlift4";
          }
          return $upit;
       }
@@ -175,9 +183,38 @@ class ResultsController extends Controller
         $meet = $datas[0];
         $group = $datas[1];
         $discipline = $datas[2];
-        $prefix =  prefix($discipline);
+        $next = "squat";
+        $powerlifting = array("squat","bench","deadlift");
         $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->get();
-       
+        // procedura za izvlačenje aktivne discipline u troboju
+        // dodati i za push&pull
+        $indeks = 0;
+        if (strpos($discipline,"powerlifting"))
+        {
+            foreach ($powerlifting as $single)
+            {
+                $zadnja = $single.'3';
+                $gotovi = 0;
+               // $flight = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->join('results','results.athlete_id','=','athletes.id')->whereNotNull($zadnja)->get();
+               foreach ($natjecatelji as $natjecatelj)
+               {
+                   if(isDone($natjecatelj->results->$zadnja))
+                    $gotovi++;                      
+               }            
+               if (count($natjecatelji) == $gotovi) {
+                   $indeks++;
+               }                     
+            }
+              if ($indeks == 3) 
+                $indeks = $indeks - 1;
+
+            $next = "powerlifting-".$powerlifting[$indeks];                              
+            $prefix =  prefix($next);       
+             
+        }
+        else
+          $prefix =  prefix($discipline);
+     
         //$broj_natjecatelja = count($natjecatelji);
         $i2 = 0;
         $i3 = 0;
@@ -185,7 +222,7 @@ class ResultsController extends Controller
         
         $upit2 = $prefix[2];
         $upit3 = $prefix[3];
-        $upit4 = $prefix[4]; 
+      //  $upit4 = $prefix[4]; 
         foreach ($natjecatelji as $natjecatelj)
         {
            if ($natjecatelj->results->$upit2 == NULL)
@@ -221,17 +258,6 @@ class ResultsController extends Controller
            
      return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
   
-    }
-    public function showGroupSerie($input)
-    {
-        $datas = explode(",",$input);
-        $meet = $datas[0];
-        $group = $datas[1];
-        $discipline = $datas[2];
-        $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->get();
-         $ispis = $meet.' '.$group.' '.$discipline;
-        //return view('back_layouts.meets.competitions.group_comp',['natjecatelji'=>$natjecatelji,'disciplina'=>$discipline,'grupa'=>$group]);
-        return response()->json(['ispis'=>$ispis,'natjecatelji'=>$natjecatelji]);
     }
     public function groupes($discipline)
     {
@@ -296,10 +322,22 @@ class ResultsController extends Controller
     }
     public function inputLift($datas)
     {
+        function isDone ($broj)
+        {
+        $decnumber = strlen(strstr($broj,'.'))-1;
+        if (($broj < 0) || ($decnumber == 3))
+         return true;
+        else 
+          return false;
+        }
+        
         function total ($result)
         {
+           
             $squat = array();
-            $squat[0] = $result->squat1;
+            if (isDone($result->squat1))
+             $squat[0] = $result->squat1;
+             
             $squat[1] = $result->squat2;
             $squat[2] = $result->squat3;
             $squat_max = max($squat);
@@ -307,7 +345,8 @@ class ResultsController extends Controller
                $squat_max = 0;
 
             $bench = array();
-            $bench[0] = $result->bench1;
+            if (isDone($result->bench1))
+               $bench[0] = $result->bench1;
             $bench[1] = $result->bench2;
             $bench[2] = $result->bench3;
             $bench_max = max($bench);
@@ -315,7 +354,8 @@ class ResultsController extends Controller
             $bench_max = 0;
 
             $deadlift = array();
-            $deadlift[0] = $result->deadlift1;
+            if (isDone($result->deadlift1))
+             $deadlift[0] = $result->deadlift1;
             $deadlift[1] = $result->deadlift2;
             $deadlift[2] = $result->deadlift3;
             $deadlift_max = max($deadlift);
@@ -344,7 +384,7 @@ class ResultsController extends Controller
         $rezultat->save();
 
 
-        return response()->json();
+        //return response()->json();
     }
 
     /**

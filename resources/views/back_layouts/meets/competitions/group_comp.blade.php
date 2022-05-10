@@ -8,6 +8,13 @@ $upit3 = $prefix[3];
 $serija = substr($aktivna, -1);
 $ostatak = count($slijedeci);
 
+if (str_contains($aktivna,"squat"))
+ $active_discipline = "Squat series";
+ if (str_contains($aktivna,"bench"))
+ $active_discipline = "Bench press series";
+ if (str_contains($aktivna,"deadlift"))
+ $active_discipline = "Deadlift series";
+
 function lift ($broj)
 {
  if ($broj < 0)
@@ -48,8 +55,11 @@ function aktivna ($broj)
      <div id="male4"></div>
 
 </div>
-        <div class="col-md-8">
-          <h2 class="text-center">PLATFORMA</h2>
+        <div class="col-md-8">       
+          <h2 class="text-center">
+          <p id="timespan"></p>
+        <div id="gumbi"></div>  
+          PLATFORMA</h2>
           <div id="stage" ></div>
           <div class="mt-4 text-center">
   <a role="button" class="btn btn-success" id="goodLift" onclick="liftResult(this.value)">Good lift</a>
@@ -59,8 +69,9 @@ function aktivna ($broj)
 </div>
     <div class="row">
         <div class="col-md-10 offset-md-1">
-<h3 class="text-center mb-4 mt-3"><strong>NATJECANJA</strong></h3>
-<h4 class="text-center mb-4 mt-3"><strong>Disciplina:{{$disciplina}}-Grupa:{{$grupa}}</strong></h4>
+<h3 class="text-center mb-4 mt-3"><strong>{{$disciplina}}</strong><br><small>{{$active_discipline}}</small></h3>
+
+<h4 class="text-center mb-4 mt-3"><strong>Grupa:{{$grupa}}</strong></h4>
 <div class="table-responsive-sm">
 <table class="table table-hover bg-light shadow">
 <thead class="thead t-head" >
@@ -164,10 +175,6 @@ function aktivna ($broj)
   
 </tbody></div>
 </table>
-
-<div class="mt-4 text-end"><button type="submit" class="btn btn-primary gumb" onclick="nextSerie()">Start</button></div>
-
-
 </div>
 </div>
 </div>
