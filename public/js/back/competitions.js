@@ -59,24 +59,25 @@ function weightUpdate(id, serija, tezina) {
 function onStage(natjecatelj, tezina, serija) {
     var platforma, novalue, goodvalue, rack;
     var gumbi =
-        "<input id='logbutton1' type='button' value='Start' onclick='countdown()'><input id='logbutton1' type='button' value='Stop' onclick='cdpause()'><input id='logbutton1'type='button' value='Reset' onclick='cdreset()'>";
+        "<input id='logbutton1' type='button' value='Start' class='btn btn-primary clock' onclick='countdown()'><input id='logbutton1' type='button' class='btn btn-primary clock' value='Stop' onclick='cdpause()'><input id='logbutton1'type='button' value='Reset' class='btn btn-primary clock' onclick='cdreset()'>";
 
     if (serija.includes("bench")) rack = natjecatelj.bp_rack;
     if (serija.includes("squat")) rack = natjecatelj.sq_rack;
     if (serija.includes("deadlift")) rack = "N/A";
-
-    //serija = "'"+serija+"'";
+    document.getElementById("kontrole").style.visibility = "visible";
+    document.getElementById("to-stage").style.display = "block";
+      //serija = "'"+serija+"'";
     platforma =
-        '<h3 class="text-center"><strong>' +
+        '<h1 class="text-center"><strong>' +
         natjecatelj.name +
         " " +
         natjecatelj.surname +
-        "</strong></h3>";
+        "</strong></h1>";
     platforma =
         platforma +
-        '<h1 class="text-center"><strong>' +
+        '<h2 class="text-center"><strong>' +
         tezina +
-        "kg</strong></h3>";
+        "kg</strong></h2>";
     goodvalue = "yes-" + natjecatelj.id + "-" + tezina + "-" + serija;
     novalue = "no-" + natjecatelj.id + "-" + tezina + "-" + serija;
     document.getElementById("stage").innerHTML = platforma;
@@ -117,6 +118,7 @@ function ploce(tezina, sipka, osiguraci) {
     var textm3 = "";
     var textm4 = "";
     var i;
+    var specifikacija = "<table><tbody>";
 
     if (osiguraci == 1) {
         sipka = sipka + 5;
@@ -163,10 +165,8 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = textc;
     if (crvene > 0) {
-        document.getElementById("crvene").innerHTML = "25kg - " + crvene + "x";
-    } else {
-        document.getElementById("crvene").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>25kg</td><td>" + crvene + "x</td></tr>";
+    } 
 
     for (i = 0; i < plave; i++) {
         textp +=
@@ -174,10 +174,8 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textp;
     if (plave > 0) {
-        document.getElementById("plave").innerHTML = "20kg - " + plave + "x";
-    } else {
-        document.getElementById("plave").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>20kg</td><td>" + plave + "x</td></tr>";
+    } 
 
     for (i = 0; i < zute; i++) {
         textzu +=
@@ -185,10 +183,8 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textzu;
     if (zute > 0) {
-        document.getElementById("zute").innerHTML = "15kg - " + zute + "x";
-    } else {
-        document.getElementById("zute").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>15kg</td><td>" + zute + "x</td></tr>";
+    } 
 
     for (i = 0; i < zelene; i++) {
         textze +=
@@ -196,10 +192,8 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textze;
     if (zelene > 0) {
-        document.getElementById("zelene").innerHTML = "10kg - " + zelene + "x";
-    } else {
-        document.getElementById("zelene").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>10kg</td><td>" + zelene + "x</td></tr>";
+    } 
 
     for (i = 0; i < bijele; i++) {
         textb +=
@@ -207,20 +201,16 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textb;
     if (bijele > 0) {
-        document.getElementById("bijele").innerHTML = "5kg - " + bijele + "x";
-    } else {
-        document.getElementById("bijele").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>5kg</td><td>" + bijele + "x</td></tr>";
+    } 
 
     for (i = 0; i < crne; i++) {
         textcr +=
             '<img src="/images/plates/crna.jpg"  height="70" width="10" align="middle">';
     }
     if (crne > 0) {
-        document.getElementById("crne").innerHTML = "2.5kg - " + crne + "x";
-    } else {
-        document.getElementById("crne").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>2.5kg</td><td>" + crne + "x</td></tr>";
+    } 
     text = text + textcr;
 
     for (i = 0; i < male1; i++) {
@@ -228,10 +218,8 @@ function ploce(tezina, sipka, osiguraci) {
             '<img src="/images/plates/mala1.jpg"  height="60" width="8" align="middle">';
     }
     if (male1 > 0) {
-        document.getElementById("male1").innerHTML = "1.25kg - " + male1 + "x";
-    } else {
-        document.getElementById("male1").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>1.25kg</td><td>" + male1 + "x</td></tr>";
+    } 
     text = text + textm1;
 
     for (i = 0; i < male2; i++) {
@@ -240,10 +228,8 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textm2;
     if (male2 > 0) {
-        document.getElementById("male2").innerHTML = "1kg - " + male2 + "x";
-    } else {
-        document.getElementById("male2").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>1kg</td><td>" + male2 + "x</td></tr>";
+    } 
 
     for (i = 0; i < male3; i++) {
         textm3 +=
@@ -251,21 +237,20 @@ function ploce(tezina, sipka, osiguraci) {
     }
     text = text + textm3;
     if (male3 > 0) {
-        document.getElementById("male3").innerHTML = "0.5kg - " + male3 + "x";
-    } else {
-        document.getElementById("male3").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>0.5kg</td><td>" + male3 + "x</td></tr>";
+    } 
+
     for (i = 0; i < male4; i++) {
         textm4 +=
             '<img src="/images/plates/mala4.jpg"  height="45" width="6" align="middle">';
     }
     text = text + textm4;
     if (male4 > 0) {
-        document.getElementById("male4").innerHTML = "0.25kg - " + male4 + "x";
-    } else {
-        document.getElementById("male4").innerHTML = "";
-    }
+        specifikacija = specifikacija + "<tr><td>0.25kg</td><td>" + male4 + "x</td></tr>";
+    } 
+    specifikacija = specifikacija + "</tbody></table>";
     document.getElementById("boje").innerHTML = text;
+    document.getElementById("specifikacija").innerHTML = specifikacija;
     return;
 }
 // Timer
@@ -300,3 +285,4 @@ function cdreset() {
     count = CCOUNT;
     document.getElementById("timespan").innerHTML = "1:" + "00";
 }
+
