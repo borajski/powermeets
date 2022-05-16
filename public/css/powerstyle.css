@@ -76,6 +76,14 @@ p {
   }
   .expand2 {width: 0;}
   #expandOn {display: none;}
+  #main-stage {
+    transition: margin-left .5s;
+    padding: 16px;
+    position: relative;
+    top: 3rem;
+    padding-bottom: 5rem;
+    z-index: 8;
+  }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {

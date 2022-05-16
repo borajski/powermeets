@@ -183,6 +183,7 @@ class ResultsController extends Controller
         $meet = $datas[0];
         $group = $datas[1];
         $discipline = $datas[2];
+        $stage = $datas[3];
         $next = "squat";
         $powerlifting = array("squat","bench","deadlift");
         $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->get();
@@ -255,9 +256,12 @@ class ResultsController extends Controller
             else
               $next[] = $natjecatelj;        
         }
-           
-     return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
-  
+    
+    if ($stage == "1")
+      return view('back_layouts.meets.competitions.stage',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
+    else
+      return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
+   
     }
     public function groupes($discipline)
     {

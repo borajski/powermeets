@@ -18,7 +18,7 @@ function getGroups(disciplina) {
                     odgovori.grupe[j] +
                     "," +
                     odgovori.ispis +
-                    '">Grupa:&nbsp;' +
+                    ',0">Grupa:&nbsp;' +
                     odgovori.grupe[j] +
                     "</a></p>";
             }
@@ -100,6 +100,8 @@ function liftResult(unos) {
             // var odgovori = JSON.parse(this.responseText);
             //  document.getElementById(id_element).innerHTML = odgovori.rezultat;
             location.reload(true);
+            window.opener.location.reload(); 
+           
         }
     };
     xhttp.open("GET", url, true);
@@ -284,5 +286,15 @@ function cdreset() {
     cdpause();
     count = CCOUNT;
     document.getElementById("timespan").innerHTML = "1:" + "00";
+}
+
+//otvaranje kopije stranice u novom prozoru
+function podaci ()
+{
+    var putanja = window.location.pathname.split('/');
+    var informacije = putanja[2];
+    var novaAdresa = informacije.replace(",0",",1");
+    novaAdresa = "/competition/"+novaAdresa;
+    window.open(novaAdresa,"_blank");
 }
 

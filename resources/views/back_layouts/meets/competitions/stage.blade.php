@@ -1,4 +1,4 @@
-@extends('back_layouts.back-master')
+@extends('back_layouts.back-stage-master')
 @section('content')
 @php
 global $serija,$ostatak;
@@ -54,13 +54,9 @@ if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($d
                     <a role="button" class="btn btn-success" id="goodLift" onclick="liftResult(this.value)">Good
                         lift</a>
                     <a role="button" class="btn btn-danger" id="noLift" onclick="liftResult(this.value)">No lift</a>
-                </div>
+                 </div>
               </div>
-            <h3 class="text-center mb-4"><strong>{{$disciplina}}</strong><br><small>{{$active_discipline}}</small>
-            </h3>            
-            <h4 class="text-center mb-4 mt-3"><strong>Grupa:{{$grupa}}</strong></h4>  
-            <a href="" class="btn btn-primary" role="button" onclick="podaci()">Stage window</a>
-  
+                           
             <div class="table-responsive-sm">
                 <table class="table table-hover bg-light shadow">
                     <thead class="thead t-head">
@@ -129,48 +125,7 @@ if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($d
                                 <td>{{$natjecatelj->points}}</td>
                             </tr>
                             @endforeach
-                            @foreach ($odradili as $natjecatelj)
-                            <tr>
-                                <td>{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</td>
-                                <td>{{$natjecatelj->weight}}</td>
-                                <td>{{$natjecatelj->age}}</td>
-                                <!--prva serija-->
-                                <td class="{{lift($natjecatelj->$upit1)}}">{{abs(round($natjecatelj->$upit1,1))}}</td>
-                                <!--kraj prve serije-->
-                                <!--druga serija-->
-                                <td class="{{lift($natjecatelj->$upit2)}}">
-                                    <div id="{{$natjecatelj->id.$upit2}}">
-                                        @if ((($serija + 1) == 2) && ($natjecatelj->$upit2 == NULL))
-                                        <input type='text' size='5' maxlength='5'
-                                            onchange="weightUpdate({{$natjecatelj->id}},'{{$upit2}}',this.value)">
-                                    </div>
-                                    @else
-                                    @if (abs(round($natjecatelj->$upit2,1)) != 0)
-                                    {{abs(round($natjecatelj->$upit2,1))}}
-                                    @endif
-                                    @endif
-                                </td>
-                                <!--kraj druge serije-->
-                                <!--treća serija-->
-                                <td class="{{lift($natjecatelj->$upit3)}}">
-                                    <div id="{{$natjecatelj->id.$upit3}}">
-                                        @if ((($serija + 1) == 3) && ($natjecatelj->$upit3 == NULL))
-                                        <input type='text' size='5' maxlength='5'
-                                            onchange="weightUpdate({{$natjecatelj->id}},'{{$upit3}}',this.value)">
-                                    </div>
-                                    @else
-                                    @if (abs(round($natjecatelj->$upit3,1)) != 0)
-                                    {{abs(round($natjecatelj->$upit3,1))}}
-                                    @endif
-                                    @endif
-                                </td>
-                                <!--kraj treće serije-->
-                                <td><strong>{{$natjecatelj->total}}</strong></td>
-                                <td><strong>{{$natjecatelj->points}}</strong></td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
+                                 </tbody>
                     </div>
                 </table>
             </div>
