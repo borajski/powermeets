@@ -80,10 +80,9 @@ Route::get('/competition/{input}',[ResultsController::class, 'showGroup']);
 Route::get('/competition/inputWeight/{input}',[ResultsController::class, 'inputWeight']);
 Route::get('/competition/inputLift/{input}',[ResultsController::class, 'inputLift']);
 // Front routes //
-
-
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
+Route::get('meet/nomList/{discipline}',[NominationsController::class, 'nomList']);
 
 //PDF Controller
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);

@@ -94,8 +94,33 @@ class MeetsController extends Controller
     public static function front_show($id)
     {
        $meet = Meet::find($id);
-       $federacija = $meet->federation;
-       return view('front_layouts.meets.meet')->with('meet',$meet)->with('federacija',$federacija);     
+       $nomination = Nomination::where('meet_id', $id)->get();
+       
+       $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+       $division = array(); //array za divizije koje su na natjecanju
+
+       $fed_divisions = explode(",", $meet->federation->divisions);
+       foreach ($nomination as $nominacija) {
+           $disciplina = explode(",", $nominacija->disciplina);
+           foreach ($disciplina as $single) {
+               $discipline_meet[] = $single;
+           }
+       }
+       $discipline_meet = array_unique($discipline_meet);
+       sort($discipline_meet);
+
+       foreach ($discipline_meet as $single) {
+           $prvoslovo = $single[0];
+           foreach ($fed_divisions as $feddiv) {
+               if ($prvoslovo == $feddiv[0]) {
+                   $division[] = $feddiv;
+               }
+           }
+       }
+       $division = array_unique($division);
+       return view('front_layouts.meets.meet',['discipline_meet'=>$discipline_meet,'division'=>$division,'meet'=>$meet]);
+      
+         
     }
     /**
      * Show the form for editing the specified resource.

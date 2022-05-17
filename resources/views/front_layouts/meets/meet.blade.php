@@ -212,9 +212,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         <option value="Lithuania">Lithuania</option>
                         <option value="Luxembourg">Luxembourg</option>
                         <option value="Macao">Macao</option>
-                        <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former
-                            Yugoslav
-                            Republic of</option>
+                        <option value="North Macedonica">North Macedonia</option>
                         <option value="Madagascar">Madagascar</option>
                         <option value="Malawi">Malawi</option>
                         <option value="Malaysia">Malaysia</option>
@@ -342,7 +340,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                 <div class="form-group">
                     <label for="spol"><b>Spol/Sex:</b></label>
                     <select class="form-select" id="spol" name="spol"
-                        onchange="weightCat(this.value,'{{$federacija->name}}')" required>
+                        onchange="weightCat(this.value,'{{$meet->federation->name}}')" required>
                         <option selected></option>
                         <option value="M">Muški/Male</option>
                         <option value="Z">Ženski/Female</option>
@@ -352,9 +350,9 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     <label for="discipline"><b>DISCIPLINE:</b></label>
                     <br>
                     @php
-                    $discipline = explode(",",$federacija->disciplines);
+                    $discipline = explode(",",$meet->federation->disciplines);
                     $meet_discipline = explode(',',$meet->discipline);
-                    $divizije = explode(",",$federacija->divisions);
+                    $divizije = explode(",",$meet->federation->divisions);
 
                     foreach ($divizije as $divizija)
                     {
@@ -384,7 +382,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         <select class="form-select" name="dobna">
                             <option selected></option>
                             @php
-                            $dobne = explode(",",$federacija->age_categories);
+                            $dobne = explode(",",$meet->federation->age_categories);
                             foreach ($dobne as $dob)
                             {
                             echo '<option value="'.$dob.'">'.$dob.'</option>';
@@ -406,7 +404,27 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             </form>
                 </div>
             </div>
-            @endif			
+            @endif
+            @if ($meet->gensetts->nominacije == "on")	
+            <h3 class="text-center mt-3 mb-5">{{ __('Nominations') }}</h3>
+            @foreach ($division as $divizija)
+            <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
+            @foreach ($discipline_meet as $single)
+            @if ((substr($divizija,0,2)) == substr($single,0,2))
+            @php 
+            $disc = explode("-",$single);
+            $disciplina = ucfirst($disc[1]);
+            @endphp
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getNominations('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
+            @endif
+            @endforeach
+            @endforeach
+            <div class="table-responsive-sm mt-4 p-2">
+                <div id="lista"></div>               
+            </div>
+        </div>
+            @endif		
 </div>
 				</div>
 			</div>
@@ -433,4 +451,5 @@ function weightCat(spol, fed) {
     xhttp.send();
 }
 </script>
+<script src="{{asset('js/back/nominations.js')}}" defer></script>
 @endsection

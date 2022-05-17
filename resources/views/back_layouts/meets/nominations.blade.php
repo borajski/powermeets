@@ -19,9 +19,7 @@
             @endforeach
             @endforeach
             <div class="table-responsive-sm mt-4 p-2">
-                <div id="lista"></div>
-                <div>
-                </div>
+                <div id="lista"></div>               
             </div>
         </div>
         @endsection

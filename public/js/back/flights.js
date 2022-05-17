@@ -10,7 +10,9 @@ function getFlights(disciplina)
     var iz = 0;
     var im = 0;
     var url="athletesList/" + disciplina;
-    document.getElementById("lista2").innerHTML = "";
+    document.getElementById("flights").style.display = "hide";
+    document.getElementById("racks").style.display = "hide";
+    document.getElementById("weighing").style.display = "hide";
     const xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function() {
@@ -97,6 +99,8 @@ function getGroups(disciplina)
     var url="groupesList/" + disciplina;
     const xhttp = new XMLHttpRequest();
     document.getElementById("lista").innerHTML = "";
+    document.getElementById("lista3").innerHTML = "";
+    document.getElementById("lista4").innerHTML = "";
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
@@ -147,7 +151,9 @@ function rackHeights(disciplina)
     var kraj_forme = "";
     var im = 0;
     var url="rackHeights/" + disciplina;
+    document.getElementById("lista2").innerHTML = "";
     document.getElementById("lista").innerHTML = "";
+    document.getElementById("lista4").innerHTML = "";
     const xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function() {
@@ -213,6 +219,8 @@ function weighing(disciplina)
     var upit;
     var im = 0;
     var url="weighing/" + disciplina;
+    document.getElementById("lista2").innerHTML = "";
+    document.getElementById("lista3").innerHTML = "";
     document.getElementById("lista").innerHTML = "";
     const xhttp = new XMLHttpRequest();
     

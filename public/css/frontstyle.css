@@ -12,6 +12,9 @@
   #gumb-prijava:focus {
     box-shadow: none;
   }
+  footer {
+    margin-top: 4.5rem;
+  }
   /* COVER IMAGE ON PAGES */
   .img-wrapper {
     background-position: center center;
