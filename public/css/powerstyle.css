@@ -181,3 +181,12 @@ p {
       background: orange;
       color: white;      
     }
+.accordion-button {
+  background-color: #000428;
+  color: white;
+  font-size: 1.2rem;
+}
+.accordion-button:focus {
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}

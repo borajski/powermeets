@@ -390,7 +390,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                             @endphp
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="unos_kategorije">
                         <label for="kategorija">Težinska kategorija/Weight category:</label>
                         <select class="form-select" name="kategorija" id="kategorija">
 
@@ -442,6 +442,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 function weightCat(spol, fed) {
     var wcat = spol + ',' + fed;
     document.getElementById("kategorija").innerHTML = "";
+    document.getElementById("unos_kategorije").style.display = "block";
     const xhttp = new XMLHttpRequest();
     var url = "weightCat/" + wcat;
     xhttp.onload = function() {

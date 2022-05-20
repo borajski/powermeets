@@ -95,5 +95,9 @@
  
 
   .pozadina {color: #000428;}
+  #unos_kategorije {
+   /* visibility: hidden;*/
+   display: none;
+  }
 
   
