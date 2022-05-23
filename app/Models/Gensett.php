@@ -10,7 +10,7 @@ use App\Models\Meet;
 
 class Gensett extends Model
 {
-   // use HasFactory;
+
    public function validateRequest(Request $request)
    {
      $request->validate([

@@ -431,11 +431,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 			<!-- /col -->
 		</div>
 	</div>
-</section>
-
-
-           
-   
+</section>        
 @endsection
 @section('js_after')
 <script>

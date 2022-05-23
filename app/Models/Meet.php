@@ -10,6 +10,7 @@ use App\Models\Gensett;
 use App\Models\Federation;
 use App\Models\Nomination;
 use App\Models\Athlete;
+use App\Models\Bar;
 
 class Meet extends Model
 {
@@ -101,5 +102,9 @@ private function setRequest($request)
     public function federation()
     {
         return $this->belongsTo(Federation::class);
+    }
+    public function bars()
+    {
+        return $this->hasOne(Bar::class, 'meet_id');
     }
 }

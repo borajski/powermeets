@@ -10,6 +10,7 @@ use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\AthletesController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\BarsController;
 use App\Models\Meet;
 
 /*
@@ -76,9 +77,10 @@ Route::post('/setrack',[AthletesController::class, 'setRack']);
 Route::resource('results', ResultsController::class);
 Route::get('results/groupes/{discipline}',[ResultsController::class, 'groupes']);
 Route::get('/competition/{input}',[ResultsController::class, 'showGroup']);
-//Route::get('/competition/nextSerie/{input}',[ResultsController::class, 'showGroupSerie']);
 Route::get('/competition/inputWeight/{input}',[ResultsController::class, 'inputWeight']);
 Route::get('/competition/inputLift/{input}',[ResultsController::class, 'inputLift']);
+
+Route::resource('bars', BarsController::class);
 // Front routes //
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
