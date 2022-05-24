@@ -56,7 +56,7 @@ function weightUpdate(id, serija, tezina) {
     location.reload(true);
 }
 //upis lifta
-function onStage(natjecatelj, tezina, serija) {
+function onStage(natjecatelj, tezina, serija,sipka,osigurac) {
     var platforma, novalue, goodvalue, rack;
     var gumbi =
         "<input id='logbutton1' type='button' value='Start' class='btn btn-primary clock' onclick='countdown()'><input id='logbutton1' type='button' class='btn btn-primary clock' value='Stop' onclick='cdpause()'><input id='logbutton1'type='button' value='Reset' class='btn btn-primary clock' onclick='cdreset()'>";
@@ -66,7 +66,7 @@ function onStage(natjecatelj, tezina, serija) {
     if (serija.includes("deadlift")) rack = "N/A";
     document.getElementById("kontrole").style.visibility = "visible";
     document.getElementById("to-stage").style.display = "block";
-      //serija = "'"+serija+"'";
+     //serija = "'"+serija+"'";
     platforma =
         '<h1 class="text-center"><strong>' +
         natjecatelj.name +
@@ -87,7 +87,7 @@ function onStage(natjecatelj, tezina, serija) {
         "<h2 class='text-center'><strong>" + rack + "</strong></h2>";
     document.getElementById("gumbi").innerHTML = gumbi;
     cdreset();
-    ploce(tezina, 20, 1);
+    ploce(tezina, sipka, osigurac);
 }
 function liftResult(unos) {
     //var id_element = id + serija;
@@ -121,14 +121,10 @@ function ploce(tezina, sipka, osiguraci) {
     var textm4 = "";
     var i;
     var specifikacija = "<table><tbody>";
+ 
+    sipka = Number(sipka)+Number(osiguraci)*2;  
+    tezina = (tezina - sipka) / 2;
 
-    if (osiguraci == 1) {
-        sipka = sipka + 5;
-        tezina = (tezina - sipka) / 2;
-    }
-    if (osiguraci == 0) {
-        tezina = (tezina - sipka) / 2;
-    }
     while (tezina > 0) {
         crvene = ~~(tezina / 25);
         tezina = tezina % 25;

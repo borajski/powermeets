@@ -15,6 +15,7 @@ $active_discipline = "Bench press series";
 if (str_contains($aktivna,"deadlift"))
 $active_discipline = "Deadlift series";
 
+
 function lift ($broj)
 {
 if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($decnumber==3) return 'greencell' ; else
@@ -81,7 +82,7 @@ if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($d
                             @foreach ($slijedeci as $natjecatelj)
                             <tr>
                                 <td><a href="#" class=""
-                                        onclick="onStage({{$natjecatelj}},{{$natjecatelj->$aktivna}},'{{$aktivna}}')">{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</a>
+                                        onclick="onStage({{$natjecatelj}},{{$natjecatelj->$aktivna}},'{{$aktivna}}','{{$bar}}','{{$collar}}')">{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</a>
                                 </td>
                                 <td>{{$natjecatelj->weight}}</td>
                                 <td>{{$natjecatelj->age}}</td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Athlete;
 use App\Models\Result;
+use App\Models\Bar;
 use Illuminate\Support\Facades\DB;
 
 
@@ -187,6 +188,7 @@ class ResultsController extends Controller
         $next = "squat";
         $powerlifting = array("squat","bench","deadlift");
         $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->get();
+        $sipka = Bar::where('meet_id',$meet)->first();
         // procedura za izvlačenje aktivne discipline u troboju
         // dodati i za push&pull
         $indeks = 0;
@@ -256,11 +258,28 @@ class ResultsController extends Controller
             else
               $next[] = $natjecatelj;        
         }
+        if (str_contains($aktivna,"squat"))
+{
+    $bar = $sipka->sqbar;
+    $collar = $sipka->sqcoll;
+}
+
+if (str_contains($aktivna,"bench"))
+{
+    $bar = $sipka->bpbar;
+    $collar = $sipka->bpcoll;
+}
+
+if (str_contains($aktivna,"deadlift"))
+{
+    $bar = $sipka->dlbar;
+    $collar = $sipka->dlcoll;
+}
     
     if ($stage == "1")
-      return view('back_layouts.meets.competitions.stage',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
+      return view('back_layouts.meets.competitions.stage',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna,'bar'=>$bar,'collar'=>$collar]);
     else
-      return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna]);
+      return view('back_layouts.meets.competitions.group_comp',['slijedeci'=>$next,'odradili'=>$odradili,'disciplina'=>$discipline,'grupa'=>$group,'prefix'=>$prefix,'aktivna'=>$aktivna,'bar'=>$bar,'collar'=>$collar]);
    
     }
     public function groupes($discipline)
