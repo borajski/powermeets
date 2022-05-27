@@ -1,11 +1,5 @@
 @extends('back_layouts.back-master')
 @section('content')
-@php 
-function ispisiDatum($datum)
-{
-    return  Carbon\Carbon::parse($datum)->format('d.m.Y');
-}
-@endphp
 <div class="container">
     <div class="row">
         <div class="col-md-10 offset-md-1">
@@ -18,7 +12,7 @@ function ispisiDatum($datum)
       <th>{{ __('Prijavljeni') }}</th>
       <th>{{ __('Organiziraj') }}</th>
       <th>{{ __('Natjecanje') }}</th>
-      <th>{{ __('Početak') }}</th>
+      <th>{{ __('Rezultati') }}</th>
       <th>{{ __('Obriši') }}</th>
     </tr>
   </thead>
@@ -34,6 +28,9 @@ function ispisiDatum($datum)
       <td class="text-center">      
       <a href="{{ route('results.show', $natjecanje->id)}}"><i class="fa-solid fa-dumbbell"></i></a>
       </td>
+      <td class="text-center">
+      <a href="competition_results/{{ $natjecanje->id }}">  
+      <i class="fa-solid fa-square-poll-horizontal fa-lg"></i></td>
       @else 
       <td class="text-center">   
       <i class="fa-solid fa-gear fa-lg"></i>
@@ -41,8 +38,8 @@ function ispisiDatum($datum)
       <td class="text-center">   
       <i class="fa-solid fa-dumbbell"></i>
       </td>
-      @endif    
-      <td>{{ ispisiDatum($natjecanje->datump) }}</td>          
+      <td class="text-center"><i class="fa-solid fa-square-poll-horizontal fa-lg"></i></td>
+      @endif 
       <td class="text-center"><a href="delete/{{ $natjecanje->id }}" onclick="return confirm('Are you sure you want to Remove?');"><i class="fa-solid fa-trash-can fa-lg"></i></a></td>
     </tr>
 @endforeach

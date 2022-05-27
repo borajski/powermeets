@@ -79,6 +79,8 @@ Route::get('results/groupes/{discipline}',[ResultsController::class, 'groupes'])
 Route::get('/competition/{input}',[ResultsController::class, 'showGroup']);
 Route::get('/competition/inputWeight/{input}',[ResultsController::class, 'inputWeight']);
 Route::get('/competition/inputLift/{input}',[ResultsController::class, 'inputLift']);
+Route::get('/competition_results/{id}',[ResultsController::class, 'showResults']);
+Route::get('competition_results/resList/{discipline}',[ResultsController::class, 'resList']);
 
 Route::resource('bars', BarsController::class);
 // Front routes //

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Athlete;
 use App\Models\Result;
 use App\Models\Bar;
+use App\Models\Meet;
 use Illuminate\Support\Facades\DB;
 
 
@@ -137,6 +138,22 @@ class ResultsController extends Controller
         $discipline_meet = array_unique($discipline_meet);
         sort($discipline_meet);
         return view('back_layouts.meets.competitions.index',['discipline'=>$discipline_meet,'meet'=>$id]);
+  
+    }
+    public function showResults($id)
+    {
+        $natjecatelji = Athlete::where('meet_id', $id)->get();
+        $meet = Meet::find($id);
+        $discipline_meet = array(); //discipline za koje su se natjecatelji prijavili na natjecanju
+ 
+        foreach ($natjecatelji as $natjecatelj)
+        {
+            $discipline_meet[] = $natjecatelj->discipline;
+        }
+
+        $discipline_meet = array_unique($discipline_meet);
+        sort($discipline_meet);
+        return view('back_layouts.meets.results',['discipline'=>$discipline_meet,'meet'=>$meet]);
   
     }
     public function showGroup($input)
@@ -309,7 +326,65 @@ if (str_contains($aktivna,"deadlift"))
            
         return response()->json(['ispis'=>$disciplina,'grupe'=>$grupe,'natjecanje'=>$meet_id]);
     }
+    public function resList($discipline)
+    {
+        function tezkat ($nomination)
+        {
+            $tezinske = array();
+            foreach ($nomination as $nominacija) {
+                $tezinske[] = $nominacija->kategorijat;
+            }
+            $tezinske = array_unique($tezinske);
+            sort($tezinske);
+            return $tezinske;
+        }
+        function dobkat ($nomination)
+        {
+            $dobne = array();
+            $dobne_t = array();
+            $dobne_j = array();
+            $dobne_o = array();
+            $dobne_m = array();
+            foreach ($nomination as $nominacija) {
+                $age = $nominacija->kategorijag;
+                switch ($age[0])
+                {
+                    case "T":
+                        $dobne_t[] = $age;
+                        break;
+                    case "J":
+                        $dobne_j[] = $age;
+                        break;
+                    case "O":
+                        $dobne_o[] = $age;
+                        break;
+                    case "M":
+                        $dobne_m[] = $age;
+                        break;
+                }
+                
+            }
+            $dobne_t = array_unique($dobne_t);
+            $dobne_j = array_unique($dobne_j);
+            $dobne_o = array_unique($dobne_o);
+            $dobne_m = array_unique($dobne_m);
+            $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_m;
+            return $dobne;
+        }
 
+        $unos = explode(',', $discipline);
+        $meet_id = $unos[0];
+        $disciplina = $unos[1]; 
+        $results_m = Athlete::where('meet_id', $meet_id)->where('spol','M')->where('discipline', $disciplina)->join('results','results.athlete_id','=','athletes.id')->orderBy('total','DESC')->orderBy('weight')->get();
+        $tezinske_m = tezkat($results_m);
+        $dobne_m = dobkat($results_m);
+       
+        $results_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $disciplina)->join('results','results.athlete_id','=','athletes.id')->orderBy('total','DESC')->orderBy('weight')->get();
+        $tezinske_f = tezkat($results_f);
+        $dobne_f = dobkat($results_f);
+
+        return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
