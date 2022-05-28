@@ -94,8 +94,8 @@ class ResultsController extends Controller
          }
              
            
-         echo "Bodovi:".$bodovi."<br>";
-         echo "Bodovi dobni:".$dobni_koeficijent."<br>"; 
+      //   echo "Bodovi:".$bodovi."<br>";
+      //   echo "Bodovi dobni:".$dobni_koeficijent."<br>"; 
          
         
         $athlete->age           = $starost;
@@ -365,9 +365,11 @@ if (str_contains($aktivna,"deadlift"))
                 
             }
             $dobne_t = array_unique($dobne_t);
+            sort($dobne_t);
             $dobne_j = array_unique($dobne_j);
             $dobne_o = array_unique($dobne_o);
             $dobne_m = array_unique($dobne_m);
+            sort($dobne_m);
             $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_m;
             return $dobne;
         }
@@ -384,6 +386,40 @@ if (str_contains($aktivna,"deadlift"))
         $dobne_f = dobkat($results_f);
 
         return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
+    }
+    public function relResList ($upit)
+    {
+        $unos = explode(',', $upit);
+
+        $meet_id    = $unos[0];
+        $disciplina = $unos[1];
+        $kategorija = $unos[2];
+        $spol       = $unos[3];
+
+        switch ($kategorija)
+        {
+            case "TeensJuniors":
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','<','24')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
+                break;
+            case "TeensAll":
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','<','19')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
+                break;
+            case "MastersAll":
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','>','39')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
+                break;
+            case "OverAll":
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
+                break;
+            default:
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('kategorijag',$kategorija)->join('results','results.athlete_id','=','athletes.id')->orderBy('points','DESC')->get();
+                break;
+       
+        }
+        if (empty($results))
+          $results = "";
+        return response()->json(['rezultati'=>$results]);
+   
+
     }
     /**
      * Show the form for editing the specified resource.
@@ -477,8 +513,10 @@ if (str_contains($aktivna,"deadlift"))
         $rezultat->$serija = $tezina;
         $rezultat->save();
         $koeficijent = $rezultat->athlete->weight_coef;
+        $dobni_koeficijent = $rezultat->athlete->age_coef;
         $rezultat->total = total($rezultat);
         $rezultat->points = total($rezultat)*$koeficijent;
+        $rezultat->age_points = total($rezultat)*$koeficijent*$dobni_koeficijent;
         $rezultat->save();
 
 
