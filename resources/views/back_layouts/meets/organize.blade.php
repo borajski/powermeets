@@ -1,7 +1,7 @@
 @extends('back_layouts.back-master')
 @section('content')
 @php
-$nominations = $meet->nominations;
+/* $nominations = $meet->nominations;
 $ima = false;
 foreach ($nominations as $nominacija)
 {
@@ -9,7 +9,7 @@ if (count($nominacija->athletes) > 0) {
 $ima = true;
 break;
 }
-}
+} */
 if ($meet->bars)
  {
      $sqbar = $meet->bars->sqbar;
@@ -36,7 +36,7 @@ if ($meet->bars)
             <h2 class="text-center p-3 mb-4"><strong>{{$meet->naziv}}</strong></h2>
             <h3 class="text-center mt-3 mb-5">{{ __('Meet Management') }}</h3>
        
-                @if ($ima)
+                @if (count($meet->athletes) > 0)
                 <button type="button" class="btn btn-secondary m-1" disabled>{{ __('Started') }}</button>
                            <!--Accordion-->
             <div class="accordion" id="meetmanaging">
@@ -104,7 +104,7 @@ if ($meet->bars)
                                 @endforeach
                                 <div class="table-responsive-sm mb-4 mt-4 p-2">
                                     <div id="lista2"></div>
-                                                                   </div>
+                             </div>
                             </div>
                         </div>
                     </div>

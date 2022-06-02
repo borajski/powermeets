@@ -88,6 +88,7 @@ Route::resource('bars', BarsController::class);
 Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet');
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
 Route::get('meet/nomList/{discipline}',[NominationsController::class, 'nomList']);
+Route::get('meet/groupesList/{discipline}',[AthletesController::class, 'groupesList']);
 
 //PDF Controller
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);

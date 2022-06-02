@@ -44,6 +44,14 @@
   -webkit-box-shadow: none!important;
     box-shadow: none!important;
 }
+.gumb2 {
+  background-color: #00517D;    
+  border: none;
+}
+.gumb2:focus {
+  -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
 
 
   .slika-box {

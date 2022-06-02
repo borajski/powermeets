@@ -11,7 +11,7 @@ function getNominations(disciplina)
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
-      ispis = '<h2 class="mb-3">Lista prijavljenih za: ' + odgovori.ispis + '</h2>';
+      ispis = '<h3 class="mt-3 mb-3 text-center"><strong>' + odgovori.ispis.toUpperCase() + '</strong></h3>';
       if ( odgovori.nominacije_m != "")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Klub</th><th>Dob</th><th>Država</th></tr></thead><tbody>';
@@ -32,7 +32,7 @@ function getNominations(disciplina)
         }  
         }  
     }
-    spol = '<h3 class="mb-3">Muškarci</h3>';
+    spol = '<h4 class="mt-3 mb-3">Men</h4>';
     tablica_m = spol + tablica + body + '</tbody></table>'; 
 }    
 if ( odgovori.nominacije_f != "")
@@ -55,7 +55,7 @@ if ( odgovori.nominacije_f != "")
     }  
     }  
 } 
-    spol = '<h3 class="mb-3">Žene</h3>';
+    spol = '<h4 class="mt-3 mb-3">Women</h4>';
     tablica_z = spol + tablica + body + '</tbody></table>';
 }   
         document.getElementById("lista").innerHTML = ispis + tablica_m + tablica_z;    
