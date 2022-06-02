@@ -146,7 +146,7 @@ else
 function rackHeights(disciplina)
 {
     var ispis;
-    var rack;
+    var rack,rack1,rack2;
     var upit;
     var kraj_forme = "";
     var im = 0;
@@ -159,29 +159,40 @@ function rackHeights(disciplina)
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
-      ispis = '<h2 class="mb-3">Visina stalka: ' + odgovori.ispis + '</h2>';
+      ispis = '<h2 class="mb-3">Rack heights: ' + odgovori.ispis + '</h2>';
       disciplina = odgovori.ispis;
       upit = disciplina.split(" ");
       if ( odgovori.natjecatelji != "")
       {
-        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th class="text-center">Rack height</th></tr></thead><tbody>';
+        var tablica;
         var body = "";
          for (var key in odgovori.natjecatelji) { 
-           if (upit[1] == "bench")
+           if ((upit[1] == "bench") || (upit[1] == "push&pull"))
            {
+            tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th class="text-center">Bench rack height</th></tr></thead><tbody>';
+       
             if (odgovori.natjecatelji[key].bp_rack == null)
                  rack = '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
             else
-                rack = '<td class="text-center"><b id="nova' + im + '" ondblclick="promjena(' + im + ')">' + odgovori.natjecatelji[key].bp_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+                rack = '<td class="text-center"><b id="nova-' + im + '" ondblclick="promjena(this.id,' + im + ')">' + odgovori.natjecatelji[key].bp_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
             
          }
+         
            else
            {
+          tablica ='<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th class="text-center">Squat rack height</th><th class="text-center">Bench rack height</th></tr></thead><tbody>';       
             if (odgovori.natjecatelji[key].sq_rack == null)
-            rack = '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="racksq[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+           rack1 = '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="racksq[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
            else
-           rack = '<td class="text-center"><b id="nova' + im + '" ondblclick="promjena(' + im + ')">' + odgovori.natjecatelji[key].sq_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="racksq[]" value="' + odgovori.natjecatelji[key].sq_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+           rack1 = '<td class="text-center"><b id="nova-' + im + '" ondblclick="promjena(this.id,' + im + ')">' + odgovori.natjecatelji[key].sq_rack +'</b><input type="hidden" id="nova-visina' + im + '" class="form-control w-50" name="racksq[]" value="' + odgovori.natjecatelji[key].sq_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
       
+           if (odgovori.natjecatelji[key].bp_rack == null)
+           rack2= '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+      else
+          rack2 = '<td class="text-center"><b id="nova2-' + im + '" ondblclick="promjena(this.id,' + im + ')">' + odgovori.natjecatelji[key].bp_rack +'</b><input type="hidden" id="nova2-visina' + im + '" class="form-control w-50" name="rackbp[]" value="' + odgovori.natjecatelji[key].bp_rack + '"><input type="hidden" name="idbroj[]" value="' + odgovori.natjecatelji[key].id + '"></td>'; 
+      
+          rack = rack1 +rack2;
+
            }
             im++;
             body  += '<tr>' + 
@@ -203,10 +214,11 @@ function rackHeights(disciplina)
     xhttp.send();  
 }
 //promjena vrijednosti na doubleclick
-function promjena (id)
+function promjena (adresa,id)
 {
-    nova="nova"+id;
-    visina = "nova-visina"+id;
+    var prefix = adresa.split("-");
+    var nova=prefix[0]+"-"+id;
+    var  visina = prefix[0]+"-visina"+id;
     document.getElementById(nova).innerHTML = "";
     document.getElementById(visina).type = "text";
 

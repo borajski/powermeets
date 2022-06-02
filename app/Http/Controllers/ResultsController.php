@@ -204,6 +204,7 @@ class ResultsController extends Controller
         $stage = $datas[3];
         $next = "squat";
         $powerlifting = array("squat","bench","deadlift");
+        $push = array("bench","deadlift");
         $natjecatelji = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->get();
         $sipka = Bar::where('meet_id',$meet)->first();
         // procedura za izvlačenje aktivne discipline u troboju
@@ -231,9 +232,36 @@ class ResultsController extends Controller
             $next = "powerlifting-".$powerlifting[$indeks];                              
             $prefix =  prefix($next);       
              
+        }      
+        // kraj procedure za izvlačenje aktivne discipline u troboju
+        // procedura za izvlačenje aktivne discipline u push&pullu        
+        elseif (strpos($discipline,"push"))
+        {
+            foreach ($push as $single)
+            {
+                $zadnja = $single.'3';
+                $gotovi = 0;
+               // $flight = Athlete::where('meet_id', $meet)->where('flight', $group)->where('discipline', $discipline)->whereNotNull('weight')->join('results','results.athlete_id','=','athletes.id')->whereNotNull($zadnja)->get();
+               foreach ($natjecatelji as $natjecatelj)
+               {
+                   if(isDone($natjecatelj->results->$zadnja))
+                    $gotovi++;                      
+               }            
+               if (count($natjecatelji) == $gotovi) {
+                   $indeks++;
+               }                     
+            }
+              if ($indeks == 2) 
+                $indeks = $indeks - 1;
+
+            $next = "pushpull-".$push[$indeks];                              
+            $prefix =  prefix($next);       
+             
         }
         else
           $prefix =  prefix($discipline);
+        // kraj procedure za izvlačenje aktivne discipline u push&pullu 
+
      
         //$broj_natjecatelja = count($natjecatelji);
         $i2 = 0;
@@ -242,7 +270,7 @@ class ResultsController extends Controller
         
         $upit2 = $prefix[2];
         $upit3 = $prefix[3];
-      //  $upit4 = $prefix[4]; 
+        //$upit4 = $prefix[4]; 
         foreach ($natjecatelji as $natjecatelj)
         {
            if ($natjecatelj->results->$upit2 == NULL)
