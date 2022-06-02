@@ -89,6 +89,8 @@ Route::get('meet/{id}',[MeetsController::class, 'front_show'])->name('front_meet
 Route::get('/send', [EmailsController::class, 'send'])->name('send');
 Route::get('meet/nomList/{discipline}',[NominationsController::class, 'nomList']);
 Route::get('meet/groupesList/{discipline}',[AthletesController::class, 'groupesList']);
+Route::get('meet/resList/{discipline}',[ResultsController::class, 'resList']);
+Route::get('meet/relResList/{upit}',[ResultsController::class, 'relResList']);
 
 //PDF Controller
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);

@@ -379,7 +379,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 
                                         foreach ($discipline as $disciplina) {
                                         $disciplina_m = $predznak.$disciplina;
-                                        // varijabla disciplina_m oznacava dispiplinu na natjecanju s obzirom na diviziju
+                            // varijabla disciplina_m oznacava dispiplinu na natjecanju s obzirom na diviziju
                                         if (in_array($disciplina_m, $meet_discipline)) {
                                         echo '<div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="discipline[]"
@@ -421,36 +421,133 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         </div>
                     </div>
                     @endif
-                    @if ($meet->gensetts->nominacije == "on")
-                    <h3 class="text-center mt-4 mb-5"><strong>{{ __('NOMINATIONS') }}</strong></h3>
-                    <div class="row">
-                        @foreach ($division as $divizija)
-                        <div class="col-md-6">
-                            <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
-                            @foreach ($discipline_meet as $single)
-                            @if ((substr($divizija,0,2)) == substr($single,0,2))
-                            @php
-                            $disc = explode("-",$single);
-                            $disciplina = ucfirst($disc[1]);
-                            @endphp
-                            <button type="submit" class="btn btn-primary gumb2 m-1"
-                                onclick="getNominations('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
-                            @endif
-                            @endforeach
-                        </div>
-                        @endforeach
-                    </div>
-                    <p>&nbsp;</p>
-                    <hr>
-                    <div class="table-responsive-sm mt-4 mb-4 p-2">
+                    @if ($meet->gensetts->rezultati == "on")
+                    @php
+                    function dobkat ($nomination)
+                    {
+                    $dobne = array();
+                    $dobne_t = array();
+                    $dobne_j = array();
+                    $dobne_o = array();
+                    $dobne_m = array();
+                    foreach ($nomination as $nominacija) {
+                    $age = $nominacija->kategorijag;
+                    switch ($age[0])
+                    {
+                    case "T":
+                    $dobne_t[] = $age;
+                    break;
+                    case "J":
+                    $dobne_j[] = $age;
+                    break;
+                    case "O":
+                    $dobne_o[] = $age;
+                    break;
+                    case "M":
+                    $dobne_m[] = $age;
+                    break;
+                    }
+
+                    }
+                    $dobne_t = array_unique($dobne_t);
+                    sort($dobne_t);
+                    $dobne_j = array_unique($dobne_j);
+                    $dobne_o = array_unique($dobne_o);
+                    $dobne_m = array_unique($dobne_m);
+                    sort($dobne_m);
+                    $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_m;
+                    return $dobne;
+                    }
+                    $natjecatelji = $meet->athletes;
+                    $dobne = dobkat($natjecatelji);
+                    $discipline_meet = array();
+                    foreach ($natjecatelji as $natjecatelj)
+                    {
+                    $discipline_meet[] = $natjecatelj->discipline;
+                    }
+                    $discipline_meet = array_unique($discipline_meet);
+                    sort($discipline_meet);
+                    @endphp
+                    <h3 class="text-center mt-4 mb-5"><strong>{{ __('RESULTS') }}</strong></h3>
+                    <h4 class="text-start mt-3 mb-5">{{ __('Results by categories') }}</h4>
+                    @foreach ($discipline_meet as $disciplina)
+                    <button type="submit" class="btn btn-primary gumb2 m-1"
+                        onclick="getResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+                    @endforeach
+                    <div class="table-responsive-sm mt-4 p-2">
                         <div id="lista"></div>
                     </div>
-                    @if (count($meet->athletes) > 0) 
-                    
-            <h3 class="text-center mt-4 mb-5"><strong>{{ __('FLIGHT GROUPS') }}</strong></h3>
-            <div class="row">
-                        @foreach ($division as $divizija)
-                        <div class="col-md-6">
+                    <h4 class="text-start mt-3 mb-4">{{ __('Results by relative categories') }}</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-select" name="disciplina" id="disciplina">
+                                <option selected>{{ __('Discipline') }}</option>
+                                @foreach ($discipline_meet as $disciplina)
+                                <option value="{{$disciplina}}">{{$disciplina}}</option>
+                                @endforeach
+                            </select>
+
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" name="category" id="category">
+                                <option selected>{{ __('Relative category') }}</option>
+                                <option value="OverAll">OverAll</option>
+                                <option value="TeensAll">Teens All</option>
+                                <option value="TeensJuniors">Teens+Juniors</option>
+                                <option value="MastersAll">Masters All</option>
+                                @foreach ($dobne as $dobna)
+                                <option value="{{$dobna}}">{{$dobna}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" name="gender" id="gender">
+                                <option selected>{{ __('Gender') }}</option>
+                                <option value="M">{{ __('Men') }}</option>
+                                <option value="Z">{{ __('Women') }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary gumb m-1"
+                                    onclick="getRelResults('{{$meet->id}}')">Show</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive-sm mt-4 p-2">
+                            <div id="lista2"></div>
+                        </div>
+                        @endif
+                        @if ($meet->gensetts->nominacije == "on")
+                        <h3 class="text-center mt-4 mb-5"><strong>{{ __('NOMINATIONS') }}</strong></h3>
+                        <div class="row">
+                            @foreach ($division as $divizija)
+                            <div class="col-md-6">
+                                <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
+                                @foreach ($discipline_meet as $single)
+                                @if ((substr($divizija,0,2)) == substr($single,0,2))
+                                @php
+                                $disc = explode("-",$single);
+                                $disciplina = ucfirst($disc[1]);
+                                @endphp
+                                <button type="submit" class="btn btn-primary gumb m-1"
+                                    onclick="getNominations('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
+                                @endif
+                                @endforeach
+                            </div>
+                            @endforeach
+                        </div>
+                        <p>&nbsp;</p>
+                        <hr>
+                        <div class="table-responsive-sm mt-4 mb-4 p-2">
+                            <div id="lista"></div>
+                        </div>
+                        @if (count($meet->athletes) > 0)
+
+                        <h3 class="text-center mt-4 mb-5"><strong>{{ __('FLIGHT GROUPS') }}</strong></h3>
+                        <div class="row">
+                            @foreach ($division as $divizija)
+                            <div class="col-md-6">
                                 <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
                                 @foreach ($discipline_meet as $single)
                                 @if ((substr($divizija,0,2)) == substr($single,0,2))
@@ -463,27 +560,28 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                                     onclick="getGroups('{{$meet->id.','.$single_disc}}')">{{$disciplina}}</button>
                                 @endif
                                 @endforeach
-                                        </div>
-                                @endforeach
-                                <div class="table-responsive-sm mb-4 mt-4 p-2">
-                                    <div id="lista2"></div>
-                             </div>
-            <p>&nbsp;</p>
-            <hr> 
-            @endif
+                            </div>
+                            @endforeach
+                            <div class="table-responsive-sm mb-4 mt-4 p-2">
+                                <div id="grupe"></div>
+                            </div>
+                            <p>&nbsp;</p>
+                            <hr>
+                            @endif
+                        </div>
+
+
+                        @endif
+                    </div>
                 </div>
-
-
-                @endif
             </div>
+            <!-- /col -->
         </div>
-    </div>
-    <!-- /col -->
-    </div>
     </div>
 </section>
 @endsection
 @section('js_after')
 <script src="{{asset('js/frontscripts.js')}}" defer></script>
 <script src="{{asset('js/back/nominations.js')}}" defer></script>
+<script src="{{asset('js/back/results.js')}}" defer></script>
 @endsection

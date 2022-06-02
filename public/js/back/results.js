@@ -18,7 +18,7 @@ function getResults(disciplina)
           if (disciplina.includes("deadlift"))
                  prefix = "DL";
        
-      ispis = '<h2 class="mb-3">Rezultati: ' + odgovori.ispis + '</h2>';
+      ispis = '<h3 class="mb-3"><strong>Results: ' + odgovori.ispis + '</strong></h3>';
       if ( odgovori.rezultati_m != "")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>#</th><th>Name and surname</th><th>BW</th><th>Age</th><th>'+prefix+'1</th><th>'+prefix+'2</th><th>'+prefix+'3</th><th>Total</th><th>Points</th></tr></thead><tbody>';
@@ -62,7 +62,7 @@ function getResults(disciplina)
     }
 }
 
-    spol = '<h3 class="mb-3">Muškarci</h3>';
+    spol = '<h4 class="mb-3">Men</h4>';
     tablica_m = spol + tablica + body + '</tbody></table>'; 
 }    
 if ( odgovori.rezultati_f != "")
@@ -106,7 +106,7 @@ if ( odgovori.rezultati_f != "")
     kategorija_ispis = false; 
 }
 }
-    spol = '<h3 class="mb-3">Žene</h3>';
+    spol = '<h4 class="mb-3">Women</h4>';
     tablica_z = spol + tablica + body + '</tbody></table>';
 }   
         document.getElementById("lista").innerHTML = ispis + tablica_m + tablica_z;    
@@ -123,12 +123,7 @@ function getRelResults(meet)
     var spol       = document.getElementById("gender").value;
     var kategorija = document.getElementById("category").value;
     var disciplina = document.getElementById("disciplina").value;
-
     upit = meet + "," + disciplina + "," + kategorija + "," + spol;
-
-
-   //alert("Meet:"+ meet +"Spol:"+spol+"Disciplina:"+disciplina+"Kategorija:"+kategorija);
-
     var url="relResList/" + upit;
     const xhttp = new XMLHttpRequest();
   
@@ -142,7 +137,7 @@ function getRelResults(meet)
           if (disciplina.includes("deadlift"))
                  prefix = "DL";
        
-      ispis = '<h2 class="mb-3">Relativni poredak: ' + disciplina + '-' + kategorija + '</h2>';
+      ispis = '<h3 class="mb-3"><strong>Results by relative category: ' + disciplina + '-' + kategorija + '</strong></h3>';
       if ( odgovori.rezultati != "")
       {
         var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>#</th><th>Name and surname</th><th>BW</th><th>Age</th><th>'+prefix+'1</th><th>'+prefix+'2</th><th>'+prefix+'3</th><th>Total</th><th>Points</th><th>Age points</th></tr></thead><tbody>';

@@ -15,7 +15,6 @@ function getGroups(disciplina)
 {
     var ispis;
     var im = 0;
-    var liste;
     var url="groupesList/" + disciplina;
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -51,7 +50,7 @@ else
     tablica = '<h4 class="mb-3"><strong>' + odgovori.grupe + '</strong></h4>';
 }   
 
-     document.getElementById("lista2").innerHTML = ispis + tablica; 
+     document.getElementById("grupe").innerHTML = ispis + tablica; 
                
     }
 };
