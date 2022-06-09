@@ -23,7 +23,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 <section>
     <div class="container bg-light mb-4">
         <div class="row">
-            <div class="col-md-8 offset-md-2 px-4 mt-5">
+            <div class="col-md-10 offset-md-1 px-4 mt-5">
                 <div class="mb-4">
                     <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
                     <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
@@ -470,11 +470,19 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     @endphp
                     <h3 class="text-center mt-4 mb-5"><strong>{{ __('RESULTS') }}</strong></h3>
                     <h4 class="text-start mt-3 mb-5">{{ __('Results by categories') }}</h4>
-                    @foreach ($discipline_meet as $disciplina)
-                    <button type="submit" class="btn btn-primary gumb2 m-1"
-                        onclick="getResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+                    @foreach ($discipline_meet as $disciplina)             
+            @if (strpos($disciplina,"powerlifting"))
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getFullResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @elseif (strpos($disciplina,"push"))
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getPushResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @else
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @endif
                     @endforeach
-                    <div class="table-responsive-sm mt-4 p-2">
+                    <div class="table-responsive-xxl mt-4">
                         <div id="lista"></div>
                     </div>
                     <h4 class="text-start mt-3 mb-4">{{ __('Results by relative categories') }}</h4>
@@ -514,7 +522,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                                     onclick="getRelResults('{{$meet->id}}')">Show</button>
                             </div>
                         </div>
-                        <div class="table-responsive-sm mt-4 p-2">
+                        <div class="table-responsive-xxl mt-4">
                             <div id="lista2"></div>
                         </div>
                         @endif

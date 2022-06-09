@@ -46,8 +46,18 @@ $dobne = dobkat($natjecatelji);
             <h3 class="text-center mt-3 mb-5">{{ __('Results') }}</h3>
             <h4 class="text-start mt-3 mb-5">{{ __('Results by categories') }}</h4>
             @foreach ($discipline as $disciplina)
+  
+            @if (strpos($disciplina,"powerlifting"))
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getFullResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @elseif (strpos($disciplina,"push"))
+            <button type="submit" class="btn btn-primary gumb m-1"
+                onclick="getPushResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @else
             <button type="submit" class="btn btn-primary gumb m-1"
                 onclick="getResults('{{$meet->id.','.$disciplina}}')">{{$disciplina}}</button>
+            @endif
+
             @endforeach
             <div class="table-responsive-sm mt-4 p-2">
                 <div id="lista"></div>

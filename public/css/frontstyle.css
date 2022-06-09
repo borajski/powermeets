@@ -115,6 +115,10 @@
     background: green;
     color: white;
     border: 1px solid white;}
+    td.bluecell {
+      background: blue;
+      color: white;
+      border: 1px solid white;}
 
 
   
