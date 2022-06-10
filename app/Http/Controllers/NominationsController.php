@@ -190,6 +190,10 @@ class NominationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nominacija = Nomination::find($id);
+        $meet_id = $nominacija->meet->id;
+        $nominacija->delete();
+        return redirect()->route('nominations.show', $meet_id)->with(['success' => 'Natjecatelj je obrisan!']);
+    
     }
 }

@@ -590,6 +590,5 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 @endsection
 @section('js_after')
 <script src="{{asset('js/frontscripts.js')}}" defer></script>
-<script src="{{asset('js/back/nominations.js')}}" defer></script>
 <script src="{{asset('js/back/results.js')}}" defer></script>
 @endsection

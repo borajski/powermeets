@@ -62,6 +62,7 @@ Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 Route::resource('nominations', NominationsController::class);
 Route::get('/nominations', [NominationsController::class, 'show']);
 Route::get('nominations/nomList/{discipline}',[NominationsController::class, 'nomList']);
+Route::get('/nominations/delete/{id}',[NominationsController::class, 'destroy']);
 
 Route::resource('athletes', AthletesController::class);
 Route::get('athletes/athletesList/{discipline}',[AthletesController::class, 'athletesList']);
