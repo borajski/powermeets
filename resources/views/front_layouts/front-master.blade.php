@@ -28,10 +28,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/frontstyle.css')}}">
+    <link rel="stylesheet" href="{{asset('css/frontstyle.css?v=').time()}}">
     @yield('css_before')
-    <script src="{{asset('js/frontscripts.js')}}" defer></script>
-    <script src="https://kit.fontawesome.com/55d0ffdc49.js" crossorigin="anonymous"></script>
+     <script src="https://kit.fontawesome.com/55d0ffdc49.js" crossorigin="anonymous"></script>
     @yield('js_before')
 </head>
 

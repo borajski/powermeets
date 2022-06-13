@@ -10,6 +10,7 @@ $ima = true;
 break;
 }
 } */
+
 if ($meet->bars)
  {
      $sqbar = $meet->bars->sqbar;

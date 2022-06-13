@@ -15,9 +15,10 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="text/svg+xml" href="{{asset('images/front/favicon.svg')}}">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
   
-        <link rel="stylesheet" href="{{asset('css/powerstyle.css')}}">
+        <link rel="stylesheet" href="{{asset('css/powerstyle.css?v=').time()}}">
         <script src="https://kit.fontawesome.com/55d0ffdc49.js" crossorigin="anonymous"></script>
     @yield('css_before')
     <script src="{{asset('js/back/general.js')}}" defer></script>
