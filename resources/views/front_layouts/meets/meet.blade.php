@@ -222,7 +222,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                                         <option value="Lithuania">Lithuania</option>
                                         <option value="Luxembourg">Luxembourg</option>
                                         <option value="Macao">Macao</option>
-                                        <option value="North Macedonica">North Macedonia</option>
+                                        <option value="North Macedonia">North Macedonia</option>
                                         <option value="Madagascar">Madagascar</option>
                                         <option value="Malawi">Malawi</option>
                                         <option value="Malaysia">Malaysia</option>
@@ -589,6 +589,6 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 </section>
 @endsection
 @section('js_after')
-<script src="{{asset('js/frontscripts.js')}}" defer></script>
+<script src="{{asset('js/front/front-scripts.js')}}" defer></script>
 <script src="{{asset('js/back/results.js')}}" defer></script>
 @endsection

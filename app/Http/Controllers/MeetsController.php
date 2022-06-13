@@ -8,6 +8,9 @@ use App\Models\Photo;
 use App\Models\Federation;
 use App\Models\Gensett;
 use App\Models\Nomination;
+use App\Models\Athlete;
+use App\Models\Bar;
+use App\Models\Result;
 
 
 class MeetsController extends Controller
@@ -169,17 +172,26 @@ class MeetsController extends Controller
       $meet = Meet::find($id);
       $gensett = Gensett::where('meet_id',$id)->first();
       $nominations = Nomination::where('meet_id',$id)->get();
+      $athletes = Athlete::where('meet_id',$id)->get();
+      $bar = Bar::where('meet_id',$id)->first();
       if ($meet->slika != NULL)
       {
         Photo::imageDelete($meet, 'meets', 'slika');
       }
       $meet->delete();
       $gensett->delete();
+      $bar->delete();
       foreach ($nominations as $nominacija)
       {
         $nominacija->delete();
       }
-      // kod brisanja treba razmotriti i brisanje pripadnih podataka u nominations tablici
+      foreach ($athletes as $natjecatelj)
+      {
+        $id_nat = $natjecatelj->id;
+        $rezultati = Result::find($id_nat);
+        $rezultati->delete();
+        $natjecatelj->delete();
+      }
       return redirect('/meets')->with(['success' => 'Natjecanje je uspješno obrisano!']);
     }
 }
