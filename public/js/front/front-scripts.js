@@ -79,7 +79,7 @@ if ( odgovori.nominacije_f != "")
 }
 
 //Groups printing
-function getGroups(disciplina)
+function getGroups(disciplina) 
 {
     var ispis;
     var im = 0;
@@ -92,7 +92,7 @@ function getGroups(disciplina)
      
       if ( odgovori.grupe != "Athletes are not groupped!")
       {
-        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Dob</th><th>Kategorija</th><th>Spol</th></tr></thead><tbody>';
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>#</th><th>Name and surname</th><th>Age</th><th>Category</th><th>Gender</th></tr></thead><tbody>';
         var body = "";
        for (var j in odgovori.grupe) {
         body += '<tr><td class="text-center text-light bg-dark" colspan="5">Group:&nbsp;'+ odgovori.grupe[j] + '</td></tr>';

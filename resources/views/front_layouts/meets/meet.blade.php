@@ -538,7 +538,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                                 $disc = explode("-",$single);
                                 $disciplina = ucfirst($disc[1]);
                                 @endphp
-                                <button type="submit" class="btn btn-primary gumb m-1"
+                                <button type="submit" class="btn btn-primary gumb2 m-1"
                                     onclick="getNominations('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
                                 @endif
                                 @endforeach
@@ -589,6 +589,6 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 </section>
 @endsection
 @section('js_after')
-<script src="{{asset('js/front/front-scripts.js')}}" defer></script>
+<script src="{{asset('js/front/front-scripts.js?v=').time()}}" defer></script>
 <script src="{{asset('js/back/results.js')}}" defer></script>
 @endsection
