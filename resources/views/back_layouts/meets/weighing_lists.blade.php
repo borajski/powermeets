@@ -39,7 +39,11 @@ $i = 0;
                         <td>{{ __('Weight') }}:___________</td>
                     </tr>
                     <tr>
+                       @if ($athlete->nomination->datum)
                         <td>{{ __('Birth date') }}:&nbsp;&nbsp;{{ispisiDatum($athlete->nomination->datum)}}</td>
+                        @else
+                        {{$athlete->surname}}
+                        @endif
                         <td>{{ __('Weight category') }}: &nbsp;&nbsp;{{$athlete->nomination->kategorijat}}</td>
                         <td>{{ __('Age category') }}:&nbsp;&nbsp;{{$athlete->nomination->kategorijag}}</td>
                     </tr>
