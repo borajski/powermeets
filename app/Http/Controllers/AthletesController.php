@@ -154,7 +154,12 @@ class AthletesController extends Controller
         $meet_id = $unos[0];
         $disciplina = $unos[1]; 
         $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
-        return response()->json(['natjecatelji'=>$athletes]);
+        foreach ($athletes as $athlete)
+        {
+          echo $athlete->name.'<br>'.$athlete->nomination->datum.'<br>';
+        }
+       return;
+       // return response()->json(['natjecatelji'=>$athletes]);
    
         /*
         $pdf = PDF::loadView('back_layouts.meets.weighing_lists', ['athletes' => $athletes])->setOptions(['defaultFont' => 'sans-serif']);;
