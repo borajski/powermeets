@@ -40,8 +40,7 @@ $i = 0;
                     </tr>
                     <tr>
                        
-                        <td>{{ __('Birth date') }}:&nbsp;&nbsp;</td>
-    
+                        <td>{{ __('Birth date') }}:&nbsp;&nbsp;{{ispisiDatum($athlete->nomination->datum)}}</td>    
                         <td>{{ __('Weight category') }}: &nbsp;&nbsp;{{$athlete->nomination->kategorijat}}</td>
                         <td>{{ __('Age category') }}:&nbsp;&nbsp;{{$athlete->nomination->kategorijag}}</td>
                     </tr>
