@@ -156,7 +156,8 @@ class AthletesController extends Controller
         $athletes = Athlete::where('meet_id', $meet_id)->where('discipline', $disciplina)->orderBy('surname')->get();
         foreach ($athletes as $athlete)
         {
-          echo $athlete->name.'<br>'.$athlete->nomination->datum.'<br>';
+          echo $athlete->name.' '.$athlete->surname.'<br>';
+          echo $athlete->nomination->datum.'<br>';
         }
        return;
        // return response()->json(['natjecatelji'=>$athletes]);
