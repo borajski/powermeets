@@ -28,15 +28,18 @@ function getResults(disciplina)
             body += '<tr><td class="text-center text-light bg-primary" colspan="9">'+ odgovori.dobne_m[k] + '</td></tr>';
       for (var j in odgovori.tezinske_m) {
          for (var key in odgovori.rezultati_m) {
-            var i = 0;
+          //  var i = 0;
         if ((odgovori.rezultati_m[key].kategorijat == odgovori.tezinske_m[j]) && (odgovori.rezultati_m[key].kategorijag == odgovori.dobne_m[k]))
         {
-        i++;
+      //  i++;
+    
         if (!kategorija_ispis)
          {
              body += '<tr><td class="text-center text-light bg-dark" colspan="9">Kategorija:&nbsp;'+ odgovori.tezinske_m[j] + 'kg</td></tr>';
              kategorija_ispis = true;
+             var i = 0;
             }
+            i++;
         body  += '<tr>' + 
         '<td>' + i + '</td>' +
         '<td>' + odgovori.rezultati_m[key].name+' '+odgovori.rezultati_m[key].surname+'</td>'+
