@@ -23,15 +23,15 @@ function getResults(disciplina)
       if ( odgovori.rezultati_m != "")
       {
        var body = "";
-       // var i = 0;
+       
         for (var k in odgovori.dobne_m) {
             body += '<tr><td class="text-center text-light bg-primary" colspan="9">'+ odgovori.dobne_m[k] + '</td></tr>';
       for (var j in odgovori.tezinske_m) {
          for (var key in odgovori.rezultati_m) {
-          //  var i = 0;
+       
         if ((odgovori.rezultati_m[key].kategorijat == odgovori.tezinske_m[j]) && (odgovori.rezultati_m[key].kategorijag == odgovori.dobne_m[k]))
         {
-      //  i++;
+    
     
         if (!kategorija_ispis)
          {
@@ -84,7 +84,9 @@ if ( odgovori.rezultati_f != "")
      {
          body += '<tr><td class="text-center text-light bg-dark" colspan="9">Kategorija:&nbsp;'+ odgovori.tezinske_f[j] + 'kg</td></tr>';
          kategorija_ispis = true;
-        }
+         var i = 0;
+            }
+            i++;
     body  += '<tr>' + 
     '<td>' + i + '</td>' +
     '<td>' + odgovori.rezultati_f[key].name+' '+odgovori.rezultati_f[key].surname+'</td>'+
@@ -195,7 +197,9 @@ if ( odgovori.rezultati_f != "")
      {
          body += '<tr><td class="text-center text-light bg-dark" colspan="18">Kategorija:&nbsp;'+ odgovori.tezinske_f[j] + 'kg</td></tr>';
          kategorija_ispis = true;
+         var i = 0;
         }
+        i++;
         body  += '<tr>' + 
         '<td>' + i + '</td>' +
         '<td>' + odgovori.rezultati_f[key].name+' '+odgovori.rezultati_f[key].surname+'</td>'+
@@ -263,7 +267,9 @@ function getPushResults(disciplina)
          {
              body += '<tr><td class="text-center text-light bg-dark" colspan="14">Kategorija:&nbsp;'+ odgovori.tezinske_m[j] + 'kg</td></tr>';
              kategorija_ispis = true;
+             var i = 0;
             }
+            i++;
         body  += '<tr>' + 
         '<td>' + i + '</td>' +
         '<td>' + odgovori.rezultati_m[key].name+' '+odgovori.rezultati_m[key].surname+'</td>'+
@@ -303,7 +309,9 @@ if ( odgovori.rezultati_f != "")
      {
          body += '<tr><td class="text-center text-light bg-dark" colspan="14">Kategorija:&nbsp;'+ odgovori.tezinske_f[j] + 'kg</td></tr>';
          kategorija_ispis = true;
+         var i = 0;
         }
+        i++;
         body  += '<tr>' + 
         '<td>' + i + '</td>' +
         '<td>' + odgovori.rezultati_f[key].name+' '+odgovori.rezultati_f[key].surname+'</td>'+
