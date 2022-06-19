@@ -6,6 +6,7 @@ function dobkat ($nomination)
 $dobne = array();
 $dobne_t = array();
 $dobne_j = array();
+$dobne_s = array();
 $dobne_o = array();
 $dobne_m = array();
 foreach ($nomination as $nominacija) {
@@ -17,6 +18,9 @@ $dobne_t[] = $age;
 break;
 case "J":
 $dobne_j[] = $age;
+break;
+case "S":
+$dobne_s[] = $age;
 break;
 case "O":
 $dobne_o[] = $age;
@@ -30,10 +34,11 @@ break;
 $dobne_t = array_unique($dobne_t);
 sort($dobne_t);
 $dobne_j = array_unique($dobne_j);
+$dobne_s = array_unique($dobne_s);
 $dobne_o = array_unique($dobne_o);
 $dobne_m = array_unique($dobne_m);
 sort($dobne_m);
-$dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_m;
+$dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
 return $dobne;
 }
 $natjecatelji = $meet->athletes;
