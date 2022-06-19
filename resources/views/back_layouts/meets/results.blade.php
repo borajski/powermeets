@@ -38,7 +38,7 @@ $dobne_s = array_unique($dobne_s);
 $dobne_o = array_unique($dobne_o);
 $dobne_m = array_unique($dobne_m);
 sort($dobne_m);
-$dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
+$dobne = array_merge($dobne_t,$dobne_j,$dobne_o,$dobne_s,$dobne_m);
 return $dobne;
 }
 $natjecatelji = $meet->athletes;
