@@ -388,30 +388,26 @@ if (str_contains($aktivna,"deadlift"))
                         break;
                     case "S":
                             $dobne_s[] = $age;
-                            echo $age.'<br>';
                             break;
                     case "O":
                         $dobne_o[] = $age;
                         break;
                     case "M":
                         $dobne_m[] = $age;
-                        echo $age.'<br>';
-                        break;
+                       break;
                 }
                 
             }
-            print_r($dobne_m);
-            print_r($dobne_s);
+         
             $dobne_t = array_unique($dobne_t);
             sort($dobne_t);
             $dobne_j = array_unique($dobne_j);
             $dobne_o = array_unique($dobne_o);
             $dobne_s = array_unique($dobne_s);
-            $dobne_m = array_unique($dobne_m);
-            print_r($dobne_m);
-            print_r($dobne_s);
+            $dobne_m = array_unique($dobne_m);         
             sort($dobne_m);
-            $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
+            //$dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
+            $dobne = array_merge($dobne_t,$dobne_j,$dobne_o,$dobne_s,$dobne_m);
             print_r($dobne);
            
             return $dobne;
