@@ -516,7 +516,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         </div>
                         <div class="col-md-2">
                             <select class="form-select" name="gender" id="gender">
-                                <option selected>{{ __('Gender') }}</option>
+                                <option selected>{{ __('Sex') }}</option>
                                 <option value="M">{{ __('Men') }}</option>
                                 <option value="Z">{{ __('Women') }}</option>
                             </select>
