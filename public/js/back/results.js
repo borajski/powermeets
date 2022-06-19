@@ -463,11 +463,13 @@ function round(value, precision) {
 function lift (broj)
 {
 var decnumber;
+if (broj !== null)
+{
 if (Number.isInteger(broj)) 
     decnumber = 0;  
 else
   decnumber = broj.toString().split('.')[1].length;
-
+}
 if (broj < 0)
  klasa = 'redcell';
  else
