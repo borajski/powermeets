@@ -388,12 +388,14 @@ if (str_contains($aktivna,"deadlift"))
                         break;
                     case "S":
                             $dobne_s[] = $age;
+                            echo $age.'<br>';
                             break;
                     case "O":
                         $dobne_o[] = $age;
                         break;
                     case "M":
                         $dobne_m[] = $age;
+                        echo $age.'<br>';
                         break;
                 }
                 
@@ -419,8 +421,9 @@ if (str_contains($aktivna,"deadlift"))
         $results_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $disciplina)->join('results','results.athlete_id','=','athletes.id')->orderBy('total','DESC')->orderBy('weight')->get();
         $tezinske_f = tezkat($results_f);
         $dobne_f = dobkat($results_f);
-
-        return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
+     //   return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'masteri'=>$dobne,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
+   
+       // return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
     }
     public function relResList ($upit)
     {
