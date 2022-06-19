@@ -374,6 +374,7 @@ if (str_contains($aktivna,"deadlift"))
             $dobne_t = array();
             $dobne_j = array();
             $dobne_o = array();
+            $dobne_s = array();
             $dobne_m = array();
             foreach ($nomination as $nominacija) {
                 $age = $nominacija->kategorijag;
@@ -385,6 +386,9 @@ if (str_contains($aktivna,"deadlift"))
                     case "J":
                         $dobne_j[] = $age;
                         break;
+                    case "S":
+                            $dobne_s[] = $age;
+                            break;
                     case "O":
                         $dobne_o[] = $age;
                         break;
@@ -398,9 +402,10 @@ if (str_contains($aktivna,"deadlift"))
             sort($dobne_t);
             $dobne_j = array_unique($dobne_j);
             $dobne_o = array_unique($dobne_o);
+            $dobne_s = array_unique($dobne_s);
             $dobne_m = array_unique($dobne_m);
             sort($dobne_m);
-            $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_m;
+            $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
             return $dobne;
         }
 
