@@ -108,5 +108,5 @@ $dobne = dobkat($natjecatelji);
 </div>
 @endsection
 @section('js_after')
-<script src="{{asset('js/back/results.js')}}" defer></script>
+<script src="{{asset('js/back/results.js?v=').time()}}" defer></script>
 @endsection

@@ -288,6 +288,8 @@ class ResultsController extends Controller
           $aktivna = $upit2;
         elseif ($i4 > 0)
           $aktivna = $upit3;
+        else 
+          $aktivna = $prefix[1];
         
      
         $sortiraj = "results.".$aktivna;
