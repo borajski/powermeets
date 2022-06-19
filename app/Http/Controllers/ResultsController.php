@@ -400,14 +400,20 @@ if (str_contains($aktivna,"deadlift"))
                 }
                 
             }
+            print_r($dobne_m);
+            print_r($dobne_s);
             $dobne_t = array_unique($dobne_t);
             sort($dobne_t);
             $dobne_j = array_unique($dobne_j);
             $dobne_o = array_unique($dobne_o);
             $dobne_s = array_unique($dobne_s);
             $dobne_m = array_unique($dobne_m);
+            print_r($dobne_m);
+            print_r($dobne_s);
             sort($dobne_m);
             $dobne = $dobne_t+$dobne_j+$dobne_o+$dobne_s+$dobne_m;
+            print_r($dobne);
+           
             return $dobne;
         }
 
