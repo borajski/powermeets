@@ -115,6 +115,10 @@
     background: green;
     color: white;
     border: 1px solid white;}
+    td.greycell {
+      background: rgb(235, 235, 235);
+      color: black;
+      border: 1px solid white;}
     td.bluecell {
       background: blue;
       color: white;

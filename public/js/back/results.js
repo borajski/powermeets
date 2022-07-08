@@ -454,11 +454,14 @@ else
     xhttp.send();  
 }
 //zaokruživanje
-function round(value, precision) {
+function round(value, precision) {    
     var multiplier = Math.pow(10, precision || 0);    
     multiplier =  Math.round(value * multiplier) / multiplier;
     multiplier = Math.abs(multiplier);
-    return multiplier;
+    if (multiplier === 0)
+     return "-";
+    else
+     return multiplier;
 }
 function lift (broj)
 {
@@ -479,6 +482,8 @@ klasa =  'greencell';
    else
   klasa =  "" ; 
  }
+ if (broj === 0.001)
+  klasa = "greycell";
  return klasa;
 } 
 // maksimalni lift od tri

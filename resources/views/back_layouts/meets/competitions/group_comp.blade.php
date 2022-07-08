@@ -18,9 +18,26 @@ $active_discipline = "Deadlift series";
 
 function lift ($broj)
 {
-if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($decnumber==3) return 'greencell' ; else
-    return "" ; } function aktivna ($broj) { global $serija,$ostatak; if ($ostatak==0) return '' ; if ($broj==$serija)
-    return 'activecell' ; else return '' ; } @endphp 
+if ($broj < 0)
+ return 'redcell';
+ if ($broj == 0.001)
+  return 'greycell';
+ $decnumber=strlen(strstr($broj,'.'))-1; 
+ if ($decnumber==3)
+  return 'greencell';
+else
+return "" ; 
+}
+function aktivna ($broj)
+{ 
+ global $serija,$ostatak;
+  if ($ostatak==0)
+  return '';
+ if ($broj==$serija)
+    return 'activecell';
+else return '' ;
+ }
+@endphp 
     <div class="container">
     <div class="row" id="to-stage">    
         <div class="row p-2">

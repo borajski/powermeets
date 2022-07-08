@@ -485,6 +485,8 @@ if (str_contains($aktivna,"deadlift"))
         $id = $unos[0];
         $serija = $unos[1];
         $tezina =  $unos[2];
+        if ($tezina == "-" || $tezina == "0")
+         $tezina = 0.001;
         $rezultat = Result::find($id);
         $rezultat->$serija = $tezina;
         $rezultat->save();
