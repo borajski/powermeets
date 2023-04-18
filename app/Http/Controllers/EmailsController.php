@@ -31,7 +31,7 @@ class EmailsController extends Controller
         'name' => $ime,
         'email' => $email,
         'comment' => $poruka ],
-        function ($m) use ($email) {
+        function ($m) use ($email,$ime) {
                 $m->from($email);
                 $m->to('powerlifting.software@gmail.com', 'PowerMeets')
                 ->subject('PowerMeets Contact Form')
