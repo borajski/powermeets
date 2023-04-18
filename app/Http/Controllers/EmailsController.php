@@ -34,7 +34,8 @@ class EmailsController extends Controller
         function ($m) use ($email) {
                 $m->from($email);
                 $m->to('powerlifting.software@gmail.com', 'PowerMeets')
-                        ->subject('PowerMeets Contact Form');
+                ->subject('PowerMeets Contact Form')
+                ->replyTo($email, $ime);
 });
         if (Mail::failures()) {
             return response()->Fail('Sorry! Please try again latter');
