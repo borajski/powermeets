@@ -33,7 +33,7 @@ class EmailsController extends Controller
         'comment' => $poruka ],
         function ($m) use ($email) {
                 $m->from($email);
-                $m->to('sinisa.knezevic@alfacat.eu', 'PowerMeets')
+                $m->to('powerlifting.software@gmail.com', 'PowerMeets')
                         ->subject('PowerMeets Contact Form');
 });
         if (Mail::failures()) {
