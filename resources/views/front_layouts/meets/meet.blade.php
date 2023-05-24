@@ -474,7 +474,10 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     sort($discipline_meet);
                     @endphp
                     <h3 class="text-center mt-4 mb-5"><strong>{{ __('RESULTS') }}</strong></h3>
+                    <a href="/tasks/{{$meet->id}}" id="export" class="btn btn-success btn-sm gumb_exp">Export CSV</a>
+
                     <h4 class="text-start mt-3 mb-5">{{ __('Results by categories') }}</h4>
+                    
                     @foreach ($discipline_meet as $disciplina)             
             @if (strpos($disciplina,"powerlifting"))
             <button type="submit" class="btn btn-primary gumb m-1"
@@ -591,7 +594,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
             <!-- /col -->
         </div>
     </div>
-</section>
+   </section>
 @endsection
 @section('js_after')
 <script src="{{asset('js/front/front-scripts.js?v=').time()}}" defer></script>

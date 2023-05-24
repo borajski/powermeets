@@ -21,7 +21,6 @@ class Federation extends Model
           'wf_categories'  => 'required',
           'points_system'  => 'required',
           'age_categories'  => 'required',
-          'logo'  => 'required',
           'divisions'  => 'required',
           'disciplines'  => 'required',
       ]);    
@@ -51,6 +50,20 @@ private function setRequest($request)
   {
       return Federation::where('id', $id)->update([
           'logo' => $path
+      ]);
+  }
+  public static function updateData($request, $fed_id)
+  {
+
+      return self::where('id', $fed_id)->update([
+        'name'            =>  $request->name,
+        'wm_categories'   =>  $request->wm_categories,
+        'wf_categories'   =>  $request->wf_categories,
+        'age_categories'  =>  $request->age_categories,
+        'points_system'    =>  $request->points_system,
+        'divisions'    =>  $request->divisions,
+        'disciplines'    =>  $request->disciplines,
+        'updated_at' => Carbon::now()
       ]);
   }
   public function meets()

@@ -39,11 +39,11 @@
                             <td><img src="{{ asset($federacija->logo)}}" height="30"></td>
                             <td> {{$federacija->name}}</td>
                             @if (auth()->user()->details->role == 'admin')
-                            <td> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            <td> <a href="#" type="button" onclick="editFed({{$federacija->id}})"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                     <path
                                         d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                                </svg></a>
             </div>
             </td>
 
@@ -115,6 +115,62 @@
                 </div>
             </form>
         </div>
+                <!-- Div za editiranje federacije-->
+            <div id="fedInfo"></div>
+            <div id="urediFed" style="display:none;">
+            <!-- form start -->
+            <form enctype="multipart/form-data" id="edit_forma" action="" method="POST">
+{{ csrf_field() }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group align-center">
+                            <label for="logo">Logo federacije</label>
+                            <br>
+                            <img class="align-center img-responsive img-thumbnail" id="output_ed" name="logo"
+                                src="https://via.placeholder.com/250" width="250" alt="logo">
+                            <br>
+                            <input type="file" class="form-control-file pt-2" name="logo" accept="image/*"
+                                onchange="document.getElementById('output_ed').src = window.URL.createObjectURL(this.files[0])">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div id="proba"></div>
+                            <label for="name"><b>Naziv federacije:</b></label>
+                            <input type="text" class="form-control" name="name" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="wm_categories"><b>Muške težinske kategorije:</b></label>
+                            <textarea class="form-control" rows="2" name="wm_categories" id="wm_categories" style="width: 100%"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="wf_categories"><b>Ženske težinske kategorije:</b></label>
+                            <textarea class="form-control" rows="2" name="wf_categories" id="wf_categories" style="width: 100%"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="age_categories"><b>Dobne kategorije:</b></label>
+                            <textarea class="form-control" rows="2" name="age_categories" id="age_categories"
+                                style="width: 100%"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="points_system"><b>Bodovni sustav:</b></label>
+                            <input type="text" class="form-control" name="points_system" id="points_system">
+                        </div>
+                        <div class="form-group">
+                            <label for="divisions"><b>Divizije:</b></label>
+                            <input type="text" class="form-control" name="divisions" id="divisions">
+                        </div>
+                        <div class="form-group">
+                            <label for="disciplines"><b>Discipline:</b></label>
+                            <input type="text" class="form-control" name="disciplines" id="disciplines">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end pt-3 pb-2">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 </div>
@@ -126,6 +182,39 @@ function newFed() {
         document.getElementById('noviUnos').style.display = "block";
     else
         document.getElementById('noviUnos').style.display = "none";
+}
+function editFed(federacija) {
+
+  fetch("/federation/" + federacija) 
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data and update the HTML
+  
+      if (document.getElementById('urediFed').style.display == "none")
+    {
+      document.getElementById('urediFed').style.display = "block"; 
+     } 
+   
+     document.getElementById('name').value=data.name; 
+     document.getElementById('wm_categories').value=data.wm_categories; 
+     document.getElementById('wf_categories').value=data.wf_categories; 
+     document.getElementById('age_categories').value=data.age_categories; 
+     document.getElementById('points_system').value=data.points_system; 
+     document.getElementById('divisions').value=data.divisions; 
+     document.getElementById('disciplines').value=data.disciplines; 
+     document.getElementById('output_ed').src=data.logo; 
+     document.getElementById('edit_forma').action = "/federation/"+data.id;
+     //document.getElementById('proba').innerHTML = "route('federation.update',"+data.id+")";
+
+
+   
+
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+
+
 }
 </script>
 @endsection

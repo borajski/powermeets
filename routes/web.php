@@ -53,11 +53,13 @@ Route::resource('gensetts', GensettsController::class);
 
 Route::resource('federations', FederationsController::class);
 Route::get('/federations', [FederationsController::class, 'index']);
+Route::post('/federation/{id}', [FederationsController::class, 'update'])->name('federation.update');
 Route::get('del_fed/{id}',[FederationsController::class, 'destroy']);
 Route::get('fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meets/fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
 Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
+Route::get('/federation/{id}', [FederationsController::class, 'getFed']);
 
 Route::resource('nominations', NominationsController::class);
 Route::get('/nominations', [NominationsController::class, 'show']);
@@ -95,5 +97,8 @@ Route::get('meet/relResList/{upit}',[ResultsController::class, 'relResList']);
 
 //PDF Controller
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
+
+//CSV Export
+Route::get('/tasks/{id}', [ResultsController::class, 'exportCSV']);
 
 

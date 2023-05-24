@@ -421,7 +421,7 @@ if (str_contains($aktivna,"deadlift"))
         $results_f = Athlete::where('meet_id', $meet_id)->where('spol','Z')->where('discipline', $disciplina)->join('results','results.athlete_id','=','athletes.id')->orderBy('total','DESC')->orderBy('weight')->get();
         $tezinske_f = tezkat($results_f);
         $dobne_f = dobkat($results_f);
-        return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
+      return response()->json(['ispis'=>$disciplina,'rezultati_m'=>$results_m,'tezinske_m'=>$tezinske_m,'dobne_m'=>$dobne_m,'rezultati_f'=>$results_f,'tezinske_f'=>$tezinske_f,'dobne_f'=>$dobne_f,]);
     }
     public function relResList ($upit)
     {
@@ -571,4 +571,196 @@ if (str_contains($aktivna,"deadlift"))
     {
         //
     }
+    public function exportCSV($id)
+{
+    function zaokruzi ($broj)
+    {
+        if ($broj > 0)
+         $broj = round($broj,2);
+        elseif ($broj == 0)
+        $broj = ""; // ovo treba doraditi za propušteni lift
+       return $broj; 
+    }
+    
+    $fileName = 'entries.csv';
+
+    $headers = array(
+        "Content-type"        => "text/csv",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+    $columns = array('Place','Name', 'Sex', 'Event', 'Division','WeightClassKg','Equipment','Age','State','BodyweightKg',
+    'Squat1Kg','Squat2Kg','Squat3Kg','Best3SquatKg','Bench1Kg','Bench2Kg','Bench3Kg','Best3BenchKg',
+    'Deadlift1Kg','Deadlift2Kg','Deadlift3Kg','Best3DeadliftKg','TotalKg');
+    
+    $results = Athlete::where('meet_id', $id)->join('results','results.athlete_id','=','athletes.id')->orderBy('total','DESC')->orderBy('weight')->get();
+    
+    /*return $results;
+    exit;  */ 
+      $callback = function() use($results, $columns) {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columns);
+    
+    foreach ($results as $rezultat) 
+     {
+        $row['Place'] = '';
+        $name = $rezultat->name.' '.$rezultat->surname;
+        $row['Name'] = $name;
+       
+        if ($rezultat->spol == "Z")
+         $sex = "F";
+        else
+         $sex = "M";
+    
+       
+        $row['Sex'] = $sex;
+
+        $disciplina = explode(" ",$rezultat->discipline);
+        $nastup = strtoupper($disciplina[1]);
+        $event = $nastup[0];
+        if ($event == "P")  // ovdje treba ubaciti provjeru za push&pull
+          $event = "SBD";
+        $equipment = $disciplina[0];
+        if ($equipment == "Raw")
+         $equipment = "Raw";
+        else 
+         $equipment = "Multi-ply";
+
+         $row['Event'] = $event;
+         $row['Division'] = $rezultat->kategorijag;
+         $row['WeightClassKg'] = $rezultat->kategorijat;
+         $row['Equipment'] = $equipment;
+         $row['Age'] = $rezultat->age;
+         $row['State'] = $rezultat->nomination->drzava;
+         $row['BodyweightKg'] = $rezultat->weight;
+
+         if ($event == "SBD")
+         {
+            // Ispis za čučanj
+            $squat = array();
+            $squat[0] = $rezultat->squat1;
+            $squat[1] = $rezultat->squat2;
+            $squat[2] = $rezultat->squat3;
+            $squat_max = max($squat);
+                 
+            $row['Squat1Kg'] = zaokruzi($rezultat->squat1);
+            $row['Squat2Kg'] = zaokruzi($rezultat->squat2);
+            $row['Squat3Kg'] = zaokruzi($rezultat->squat3);
+            if ($squat_max > 0) 
+                $row['Best3SquatKg'] = zaokruzi($squat_max);
+            else
+                $row['Best3SquatKg'] = ""; // ovo treba urediti za bombout
+            
+            // Ispis za bench press
+            $bench = array();
+            $bench[0] = $rezultat->bench1;
+            $bench[1] = $rezultat->bench2;
+            $bench[2] = $rezultat->bench3;
+            $bench_max = max($bench);
+                 
+            $row['Bench1Kg'] = zaokruzi($rezultat->bench1);
+            $row['Bench2Kg'] = zaokruzi($rezultat->bench2);
+            $row['Bench3Kg'] = zaokruzi($rezultat->bench3);
+            if ($bench_max > 0) 
+                $row['Best3BenchKg'] = zaokruzi($bench_max);
+            else
+                $row['Best3BenchKg'] = ""; // ovo treba urediti za bombput
+            // Ispis za deadlift
+            $deadlift = array();
+            $deadlift[0] = $rezultat->deadlift1;
+            $deadlift[1] = $rezultat->deadlift2;
+            $deadlift[2] = $rezultat->deadlift3;
+            $deadlift_max = max($deadlift);
+                 
+            $row['Deadlift1Kg'] = zaokruzi($rezultat->deadlift1);
+            $row['Deadlift2Kg'] = zaokruzi($rezultat->deadlift2);
+            $row['Deadlift3Kg'] = zaokruzi($rezultat->deadlift3);
+            if ($deadlift_max > 0) 
+                $row['Best3DeadliftKg'] = zaokruzi($deadlift_max);
+            else
+                $row['Best3DeadliftKg'] = ""; // ovo treba urediti za bombput
+         }
+         elseif ($event == "B")
+         {
+                                      
+                  $row['Squat1Kg'] = "";
+                  $row['Squat2Kg'] = "";
+                  $row['Squat3Kg'] = "";
+                  $row['Best3SquatKg'] = "";
+          
+                  
+                  // Ispis za bench press
+                  $bench = array();
+                  $bench[0] = $rezultat->bench1;
+                  $bench[1] = $rezultat->bench2;
+                  $bench[2] = $rezultat->bench3;
+                  $bench_max = max($bench);
+                       
+                  $row['Bench1Kg'] = zaokruzi($rezultat->bench1);
+                  $row['Bench2Kg'] = zaokruzi($rezultat->bench2);
+                  $row['Bench3Kg'] = zaokruzi($rezultat->bench3);
+                  if ($bench_max > 0) 
+                      $row['Best3BenchKg'] = zaokruzi($bench_max);
+                  else
+                      $row['Best3BenchKg'] = ""; // ovo treba urediti za bombout
+                
+                      $row['Deadlift1Kg'] = "";
+                      $row['Deadlift2Kg'] = "";
+                      $row['Deadlift3Kg'] = "";
+                      $row['Best3DeadliftKg'] = "";
+    
+         }
+         elseif ($event == "D")
+         {
+                                      
+                  $row['Squat1Kg'] = "";
+                  $row['Squat2Kg'] = "";
+                  $row['Squat3Kg'] = "";
+                  $row['Best3SquatKg'] = "";
+
+                  $row['Bench1Kg'] = "";
+                  $row['Bench2Kg'] = "";
+                  $row['Bench3Kg'] = "";
+                  $row['Best3BenchKg'] = "";
+          
+                  
+                  // Ispis za bench press
+                  $deadlift = array();
+                  $deadlift[0] = $rezultat->deadlift1;
+                  $deadlift[1] = $rezultat->deadlift2;
+                  $deadlift[2] = $rezultat->deadlift3;
+                  $deadlift_max = max($deadlift);
+                       
+                  $row['Deadlift1Kg'] = zaokruzi($rezultat->deadlift1);
+                  $row['Deadlift2Kg'] = zaokruzi($rezultat->deadlift2);
+                  $row['Deadlift3Kg'] = zaokruzi($rezultat->deadlift3);
+                  if ($deadlift_max > 0) 
+                      $row['Best3DeadliftKg'] = zaokruzi($deadlift_max);
+                  else
+                      $row['Best3DeadliftKg'] = ""; // ovo treba urediti za bombout            
+         }
+          // DOPISATI OPCIJU ZA PUSH&PULL I SQUAT ONLY //
+          $total = $rezultat->total;  
+          if ($total > 0) 
+          $row['TotalKg'] = zaokruzi($total);
+      else
+          $row['TotalKg'] = ""; // ovo treba urediti za bombout   
+
+    
+       fputcsv($file, array($row['Place'],$row['Name'], $row['Sex'], $row['Event'],$row['Division'],$row['WeightClassKg'],
+       $row['Equipment'],$row['Age'],$row['State'],$row['BodyweightKg'],
+       $row['Squat1Kg'],$row['Squat2Kg'],$row['Squat3Kg'],$row['Best3SquatKg'],
+       $row['Bench1Kg'],$row['Bench2Kg'],$row['Bench3Kg'],$row['Best3BenchKg'],
+       $row['Deadlift1Kg'],$row['Deadlift2Kg'],$row['Deadlift3Kg'],$row['Best3DeadliftKg'],$row['TotalKg']));
+     
+     } 
+     fclose($file);
+    };
+     
+    return response()->stream($callback, 200, $headers);
+
+    }
+
 }

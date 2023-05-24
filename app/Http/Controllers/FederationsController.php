@@ -18,7 +18,8 @@ class FederationsController extends Controller
     {
         $query = (new Federation())->newQuery();
         $federacije = $query->orderBy('name')->get();
-        return view('back_layouts.federations.index')->with('federacije',$federacije);
+        return view('back_layouts.federations.index')->with('federacije',$federacije); 
+        
     }
 
     /**
@@ -64,6 +65,16 @@ class FederationsController extends Controller
     {
         //
     }
+    
+public function getFed($id)
+{
+    $federation = Federation::find($id);
+    if (!$federation) {
+        return response()->json(['error' => 'federation not found'], 404);
+    }
+
+    return response()->json($federation);
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -129,7 +140,19 @@ class FederationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $federacija = Federation::find($id);
+        $updated = $federacija->validateRequest($request)->updateData($request,$id);
+        if ($updated)
+        {
+          if ($request->hasFile('logo')) {
+            $path = Photo::imageUpload($request->file('logo'), $federacija, 'federations', 'logo');
+            $federacija->updateImagePath($id, $path);
+        }
+        return redirect('/federations')->with(['success' => 'Federation updated successfully!']);
+    }
+    else {
+       return redirect()->back()->with(['error' => 'Oops! Some errors occured!']);
+    }
     }
 
     /**
