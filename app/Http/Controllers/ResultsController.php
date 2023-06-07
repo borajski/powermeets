@@ -438,7 +438,7 @@ if (str_contains($aktivna,"deadlift"))
                 $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','<','24')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
                 break;
             case "TeensAll":
-                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','<','19')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
+                $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','<','20')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
                 break;
             case "MastersAll":
                 $results = Athlete::where('meet_id', $meet_id)->where('spol',$spol)->where('discipline', $disciplina)->where('age','>','39')->join('results','results.athlete_id','=','athletes.id')->orderBy('age_points','DESC')->get();
