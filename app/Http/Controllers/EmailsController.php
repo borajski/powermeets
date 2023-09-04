@@ -17,11 +17,13 @@ class EmailsController extends Controller
             }
             return $new_string;
         }
-        $this->validate($request, [
+      $this->validate($request, [
+            'g-recaptcha-response' => 'required|captcha',
             'ime' => 'required',
             'email' => 'required',
-            'poruka' => 'required'
-        ]);
+            'poruka' => 'required',
+            
+        ]); 
         $ime = $request->get('ime');
         $ime = sentence_case($ime);
         $email = $request->get('email');

@@ -177,7 +177,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 </div>
 </section>
 <section>
-<section style="padding: 20px;background-color: #EAEDF7">
+<section style="padding: 20px;background-color: #EAEDF7" >
 	<div class="container-fluid mt-4">
 		<div class="row p-2">
 			<div class="col-sm-6" id="kontakt">		
@@ -190,12 +190,20 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 						<br>
 					</div>
 					<div class="form-group">
-						<label for="email">{{ __('Email address:')}}</label><input type="email" class="form-control unos" name="email" required="">
+						<label for="email">{{ __('Email address:')}}</label><input type="email" class="form-control unos" name="email" required="" onchange="brojIspis()">
 						<br>
 					</div><br>
 					<div class="form-group">
 						<label for="poruka">{{ __('Message:')}}</label><textarea class="form-control poruka unos" rows="3" name="poruka" value=""></textarea>
-					</div><button type="submit" class="btn btn-primary gumb float-end mt-5 mb-3">{{ __('Send')}}</button><br>
+					</div>
+			
+                  <div class="form-groups">
+                     <strong>Recaptcha:</strong>                  
+                     {!! NoCaptcha::renderJs() !!}
+                     {!! NoCaptcha::display() !!}
+                  </div>
+          
+					<button type="submit" class="btn btn-primary gumb float-end mt-5 mb-3">{{ __('Send')}}</button><br>
 				</form>
 
 
