@@ -176,8 +176,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 		</div>
 </div>
 </section>
-<section>
-<section style="padding: 20px;background-color: #EAEDF7" >
+<section style="padding: 20px;background-color: #EAEDF7;" >
 	<div class="container-fluid mt-4">
 		<div class="row p-2">
 			<div class="col-sm-6" id="kontakt">		
@@ -198,7 +197,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 					</div>
 			
                   <div class="form-groups">
-                     <strong>Recaptcha:</strong>                  
+                    <p>&nbsp;</p>             
                      {!! NoCaptcha::renderJs() !!}
                      {!! NoCaptcha::display() !!}
                   </div>
