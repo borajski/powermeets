@@ -35,14 +35,14 @@ class MeetsController extends Controller
         return view('back_layouts.meets.index')->with('natjecanja',$natjecanja);
       }
     }
-    /*
-    public function front_index()
-    {   
+    public function index_front()
+    {
+      
         $query = (new Meet())->newQuery();
         $natjecanja = $query->orderBy('datump')->get();
-        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja);    
+        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja); 
+    
     }
-*/
     /**
      * Show the form for creating a new resource.
      *

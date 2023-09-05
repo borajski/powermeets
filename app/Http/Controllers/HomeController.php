@@ -38,13 +38,4 @@ class HomeController extends Controller
       }
     
     }
-    public function index_front()
-    {
-      
-        $query = (new Meet())->newQuery();
-        $natjecanja = $query->orderBy('datump')->get();
-        return view('front_layouts.meets.index')->with('natjecanja',$natjecanja);
-   
-    
-    }
 }
