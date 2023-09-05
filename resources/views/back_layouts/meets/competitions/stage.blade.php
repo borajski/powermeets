@@ -58,7 +58,7 @@ if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($d
               </div>
                            
             <div class="table-responsive-sm">
-                <table class="table table-hover bg-light shadow">
+                <table class="table table-hover bg-dark text-light shadow">
                     <thead class="thead t-head">
                         <tr>
                             <th>{{ __('Athlete') }}</th>

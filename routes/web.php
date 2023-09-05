@@ -33,6 +33,8 @@ Route::get('/profile', function () {
     return view('back_layouts.users.user_profile');
 });
 
+Route::get('/competitions', [App\Http\Controllers\HomeController::class, 'index_front']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

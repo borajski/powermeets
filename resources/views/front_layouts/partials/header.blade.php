@@ -14,6 +14,9 @@
                     <a class="nav-link" href="{{route('start')}}#about">About</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/competitions') }}">Competitions</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{route('start')}}#contact">Contact</a>
                 </li>
                 <li class="nav-item dropdown">

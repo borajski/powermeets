@@ -80,7 +80,7 @@ else return '' ;
             <a href="" class="btn btn-primary" role="button" onclick="podaci()">Stage window</a>
   
             <div class="table-responsive-sm">
-                <table class="table table-hover bg-light shadow">
+                <table class="table table-hover bg-dark text-light shadow">
                     <thead class="thead t-head">
                         <tr>
                             <th>{{ __('Athlete') }}</th>

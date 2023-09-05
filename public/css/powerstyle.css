@@ -198,3 +198,6 @@ p {
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
 }
+.table-hover tbody tr:hover {
+  background: rgb(235, 250, 250);
+}

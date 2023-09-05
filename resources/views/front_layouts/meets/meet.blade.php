@@ -30,7 +30,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                     <h3 class="m-2"><b>Mjesto:</b> <small> {{$meet->mjesto}}</small></h3>
                     <h3 class="m-2"><b>Početak:</b> <small> {{ispisiDatum($meet->datump)}}</small></h3>
                     <h3 class="m-2"><b>Završetak:</b> <small> {{ispisiDatum($meet->datumk)}}</small></h3>
-
+                    @if ($meet->gensetts->rezultati != "on")
                     <h3 class="m-2"><b>Ostale informacije i obavijesti:</b></h3>
                     <div class="m-2 mt-4">
                         @php
@@ -45,6 +45,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         }
                         @endphp
                     </div>
+                    @endif
                     @if ($meet->gensetts->prijavnica == 'on')
                     <p class="text-end m-4">
                         <button class="btn btn-primary gumb" data-bs-toggle="collapse" href="#prijavnica" role="button"
