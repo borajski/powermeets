@@ -7,6 +7,7 @@ use App\Models\Nomination;
 use Mail;
 use App\Mail\AppMessageMail;
 use App\Models\Meet;
+use App\Models\Athlete;
 
 class NominationsController extends Controller
 {
@@ -81,7 +82,51 @@ class NominationsController extends Controller
             return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
         }
     }
+    public function store_after(Request $request)
+    {
+        $nomination = new Nomination();
+        $stored = $nomination->validateRequest($request)->storeData($request); // gives nomination id
+       
+        $nominacija = Nomination::find($stored);
 
+      //  $nomination = Nomination::where('meet_id', $id)->get();
+        $meet = Meet::find($nominacija->meet_id);
+
+        $fed_divisions = explode(",", $meet->federation->divisions);
+
+              
+            $disciplina = explode(",", $nominacija->disciplina);
+            foreach ($disciplina as $single) {
+                $naziv_discipline = explode("-", $single);
+                $div_indeks = $naziv_discipline[0];
+                foreach ($fed_divisions as $feddiv) {
+                    if ($div_indeks[0] == $feddiv[0]) {
+                        $division = $feddiv;
+                    }
+                }                
+                $single_discipline = $division.' '.$naziv_discipline[1];
+                $athlete = new Athlete();
+                $athlete->nomination_id = $nominacija->id;
+                $athlete->meet_id = $nominacija->meet_id;
+                $athlete->name = $nominacija->ime;
+                $athlete->surname = $nominacija->prezime;
+                $athlete->discipline = $single_discipline;
+                $athlete->spol = $nominacija->spol;
+                $athlete->kategorijat = $nominacija->kategorijat;
+                $athlete->kategorijag = $nominacija->kategorijag;
+                $athlete->save();
+            }
+        
+
+
+     
+        if ($stored) {  
+           return redirect()->route('athletes.show', $request->meet_id)->with(['success' => $nominacija->meet->naziv.' Uspješno ste prijavljeni!']);
+            }
+       else {
+            return redirect()->back()->with(['error' => 'Uf! Došlo je do pogreške u spremanju podataka!']);
+        }
+    }
     /**
      * Display the specified resource.
      *

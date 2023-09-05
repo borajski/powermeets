@@ -37,12 +37,16 @@ if ($mjesec < $mjesec0) $starost=$godina0-$godina; else { $starost=$godina0-$god
             <h4 class="text-center text-danger p-3 mb-4"><strong>{{ __('The athlete has done a weigh-in') }}</strong></h4>
             @else
             <div class="card card-body shadow">
-                <h4><strong>{{ __('Sex') }}:</strong>{{$athlete->spol}}</h4>
+                <h4><strong>{{ __('Sex') }}: </strong>{{$athlete->spol}}</h4>
 
-                <h4><strong>{{ __('Date of birth') }}:</strong>{{ispisiDatum($athlete->nomination->datum)}}</h4>
+                <h4><strong>{{ __('Date of birth') }}:</strong>
+                <input type="text" class="form-control w-50" name="datum-r" id="datum-r" value="{{ispisiDatum($athlete->nomination->datum)}}"
+                 onchange="kontrolaDatuma('{{$athlete->nomination->meet->federation->name}}')"; required>
+                </h4>
                 <br>
-                <h4><strong>{{ __('Age') }}:</strong><i
-                        class="text-info">{{ageControll($athlete->nomination->datum,$athlete->nomination->meet->federation->name)}}</i>
+
+                <h4><strong>{{ __('Age') }}:</strong>
+                <i class="text-info" id="godine">{{ageControll($athlete->nomination->datum,$athlete->nomination->meet->federation->name)}}</i>
                 </h4>
                 <form enctype="multipart/form-data" action="{{route('results.store')}}" method="POST">
                     {{ csrf_field() }}
@@ -64,7 +68,8 @@ if ($mjesec < $mjesec0) $starost=$godina0-$godina; else { $starost=$godina0-$god
                         <i>{{ __('Please check age according to age category the athlete has applied for!') }}</i></p>
 
                     <br>
-                    <h4><strong>{{ __('Weight') }}:</strong><input type="text" class="form-control w-50" name="weight"
+                    <h4><strong>{{ __('Weight') }}:</strong>
+                    <input type="text" class="form-control w-50" name="weight"
                             required></h4>
                     <div class="form-group">
                         <label
@@ -83,7 +88,7 @@ if ($mjesec < $mjesec0) $starost=$godina0-$godina; else { $starost=$godina0-$god
                             @endphp
                         </select>
                         <input type="hidden" class="form-control" name="athlete_id" value="{{$athlete->id}}">
-                        <input type="hidden" class="form-control" name="starost" value="{{ageControll($athlete->nomination->datum,$athlete->nomination->meet->federation->name)}}">
+                        <input type="hidden" class="form-control" name="starost" id="starost" value="{{ageControll($athlete->nomination->datum,$athlete->nomination->meet->federation->name)}}">
                  
                     </div>
                     <p class="text-danger">
@@ -106,7 +111,7 @@ if ($mjesec < $mjesec0) $starost=$godina0-$godina; else { $starost=$godina0-$god
                     <div class="form-group">
                         <label
                             for="deadlift"><b>{{ __('Deadlift') }}@include('back_layouts.partials.required-star')</b></label>
-                        <input type="text" class="form-control w-50" name="deadlift" required>
+                        <input type="text" class="form-control w-50" name="deadlift"  required>
                     </div>
                     <div class="mt-4 text-end">
                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
@@ -117,4 +122,40 @@ if ($mjesec < $mjesec0) $starost=$godina0-$godina; else { $starost=$godina0-$god
         </div>
     </div>
     </div>
+    @endsection
+    @section('js_after')
+    <script>
+    function kontrolaDatuma(federation)
+     {
+        var datum = document.getElementById("datum-r").value;
+        const dateParts = datum.split('.');
+        const currentDate = new Date();
+
+  // Extract day, month, and year from the array
+  const dan = parseInt(dateParts[0], 10);
+  const mjesec = parseInt(dateParts[1], 10);
+  const godina = parseInt(dateParts[2], 10);  
+
+const dan0 = String(currentDate.getDate()).padStart(2, '0'); // Get day and pad with leading zero if needed
+const mjesec0 = String(currentDate.getMonth() + 1).padStart(2, '0'); // Get month (adding 1 since months are zero-based) and pad with leading zero if needed
+const godina0 = String(currentDate.getFullYear());
+
+  if (mjesec < mjesec0) {
+    var starost = godina0 - godina;
+  } else {
+    var starost = godina0 - godina - 1;
+    if (mjesec === mjesec0) {
+      if (dan <= dan0) {
+        starost = godina0 - godina;
+      }
+    }
+  }
+  
+  if (federation === "IPF") {
+    starost = godina0 - godina;
+  }
+ document.getElementById("godine").innerHTML = starost;
+ document.getElementById("starost").value = starost;
+}
+        </script>
     @endsection

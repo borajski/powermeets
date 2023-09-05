@@ -12,6 +12,7 @@ use App\Models\Result;
 
 class Athlete extends Model
 {
+ 
     public function nomination()
     {
      return $this->belongsTo(Nomination::class);

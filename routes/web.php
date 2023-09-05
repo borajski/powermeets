@@ -62,8 +62,10 @@ Route::get('meets/fedRules/{id}',[FederationsController::class, 'fedRules']);
 Route::get('meet/weightCat/{id}',[FederationsController::class, 'weightCat']);
 Route::get('meet/ageCat/{id}',[FederationsController::class, 'ageCat']);
 Route::get('/federation/{id}', [FederationsController::class, 'getFed']);
+Route::get('athletes/weightCat/{id}',[FederationsController::class, 'weightCat']);
 
 Route::resource('nominations', NominationsController::class);
+Route::post('athletes/store_after', [NominationsController::class, 'store_after'])->name('nominations.store.after');
 Route::get('/nominations', [NominationsController::class, 'show']);
 Route::get('nominations/nomList/{discipline}',[NominationsController::class, 'nomList']);
 Route::get('/nominations/delete/{id}',[NominationsController::class, 'destroy']);
