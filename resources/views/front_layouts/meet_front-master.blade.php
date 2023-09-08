@@ -11,7 +11,7 @@
     <meta property="og:title" content="{{$meet->naziv}}">
     <meta property="og:type" content="website">
     <meta property="og:description" content="{{$meet->opis}}">
-    <meta property="og:url" content="/">
+    <meta property="og:url" content="https://www.poermeets.eu/meet/{{$meet->id}}">
     <meta name="twitter:card" content="{{asset($meet->slika)}}">
     <meta property="og:image" content="{{asset($meet->slika)}}" />
     <meta property="og:image:secure_url" content="{{asset($meet->slika)}}" />
