@@ -4,21 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Powerlifting Software</title>
-    <meta name="description" content="POWERMEETS-a modern powerlifting software-Web platform for organizing and managing powerlifting competitions.">
+    <title>{{$meet->naziv}}</title>
+    <meta name="description" content="{{$meet->opis}}">
     <meta name="keywords" content="powerlifting software,powerlifting application,web application,powerlifting meets,meets,nominations,results,entry lists,competition">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="PowerMeets-a modern powerlifting software">
+    <meta property="og:title" content="{{$meet->naziv}}">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="Web platform for organizing and managing powerlifting competitions.">
+    <meta property="og:description" content="{{$meet->opis}}">
     <meta property="og:url" content="/">
-    <meta name="twitter:card" content="{{asset('images/front/powermeets.png')}}">
-    <meta property="og:image" content="{{asset('images/front/powermeets.png')}}" />
-    <meta property="og:image:secure_url" content="{{asset('images/front/powermeets.png')}}" />
-<meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="{{asset($meet->slika)}}">
+    <meta property="og:image" content="{{asset($meet->slika)}}" />
+    <meta property="og:image:secure_url" content="{{asset($meet->slika)}}" />
+<meta property="og:image:type" content="image/jpg" />
 <meta property="og:image:width" content="751" />
 <meta property="og:image:height" content="615" />
-<meta property="og:image:alt" content="Powerlifting software" />
+<meta property="og:image:alt" content="{{$meet->naziv}}" />
     <meta name="robots" content="index,follow" /> 
     <link rel="canonical" href="/">
     <link rel="icon" type="text/svg+xml" href="{{asset('images/front/favicon.svg')}}">

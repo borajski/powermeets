@@ -1,4 +1,4 @@
-@extends('front_layouts.front-master')
+@extends('front_layouts.meet_front-master')
 @section('content')
 @php
 function ispisiDatum($datum)
@@ -12,6 +12,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
         <div class="row">
             <div class="col-md-12 bg-light pt-4 mt-2">
                 <h1 class="display-3 text-center mt-3 mb-0">{{$meet->naziv}}</h1>
+
                 <p class="text-muted h4 text-center mb-5">{{$meet->opis}}</p>
                 <div class="img-wrapper" style="background-image:url('{{asset($meet->slika)}}');">
 
