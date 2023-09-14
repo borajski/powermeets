@@ -13,6 +13,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\BarsController;
 use App\Models\Meet;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

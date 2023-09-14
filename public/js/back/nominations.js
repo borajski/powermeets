@@ -12,7 +12,7 @@ function getNominations(disciplina)
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var odgovori = JSON.parse(this.responseText);
-        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Klub</th><th>Dob</th><th>Država</th><th>Brisanje</th></tr></thead><tbody>';
+        var tablica ='<table class="table table-hover bg-light shadow"><thead class="thead"><tr><th>R.br.</th><th>Ime i prezime</th><th>Klub</th><th>Dob</th><th>Država</th><th>Brisanje</th></tr></thead><tbody hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s">';
       
       ispis = '<h3 class="mt-3 mb-3 text-center"><strong>' + odgovori.ispis.toUpperCase() + '</strong></h3>';
       if ( odgovori.nominacije_m != "")
