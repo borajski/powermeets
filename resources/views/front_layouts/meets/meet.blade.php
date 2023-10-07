@@ -21,10 +21,10 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
         </div>
     </div>
 </section>
-<section>
-    <div class="container bg-light mb-4">
+<section style="margin-bottom: 3rem;">
+    <div class="container bg-light pb-4">
         <div class="row">
-            <div class="col-md-10 offset-md-1 px-4 mt-5 mb-5">
+            <div class="col-md-10 offset-md-1 px-4">
                 <div class="mb-4">
                     <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
                     <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
