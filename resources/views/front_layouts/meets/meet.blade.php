@@ -24,7 +24,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
 <section>
     <div class="container bg-light mb-4">
         <div class="row">
-            <div class="col-md-10 offset-md-1 px-4 mt-5">
+            <div class="col-md-10 offset-md-1 px-4 mt-5 mb-5">
                 <div class="mb-4">
                     <h3 class="m-2"><b>Organizator:</b> <small>{{$meet->organizator}}</small></h3>
                     <h3 class="m-2"><b>Tehnička pravila:</b> <small> {{$meet->federation->name}}</small></h3>
@@ -47,6 +47,63 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         @endphp
                     </div>
                     @endif
+                    <!--Lista prijavljenih -->
+                    @if ($meet->gensetts->nominacije == "on")
+                        <h3 class="text-center mt-4 mb-5"><strong>{{ __('NOMINATIONS') }}</strong></h3>
+                        <div class="row">
+                            @foreach ($division as $divizija)
+                            <div class="col-md-6">
+                                <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
+                                @foreach ($discipline_meet as $single)
+                                @if ((substr($divizija,0,2)) == substr($single,0,2))
+                                @php
+                                $disc = explode("-",$single);
+                                $disciplina = ucfirst($disc[1]);
+                                @endphp
+                                <button type="submit" class="btn btn-primary gumb2 m-1"
+                                    onclick="getNominations('{{$meet->id.','.$single}}')">{{$disciplina}}</button>
+                                @endif
+                                @endforeach
+                            </div>
+                            @endforeach
+                        </div>
+                        <p>&nbsp;</p>
+                        <hr>
+                        <div class="table-responsive-sm mt-4 mb-4 p-2">
+                            <div id="lista"></div>
+                        </div>
+                        @if (count($meet->athletes) > 0)
+
+                        <h3 class="text-center mt-4 mb-5"><strong>{{ __('FLIGHT GROUPS') }}</strong></h3>
+                        <div class="row">
+                            @foreach ($division as $divizija)
+                            <div class="col-md-6">
+                                <h4 class="mt-2 mb-2"><strong> {{$divizija}}</strong></h4>
+                                @foreach ($discipline_meet as $single)
+                                @if ((substr($divizija,0,2)) == substr($single,0,2))
+                                @php
+                                $disc = explode("-",$single);
+                                $single_disc = $divizija.' '.$disc[1];
+                                $disciplina = ucfirst($disc[1]);
+                                @endphp
+                                <button type="submit" class="btn btn-primary gumb2 m-1"
+                                    onclick="getGroups('{{$meet->id.','.$single_disc}}')">{{$disciplina}}</button>
+                                @endif
+                                @endforeach
+                            </div>
+                            @endforeach
+                            <div class="table-responsive-sm mb-4 mt-4 p-2">
+                                <div id="grupe"></div>
+                            </div>
+                            <p>&nbsp;</p>
+                            <hr>
+                            @endif
+                        </div>
+
+
+                        @endif
+                       <!--kraj liste prijavljenih-->
+
                     @if ($meet->gensetts->prijavnica == 'on')
                     <p class="text-end m-4">
                         <button class="btn btn-primary gumb" data-bs-toggle="collapse" href="#prijavnica" role="button"
@@ -536,6 +593,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                             <div id="lista2"></div>
                         </div>
                         @endif
+                        <!--
                         @if ($meet->gensetts->nominacije == "on")
                         <h3 class="text-center mt-4 mb-5"><strong>{{ __('NOMINATIONS') }}</strong></h3>
                         <div class="row">
@@ -589,7 +647,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
                         </div>
 
 
-                        @endif
+                        @endif -->
                     </div>
                 </div>
             </div>
