@@ -21,7 +21,7 @@ return Carbon\Carbon::parse($datum)->format('d.m.Y');
         </div>
     </div>
 </section>
-<section style="margin-bottom: 3rem;">
+<section style="margin-bottom: 5rem;">
     <div class="container bg-light pb-4">
         <div class="row">
             <div class="col-md-10 offset-md-1 px-4">
