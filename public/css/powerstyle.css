@@ -201,3 +201,6 @@ p {
 .table-hover tbody tr:hover {
   background: rgb(235, 250, 250);
 }
+.athlete-link {
+  color: white;
+}

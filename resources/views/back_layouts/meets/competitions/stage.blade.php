@@ -76,7 +76,7 @@ if ($broj < 0) return 'redcell' ; $decnumber=strlen(strstr($broj,'.'))-1; if ($d
 
                             @foreach ($slijedeci as $natjecatelj)
                             <tr>
-                                <td><a href="#" class=""
+                                <td><a href="#" class="athlete-link"
                                         onclick="onStage({{$natjecatelj}},{{$natjecatelj->$aktivna}},'{{$aktivna}}','{{$bar}}','{{$collar}}')">{{$natjecatelj->name}}&nbsp;{{$natjecatelj->surname}}</a>
                                 </td>
                                 <td>{{$natjecatelj->weight}}</td>
