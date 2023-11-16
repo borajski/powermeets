@@ -98,7 +98,13 @@
                         </div>
                         <div class="form-group">
                             <label for="points_system"><b>Bodovni sustav:</b></label>
-                            <input type="text" class="form-control" name="points_system">
+                                                      <select class="form-select" name="points_system">
+  <option selected>Izaberi bodovni sustav</option>
+  <option value="Reshel">Reshel</option>
+  <option value="Wilks">Wilks</option>
+  <option value="IPF-GL">IPF-GL</option>
+  <option value="Glossbrenner">Glossbrenner</option>
+</select>
                         </div>
                         <div class="form-group">
                             <label for="divisions"><b>Divizije:</b></label>
@@ -154,7 +160,14 @@
                         </div>
                         <div class="form-group">
                             <label for="points_system"><b>Bodovni sustav:</b></label>
-                            <input type="text" class="form-control" name="points_system" id="points_system">
+                            <select class="form-select" name="points_system">
+                            <option selected id="points_system"></option>
+  <option value="Reshel">Reshel</option>
+  <option value="Wilks">Wilks</option>
+  <option value="IPF-GL">IPF-GL</option>
+  <option value="Glossbrenner">Glossbrenner</option>
+</select>
+                            
                         </div>
                         <div class="form-group">
                             <label for="divisions"><b>Divizije:</b></label>
@@ -194,12 +207,13 @@ function editFed(federacija) {
     {
       document.getElementById('urediFed').style.display = "block"; 
      } 
-   
+    
+  
      document.getElementById('name').value=data.name; 
      document.getElementById('wm_categories').value=data.wm_categories; 
      document.getElementById('wf_categories').value=data.wf_categories; 
      document.getElementById('age_categories').value=data.age_categories; 
-     document.getElementById('points_system').value=data.points_system; 
+     document.getElementById('points_system').innerHTML=data.points_system; 
      document.getElementById('divisions').value=data.divisions; 
      document.getElementById('disciplines').value=data.disciplines; 
      document.getElementById('output_ed').src=data.logo; 
