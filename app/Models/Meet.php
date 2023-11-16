@@ -34,7 +34,7 @@ class Meet extends Model
     $disc_meet = "";
     foreach ($disciplines as $disciplina) {           
         $disc_meet = $disc_meet.','.$disciplina;
-    } 
+        } 
     $disc_meet = ltrim($disc_meet, $disc_meet[0]);
 
     return self::insertGetId([

@@ -126,28 +126,32 @@ $rezultati = '';
                             <label for="discipline"><b>DISCIPLINE:</b></label>
                             <br>
                             @php
-                            $discipline = explode(",",$federacija->disciplines);
+                            $discipline = explode(",",$meet->federation->disciplines);
                             $meet_discipline = explode(',',$meet->discipline);
                             $divizije = explode(",",$federacija->divisions);
-
                             foreach ($divizije as $divizija)
                             {
                             $predznak = substr($divizija,0,2).'-';
                             echo '<div class="form-group mt-4 mb-4">
-                                <label for="'.$divizija.'"><b>'.$divizija.':
-                                    </b></label><br>';
+                                <label for="'.$divizija.'"><b>'.$divizija.':</b></label><br>';
 
                                 foreach ($discipline as $disciplina) {
+                                   
                                 $disciplina_m = $predznak.$disciplina;
+                            
+            
                                 // varijabla disciplina_m oznacava dispiplinu na natjecanju s obzirom na diviziju
+                               
                                 if (in_array($disciplina_m, $meet_discipline)) {
+                            
                                 echo '<div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" name="discipline[]"
                                         value="'.$predznak.$disciplina.'" checked>
                                     <label class="form-check-label"
                                         for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
                                 </div>';
-                                } else {
+                                }
+                                 else {
                                 echo '<div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" name="discipline[]"
                                         value="'.$predznak.$disciplina.'">
@@ -155,6 +159,7 @@ $rezultati = '';
                                         for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
                                 </div>';
                                 }
+                            
                                 }
                                 echo '
                             </div>';

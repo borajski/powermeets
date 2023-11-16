@@ -95,13 +95,23 @@ public function getFed($id)
                 </b></label>
             <br>';
             $predznak = substr($divizija,0,2).'-';
-            foreach ($discipline as $disciplina)
-            {
+            if ($predznak == "F8-")
+             {
+                $disciplina = "bench press";
                 echo '<div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="discipline[]" value="'.$predznak.$disciplina.'">
-                <label class="form-check-label" for="'.$predznak.$disciplina.'">'.ucfirst($disciplina).'</label>
+                <input class="form-check-input" type="checkbox" name="discipline[]" value="' . $predznak . $disciplina . '">
+                <label class="form-check-label" for="' . $predznak . $disciplina . '">' . ucfirst($disciplina) . '</label>
             </div>';
-            }
+             }
+             else
+             {
+    foreach ($discipline as $disciplina) {
+        echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="discipline[]" value="' . $predznak . $disciplina . '">
+                <label class="form-check-label" for="' . $predznak . $disciplina . '">' . ucfirst($disciplina) . '</label>
+            </div>';
+    }
+}
             echo '</div>';
         }    
         
