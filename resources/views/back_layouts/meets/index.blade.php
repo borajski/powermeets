@@ -1,10 +1,10 @@
 @extends('back_layouts.back-master')
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row py-3">
         <div class="col-md-10 offset-md-1">
-<h4>Natjecanja</h4>
-<div class="table-responsive-sm">
+<h4><strong>{{ __('SVA NATJECANJA') }}</strong></h4>
+<div class="table-responsive-sm pt-4">
 <table class="table table-hover bg-light shadow">
   <thead class="thead t-head" >
     <tr>
