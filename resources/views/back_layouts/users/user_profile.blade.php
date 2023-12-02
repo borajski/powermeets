@@ -19,7 +19,7 @@ $drzava = "";
 $slika = "images/users/default-avatar.png";
 $role = "manager";
 $live = "da";
-echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo vas uredite vaše korisničke
+echo '<h4 class="text-center"><strong>Za potpuno korištenje platforme molimo vas dopunite vaše korisničke
         podatke</strong></h4>';
 }
 
