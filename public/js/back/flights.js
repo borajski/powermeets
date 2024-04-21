@@ -263,9 +263,7 @@ function rackHeights(disciplina) {
                             '<table class="table table-hover bg-light shadow"><thead class="thead  text-light bg-dark"><tr><th>R.br.</th><th>Ime i prezime</th><th class="text-center">Squat rack height</th><th class="text-center">Bench rack height</th></tr></thead><tbody>';
                         if (odgovori.natjecatelji[key].sq_rack == null)
                             rack1 =
-                                '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="racksq[]"><input type="hidden" name="idbroj[]" value="' +
-                                odgovori.natjecatelji[key].id +
-                                '"></td>';
+                                '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="racksq[]"></td>';
                         else
                             rack1 =
                                 '<td class="text-center"><b id="nova-' +
@@ -278,15 +276,11 @@ function rackHeights(disciplina) {
                                 im +
                                 '" class="form-control w-50" name="racksq[]" value="' +
                                 odgovori.natjecatelji[key].sq_rack +
-                                '"><input type="hidden" name="idbroj[]" value="' +
-                                odgovori.natjecatelji[key].id +
                                 '"></td>';
 
                         if (odgovori.natjecatelji[key].bp_rack == null)
                             rack2 =
-                                '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="rackbp[]"><input type="hidden" name="idbroj[]" value="' +
-                                odgovori.natjecatelji[key].id +
-                                '"></td>';
+                                '<td class="text-center"><input type="text" class="form-control w-50 text-center" name="rackbp[]"></td>';
                         else
                             rack2 =
                                 '<td class="text-center"><b id="nova2-' +
@@ -299,8 +293,6 @@ function rackHeights(disciplina) {
                                 im +
                                 '" class="form-control w-50" name="rackbp[]" value="' +
                                 odgovori.natjecatelji[key].bp_rack +
-                                '"><input type="hidden" name="idbroj[]" value="' +
-                                odgovori.natjecatelji[key].id +
                                 '"></td>';
 
                         rack = rack1 + rack2;
@@ -312,6 +304,9 @@ function rackHeights(disciplina) {
                         im +
                         "</td>" +
                         "<td>" +
+                        '<input type="hidden" name="idbroj[]" value="' +
+                                odgovori.natjecatelji[key].id +
+                                '"></input>' +
                         odgovori.natjecatelji[key].name +
                         " " +
                         odgovori.natjecatelji[key].surname +

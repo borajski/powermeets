@@ -285,13 +285,14 @@ class AthletesController extends Controller
         $upit = explode(" ",$disciplina);
         $ids = $request->idbroj;
         $broj_natjecatelja = $request->athletes_number;
+       
 
         if (($upit[1] == "bench") ||  ($upit[1] == "push&pull"))      
             $racks_bp = $request->rackbp;
         else
            {
                $racks_sq = $request->racksq;
-               $racks_bp = $request->rackbp;
+               $racks_bp = $request->rackbp;             
             
            }   
         for ($i=0;$i<$broj_natjecatelja;$i++)
@@ -303,11 +304,12 @@ class AthletesController extends Controller
                 {
                     $athlete->sq_rack = $racks_sq[$i];
                     $athlete->bp_rack = $racks_bp[$i];
-                } 
+                     
+                    } 
+                    $athlete->save();        
             
-            $athlete->save();
         }
-    
+   
         return redirect()->route('athletes.show', $athlete->meet_id)->with(['success' => 'Rack heights set!']);
     
  
