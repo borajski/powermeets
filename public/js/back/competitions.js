@@ -53,7 +53,9 @@ function weightUpdate(id, serija, tezina) {
     };
     xhttp.open("GET", url, true);
     xhttp.send();
-    location.reload(true);
+    //location.reload(true);
+    window.location.href=window.location.href;
+
 }
 //upis lifta
 function onStage(natjecatelj, tezina, serija,sipka,osigurac) {
