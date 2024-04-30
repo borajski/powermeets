@@ -622,7 +622,7 @@ class ResultsController extends Controller
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         );
-        $columns = array('Place','Name', 'Sex', 'Event', 'Division','WeightClassKg','Equipment','Age','State','BodyweightKg',
+        $columns = array('Place','Name', 'Sex', 'Event', 'Division','WeightClassKg','Equipment','Age','BirthDate','Country','BodyweightKg',
         'Squat1Kg','Squat2Kg','Squat3Kg','Best3SquatKg','Bench1Kg','Bench2Kg','Bench3Kg','Best3BenchKg',
         'Deadlift1Kg','Deadlift2Kg','Deadlift3Kg','Best3DeadliftKg','TotalKg');
 
@@ -666,7 +666,8 @@ class ResultsController extends Controller
                 $row['WeightClassKg'] = $rezultat->kategorijat;
                 $row['Equipment'] = $equipment;
                 $row['Age'] = $rezultat->age;
-                $row['State'] = $rezultat->nomination->drzava;
+                $row['BirthDate'] = $rezultat->nomination->datum;
+                $row['Country'] = $rezultat->nomination->drzava;
                 $row['BodyweightKg'] = $rezultat->weight;
 
                 if ($event == "SBD") {
@@ -784,7 +785,7 @@ class ResultsController extends Controller
 
 
                 fputcsv($file, array($row['Place'],$row['Name'], $row['Sex'], $row['Event'],$row['Division'],$row['WeightClassKg'],
-                $row['Equipment'],$row['Age'],$row['State'],$row['BodyweightKg'],
+                $row['Equipment'],$row['Age'],$row['BirthDate'],$row['Country'],$row['BodyweightKg'],
                 $row['Squat1Kg'],$row['Squat2Kg'],$row['Squat3Kg'],$row['Best3SquatKg'],
                 $row['Bench1Kg'],$row['Bench2Kg'],$row['Bench3Kg'],$row['Best3BenchKg'],
                 $row['Deadlift1Kg'],$row['Deadlift2Kg'],$row['Deadlift3Kg'],$row['Best3DeadliftKg'],$row['TotalKg']));
