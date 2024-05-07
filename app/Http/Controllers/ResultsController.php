@@ -612,6 +612,21 @@ class ResultsController extends Controller
             } // ovo treba doraditi za propušteni lift
             return $broj;
         }
+        function normalizeSpaces($sentence) {
+            // Use a regular expression to replace consecutive spaces with a single space
+            $normalized = preg_replace('/\s+/', ' ', $sentence);
+            return trim($normalized); // Trim any leading or trailing spaces
+        }
+        function movePlusToEnd($tekst) {
+            // Check if the string starts with a '+'
+            if (substr($tekst, 0, 1) === '+') {
+                // Remove the leading '+'
+                $tekst = substr($tekst, 1);
+                // Append the '+' to the end of the string
+                $tekst .= '+';
+            }
+            return $tekst;
+        }
 
         $fileName = 'entries.csv';
 
@@ -636,7 +651,9 @@ class ResultsController extends Controller
 
             foreach ($results as $rezultat) {
                 $row['Place'] = '';
-                $name = $rezultat->name . ' ' . $rezultat->surname;
+                $name = $rezultat->name.' '.$rezultat->surname;
+                $name = normalizeSpaces($name);
+                $name = ucwords($name);
                 $row['Name'] = $name;
 
                 if ($rezultat->spol == "Z") {
@@ -663,7 +680,9 @@ class ResultsController extends Controller
 
                 $row['Event'] = $event;
                 $row['Division'] = $rezultat->kategorijag;
-                $row['WeightClassKg'] = $rezultat->kategorijat;
+                $kategorijat = $rezultat->kategorijat;
+                $kategorijat = movePlusToEnd($kategorijat);
+                $row['WeightClassKg'] = $kategorijat;
                 $row['Equipment'] = $equipment;
                 $row['Age'] = $rezultat->age;
                 $row['BirthDate'] = $rezultat->nomination->datum;
